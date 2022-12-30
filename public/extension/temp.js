@@ -1,0 +1,1 @@
+const str = "Some string from temp"
