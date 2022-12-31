@@ -31,7 +31,7 @@ const ListingsTable = (props) => {
       align: 'center',
       headerAlign: 'center',
       renderCell: (params) => (
-        <div className="container text-center">
+        <div className="container text-center text-truncate">
         <Link href={`${params.row.url}`} target="_blank">{params.row.url}</Link>
         </div>
 
