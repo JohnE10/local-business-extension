@@ -1,30 +1,32 @@
 import { useEffect, useState } from "react";
+import ListingsTable from '../components/ListingsTable';
 
-export async function getServerSideProps( ctx ) {
+export default function Home() {
 
-  // let temp = JSON.parse(ctx);
+  const [listings, setListings] = useState(null);
+  const [error, setError] = useState(null);
 
-  console.log('ctx query is: ', ctx.resolvedUrl, typeof ctx.resolvedUrl);
-  const objArr = [{a: 'something meaningless', b: 'something more meaningless'}];
+  useEffect(() => {
+    try {
+      if (typeof window !== 'undefined') {
 
-  return {
-    props: {
-      'objArr': objArr
+        let temp = localStorage.getItem('listings');
+        temp = JSON.parse(temp);
+        console.log('get item is: ', temp);
+        setListings(temp);
+      }
+    } catch (err) {
+      setError(err.message);
     }
-
-  };
-}
-
-export default function Home({ objArr }) {
-
-  if (typeof window !== 'undefined') {
-    localStorage.setItem('objArr', JSON.stringify(objArr));
-  }
+  }, []);
 
   return (
-    <u>
+    <div>
+      <h2 className='text-center my-4'>Business Listings</h2>
+      <div className="container w-75">
+        {listings && !error && <ListingsTable listings={listings} />}
+      </div>
 
-    </u>
+    </div>
   );
-
 }

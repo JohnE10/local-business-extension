@@ -1,15 +1,20 @@
-try{
-    chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
+
+
+try {
+    chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
         if (changeInfo.status == 'complete') {
-            chrome.scripting.excecuteScript({
-                files: ['injectStorageInfo.js'],
-                target: {tabId: tab.id}
-            });
+            chrome.storage.sync.get(['syncStorage']).then((result) => {
+                console.log('value is: ', result.syncStorage);
+            
+                
+            })
         }
     })
-} catch(err) {
+} catch (err) {
     console.log(e);
 }
+
+
 
 
 
