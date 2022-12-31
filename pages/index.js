@@ -24,6 +24,7 @@ export default function Home() {
     <div>
       <h2 className='text-center my-4'>Business Listings</h2>
       <div className="container w-75">
+        {error && <h3 className='text-danger text-center'>Error: {error}</h3>}
         {listings && !error && <ListingsTable listings={listings} />}
       </div>
 
