@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { DataGrid } from '@mui/x-data-grid';
 import { useState } from "react";
+import { fontWeight } from "@mui/system";
 
 const ListingsTable = (props) => {
 
@@ -51,7 +52,11 @@ const ListingsTable = (props) => {
         sx={{
           "& .MuiDataGrid-columnHeader:last-child .MuiDataGrid-columnSeparator": {
             display: "none"
+          },
+          "& .MuiDataGrid-columnHeaders": {
+            textDecoration: "underline",
           }
+
         }}
         rows={listings}
         columns={columns}
