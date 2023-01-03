@@ -13,9 +13,9 @@ export default async function handler(req, res) {
 
     for (let i = 0; i < objArr.length; i++) {
       const { name, url, search } = objArr[i];
-      const entry = 0;
+      const numberOfEmails = 0;
       if (!await Business.findOne({ url: url })) {
-        const businessEntry = await Business.create({ name, url, search, entry });
+        const businessEntry = await Business.create({ name, url, search, numberOfEmails });
       }
     }
 

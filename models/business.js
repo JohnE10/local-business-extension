@@ -15,8 +15,13 @@ const business = new Schema({
         type: String,
         required: false,
     },
-    entry: {
+    numberOfEmails: {
         type: Number,
+        required: false,
+    },
+
+    dateEmailedLast: {
+        type: Date,
         required: false,
     }
 }, { timestamps: true });
