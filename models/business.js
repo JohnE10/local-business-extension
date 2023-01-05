@@ -15,6 +15,10 @@ const business = new Schema({
         type: String,
         required: false,
     },
+    email: {
+        type: String,
+        required: false,
+    },
     numberOfEmails: {
         type: Number,
         required: false,
