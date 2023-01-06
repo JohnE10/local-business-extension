@@ -30,22 +30,23 @@ export default async function handler(req, res) {
         // ];
 
         const tempObj = [
-            'https://webtechagency.ca/',
-            'https://360webfirm.ca/',
-            'http://www.brandrocket.ca/',
-            'https://versacoretechdesigns.com/',
-            'https://webberman.ca/',
-            'http://urroz.ca/',
-            'https://www.mellowbrewmarketing.com/',
-            'http://jgaucher.ca/',
-            'https://cornwallwebsitedesign.ca/',
-            'https://nimbleweb.co/',
-            'http://613webs.wixsite.com/mysite',
-            'https://www.monsterweb.ca/',
-            'http://gjinternetsolutions.com/',
-            'http://www.dragonflywebcreations.com/',
-            'http://theprojectmachine.ca/',
-            'https://okay.network/',
+            'https://endoh.co/',
+            'http://www.studioweb.com/',
+            'https://catalystdv.com/',
+            'https://lafirme.quebec/',
+            'http://www.aliengirl.xyz/',
+            'https://www.sidekickinteractive.com/',
+            'http://www.blackduckagency.com/',
+            'https://monolith.agency/',
+            'https://www.appnovation.com/',
+            'http://www.mh.ca/',
+            'http://www.mezoweb.com/',
+            'http://field-office.ca/',
+            'https://www.azrawweb.com/',
+            'https://vibetech.org/',
+            'http://www.walterinteractive.com/',
+            'https://www.capermint.com/',
+            'https://www.malopan.com/',
         ];
 
         let inserted = [];
@@ -68,7 +69,7 @@ export default async function handler(req, res) {
                 }
 
                 let name = '';
-                let search = 'web development agency cornwall, ontario';
+                let search = 'web development agency montreal, qc';
 
                 if (!await Business.findOne({ url: url })) {
                     const businessEntry = await Business.create({ name, url, search });
@@ -98,7 +99,7 @@ export default async function handler(req, res) {
             }
         }
 
-        return res.status(200).send({ success: `Task completed! - ${JSON.stringify(inserted)}`, notInserted: notInserted })
+        return res.status(200).send({ success: `Task completed! - ${inserted}`, notInserted: notInserted })
 
     } catch (err) {
         return res.status(200).send({ error: err.message })
