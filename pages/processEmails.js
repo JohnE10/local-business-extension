@@ -17,8 +17,8 @@ const processEmails = () => {
     }
 
     // find value in array of objecys
-    function search(key, keyValue, arr){
-        for (let i=0; i < arr.length; i++) {
+    function search(key, keyValue, arr) {
+        for (let i = 0; i < arr.length; i++) {
             if (arr[i].key == keyValue) {
                 return arr[i];
             }
@@ -28,6 +28,7 @@ const processEmails = () => {
     // declare variables
     const [pageContent, setPageContent] = useState([]);
     const [emailList, setEmailList] = useState([]);
+    const [contactEmailList, setContactEmailList] = useState([]);
     const [checkContact, setCheckContact] = useState([]);
     const [noEmailList, setNoEmailList] = useState([]);
     const [error, setError] = useState(null);
@@ -85,11 +86,26 @@ const processEmails = () => {
             // if url has no email, then stick it in the checkContact array to see if there's an email in the contact page
             if (tempArr.length == 0) {
                 if (!checkContact.map(a => a.url).includes(ele.url)) {  // no dupes
-                    checkContact.push({url: ele.url, data: ele.data});
+                    checkContact.push({ url: ele.url, data: ele.data });
+                    const htmlDom = new DOMParser().parseFromString(ele.data, 'text/html');
+                    const aTags = htmlDom.getElementsByTagName('a');
+                    for (let i = 0; i < aTags.length; i++) {
+                        // console.log('a.innerHTML is:', aTags[i].innerHTML);
+                        if (aTags[i].innerHTML) {
+                            if (aTags[i].innerHTML.toLowerCase().includes('contact') || aTags[i].innerHTML.toLowerCase().includes('get in touch')) {
+                                // console.log('aTag href is: ', aTags[i].getAttribute('href'));
+                                if (!contactEmailList.map(a => a.contactUrl).includes(aTags[i].getAttribute('href'))) {
+                                    contactEmailList.push({ url: ele.url, contactUrl: aTags[i].getAttribute('href') })
+                                }
+                            }
+                        }
+                    }
+                    // console.log('aTags is: ', aTags);
+
                 }
             } else {
                 // if an email is found, then stick it in the emailList array
-                for (let i = 0; i < tempArr.length; i++) { 
+                for (let i = 0; i < tempArr.length; i++) {
 
                     if (!emailList.map(a => a.email).includes(tempArr[i][0]) && !tempArr[i][0].includes('/')) { // no dupes and no junk 
                         if (tempArr[i][0].substr(tempArr[i][0].length - 4) != '.png') { // remove any www.
@@ -113,8 +129,8 @@ const processEmails = () => {
     // }
 
     console.log('emailList is: ', emailList);
-
     console.log('checkContact is: ', checkContact);
+    console.log('contactEmailList is: ', contactEmailList);
 
     return (
 
