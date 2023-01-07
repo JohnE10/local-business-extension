@@ -87,21 +87,18 @@ const processEmails = () => {
             if (tempArr.length == 0) {
                 if (!checkContact.map(a => a.url).includes(ele.url)) {  // no dupes
                     checkContact.push({ url: ele.url, data: ele.data });
-                    const htmlDom = new DOMParser().parseFromString(ele.data, 'text/html');
-                    const aTags = htmlDom.getElementsByTagName('a');
+                    const htmlDom = new DOMParser().parseFromString(ele.data, 'text/html'); // convert string into html dom
+                    const aTags = htmlDom.getElementsByTagName('a'); // get all the a tags
                     for (let i = 0; i < aTags.length; i++) {
-                        // console.log('a.innerHTML is:', aTags[i].innerHTML);
                         if (aTags[i].innerHTML) {
+                            // if the a tags is for contact of "get in touch" page then push it href attribute to an array
                             if (aTags[i].innerHTML.toLowerCase().includes('contact') || aTags[i].innerHTML.toLowerCase().includes('get in touch')) {
-                                // console.log('aTag href is: ', aTags[i].getAttribute('href'));
-                                if (!contactEmailList.map(a => a.contactUrl).includes(aTags[i].getAttribute('href'))) {
+                                if (!contactEmailList.map(a => a.contactUrl).includes(aTags[i].getAttribute('href'))) { // check for dupes
                                     contactEmailList.push({ url: ele.url, contactUrl: aTags[i].getAttribute('href') })
                                 }
                             }
                         }
                     }
-                    // console.log('aTags is: ', aTags);
-
                 }
             } else {
                 // if an email is found, then stick it in the emailList array
@@ -117,16 +114,6 @@ const processEmails = () => {
         })
 
     }
-
-
-    // // for those urls with no email found, check the contact page 
-    // if(checkContact.length>0) {
-    //     checkContact.forEach((url) => {
-    //         // let tempArr = search('url', url, pageContent)
-    //         // console.log('tempArr', tempArr);
-    //         console.log('url is: ', url);
-    //     })  
-    // }
 
     console.log('emailList is: ', emailList);
     console.log('checkContact is: ', checkContact);
