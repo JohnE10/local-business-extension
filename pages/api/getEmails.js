@@ -8,13 +8,6 @@ export default async function handler(req, res) {
 
     return res.status(200).send(data);
 
-    // const url = 'https://360webfirm.ca/';
-
-    // const response = await fetch(url);
-    // const pageContent = await response.text();
-
-    // return res.status(200).json({ success: pageContent })
-
 
 
 
