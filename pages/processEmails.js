@@ -158,6 +158,12 @@ const processEmails = () => {
                         }
                     }
                 }
+            } else {
+                if(strippedUrl) {
+                    if(!noEmailList.includes(strippedUrl)) {
+                        noEmailList.push(strippedUrl);
+                    }   
+                }
             }
         })
     }
