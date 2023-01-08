@@ -16,24 +16,38 @@ const processEmails = () => {
         return url;
     }
 
-    // find value in array of objecys
-    function search(key, keyValue, arr) {
-        for (let i = 0; i < arr.length; i++) {
-            if (arr[i].key == keyValue) {
-                return arr[i];
+    // fetch data from next api
+    const runFetch = async (urls) => {
+        const pageContent = [];
+        urls.forEach((url) => {
+            const fetchData = async () => {
+                const response = await fetch('http://localhost:3000/api/getEmails', {
+                    method: 'POST',
+                    headers: {
+                        'content-type': 'application/json',
+                    },
+                    body: JSON.stringify({ url: url })
+                });
+                const data = await response.text();
+                // setPageContent((pageContent) => [...pageContent, { url: url, data: data }]);
+                pageContent.push[{ url: url, data: data }];
+                
             }
-        }
-    }
+            fetchData();
+            
+        });
+        return pageContent;
+    };
 
     // declare variables
     const [pageContent, setPageContent] = useState([]);
+    const [contactPageContent, setContactPageContent] = useState([]);
     const [emailList, setEmailList] = useState([]);
     const [contactEmailList, setContactEmailList] = useState([]);
+    const [contactUrls, setContactUrls] = useState([]);
     const [checkContact, setCheckContact] = useState([]);
     const [noEmailList, setNoEmailList] = useState([]);
     const [error, setError] = useState(null);
-
-    // const noEmailList = [];
 
     // urls to scrape
     const urls = [
@@ -77,12 +91,14 @@ const processEmails = () => {
         });
     }, []);
 
+
+
     // get a list of emails and a list of urls where no email was found
     if (pageContent.length > 0) {
 
         pageContent.map((ele) => {
             let strippedUrl = stripDomain(ele.url); // strip url to host name
-            const tempArr = [...ele.data.matchAll(emailRegEx)]; // get all email addresses in page content
+            const tempArr = [...ele.data.matchAll(emailRegEx)]; // get all email addresses in page
             // if url has no email, then stick it in the checkContact array to see if there's an email in the contact page
             if (tempArr.length == 0) {
                 if (!checkContact.map(a => a.url).includes(ele.url)) {  // no dupes
@@ -93,8 +109,21 @@ const processEmails = () => {
                         if (aTags[i].innerHTML) {
                             // if the a tags is for contact of "get in touch" page then push it href attribute to an array
                             if (aTags[i].innerHTML.toLowerCase().includes('contact') || aTags[i].innerHTML.toLowerCase().includes('get in touch')) {
-                                if (!contactEmailList.map(a => a.contactUrl).includes(aTags[i].getAttribute('href'))) { // check for dupes
-                                    contactEmailList.push({ url: ele.url, contactUrl: aTags[i].getAttribute('href') })
+                                if (!contactUrls.map(a => a.contactUrl).includes(aTags[i].getAttribute('href'))) { // check for dupes
+                                    contactUrls.push({ url: ele.url, contactUrl: aTags[i].getAttribute('href') })
+                                    const fetchData = async (url) => {
+                                        const response = await fetch('http://localhost:3000/api/getEmails', {
+                                            method: 'POST',
+                                            headers: {
+                                                'content-type': 'application/json',
+                                            },
+                                            body: JSON.stringify({ url: url })
+                                        });
+                                        const data = await response.text();
+                                        setContactPageContent((contactPageContent) => [...contactPageContent, { url: url, data: data }]);
+                        
+                                    }
+                                    fetchData(aTags[i].getAttribute('href'));
                                 }
                             }
                         }
@@ -115,9 +144,30 @@ const processEmails = () => {
 
     }
 
+    // extract emails from the contact page urls
+    if (contactPageContent.length > 0) {
+        contactPageContent.map((ele) => {
+            let strippedUrl = stripDomain(ele.url); // strip url to host name
+            const tempArr = [...ele.data.matchAll(emailRegEx)]; // get all email addresses in page
+            // if an email is found, then stick it in the contactEmailList array
+            if (tempArr.length != 0) {
+                for (let i = 0; i < tempArr.length; i++) {
+                    if (!contactEmailList.map(a => a.email).includes(tempArr[i][0]) && !tempArr[i][0].includes('/')) { // no dupes and no junk 
+                        if (tempArr[i][0].substr(tempArr[i][0].length - 4) != '.png') { // remove any www.
+                            contactEmailList.push({ url: strippedUrl, email: tempArr[i][0] }); // add to list
+                        }
+                    }
+                }
+            }
+        })
+    }
+
+    console.log('contactPageContent: ', contactPageContent);
+
     console.log('emailList is: ', emailList);
     console.log('checkContact is: ', checkContact);
-    console.log('contactEmailList is: ', contactEmailList);
+    console.log('contactUrls is: ', contactUrls);
+    console.log('contactEmailList', contactEmailList);
 
     return (
 
