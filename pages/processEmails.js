@@ -31,10 +31,10 @@ const processEmails = () => {
                 const data = await response.text();
                 // setPageContent((pageContent) => [...pageContent, { url: url, data: data }]);
                 pageContent.push[{ url: url, data: data }];
-                
+
             }
             fetchData();
-            
+
         });
         return pageContent;
     };
@@ -121,7 +121,7 @@ const processEmails = () => {
                                         });
                                         const data = await response.text();
                                         setContactPageContent((contactPageContent) => [...contactPageContent, { url: url, data: data }]);
-                        
+
                                     }
                                     fetchData(aTags[i].getAttribute('href'));
                                 }
@@ -186,7 +186,21 @@ const processEmails = () => {
 
                 }
             </div>
-            <h2 className='text-center my-4'>Urls with no Email List</h2>
+            <h2 className='text-center my-4'>Contact Email List</h2>
+            <div className="container w-75">
+                {error && <h3 className='text-danger text-center'>Error: {error}</h3>}
+                {
+                    contactEmailList &&
+                    <div>
+                        {contactEmailList.map((email, i) => (
+                            <div key={i}>{email.email}</div>
+                        ))}
+                        <div>Count is: {contactEmailList.length}</div>
+                    </div>
+
+                }
+            </div>
+            <h2 className='text-center my-4'>Urls with no Email</h2>
             <div className="container w-75">
                 {error && <h3 className='text-danger text-center'>Error: {error}</h3>}
                 {
