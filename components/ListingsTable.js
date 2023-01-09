@@ -45,7 +45,7 @@ const ListingsTable = (props) => {
   return (
     <div>
       {/* show error if there's a delete item issue */}
-      {tableError && <div className='bg-danger text-light mb-3 p-3'>{ tableError }</div>}
+      {tableError && <div className='bg-danger text-light mb-3 p-3'>This is a tableError: { tableError }</div>}
 
       {/* show list of items in store */}
       {listings && <DataGrid

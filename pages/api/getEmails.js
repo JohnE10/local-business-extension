@@ -1,12 +1,18 @@
 export default async function handler(req, res) {
 
     // console.log('req: ', req);
-    console.log('req.body.url: ', req.body.url)
 
-    const response = await fetch(req.body.url);
-    const data = await response.text();
+    if(req.body.url) {
+        console.log('req.body.url: ', req.body.url)
 
-    return res.status(200).send(data);
+        const response = await fetch(req.body.url);
+        const data = await response.text();
+
+        return res.status(200).send(data);
+    }
+
+
+
 
 
 

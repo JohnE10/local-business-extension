@@ -63,10 +63,12 @@ const thePage = () => {
         })
     }
 
-    for (let i=0; i<objArr.length; i++) {
+    console.log('objArr is: ', objArr);
+
+    for (let i = 0; i < objArr.length; i++) {
         console.log(objArr[i].url);
     }
-    
+
 
     // post data to backend to be stored in database
     const fetchUrl = `http://localhost:3000/api/storeData`;
@@ -85,7 +87,9 @@ const thePage = () => {
 
     // only run the fetch if there are listings
     if (objArr.length) {
+        console.log('objArr after the if(objArr.length');
         if (objArr.length > 0) {
+            console.log('objArr after the if(objArr.length>0');
             fetchData();
             chrome.storage.sync.set({ 'listings': objArr }); // store listings in chrome storage
         }
@@ -96,6 +100,8 @@ const thePage = () => {
         localStorage.setItem('listings', JSON.stringify(result.listings));
     });
 }
+
+thePage();
 
 chrome.runtime.onMessage.addListener(
 
@@ -109,8 +115,8 @@ chrome.runtime.onMessage.addListener(
 
         for (let i = 0; i < searchStr.length; i++) {
             if (searchStr[i].getAttribute('aria-label')) {
-                nextUrls.push({uri: searchStr[i].getAttribute('href'), page: searchStr[i].getAttribute('aria-label'), index: (i+2)});      
-            }            
+                nextUrls.push({ uri: searchStr[i].getAttribute('href'), page: searchStr[i].getAttribute('aria-label'), index: (i + 2) });
+            }
         }
 
         console.log('nextUrls is: ', nextUrls);
@@ -120,6 +126,9 @@ chrome.runtime.onMessage.addListener(
             "from the extension");
         if (request.greeting === "hello")
             sendResponse(nextUrls);
+
+        if (request.greeting === "set storage")
+            sendResponse('set storage completed');
 
     }
 ); 

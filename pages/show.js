@@ -11,6 +11,8 @@ export default function Show() {
 
         // retrieve listings, to be passed to ListingsTable below, from local storage
         try {
+            console.log('listings is: ', JSON.parse(localStorage.getItem('listings')));
+            // 
             setListings(JSON.parse(localStorage.getItem('listings')));
         } catch (err) {
             setError(err.message);
