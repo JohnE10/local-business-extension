@@ -87,10 +87,8 @@ const thePage = () => {
 
     // only run the fetch if there are listings
     if (objArr.length) {
-        console.log('objArr after the if(objArr.length');
         if (objArr.length > 0) {
-            console.log('objArr after the if(objArr.length>0');
-            fetchData();
+            // fetchData();
             chrome.storage.sync.set({ 'listings': objArr }); // store listings in chrome storage
         }
     }

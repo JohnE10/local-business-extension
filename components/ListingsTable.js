@@ -7,6 +7,7 @@ const ListingsTable = (props) => {
 
   // instantiate table component object and error variable
   const [listings, setListings] = useState(props.listings);
+  const [nonExisting, setNonExisting] = useState(props.nonExisting);
   const [tableError, setTableError] = useState(null);
 
   // define Material UI table columns
@@ -33,19 +34,21 @@ const ListingsTable = (props) => {
       headerAlign: 'center',
       renderCell: (params) => (
         <div className="container text-center text-truncate">
-        <Link href={`${params.row.url}`} target="_blank">{params.row.url}</Link>
+          <Link href={`${params.row.url}`} target="_blank">{params.row.url}</Link>
         </div>
 
       )
-      
+
     },
 
   ];
 
+  console.log('nonExisting is: ', nonExisting);
+
   return (
     <div>
       {/* show error if there's a delete item issue */}
-      {tableError && <div className='bg-danger text-light mb-3 p-3'>This is a tableError: { tableError }</div>}
+      {tableError && <div className='bg-danger text-light mb-3 p-3'>This is a tableError: {tableError}</div>}
 
       {/* show list of items in store */}
       {listings && <DataGrid
@@ -59,6 +62,24 @@ const ListingsTable = (props) => {
 
         }}
         rows={listings}
+        columns={columns}
+        pageSize={20}
+        rowsPerPageOptions={[20]}
+        autoHeight
+        sortable
+      />}
+      {!nonExisting && <div>...loading</div>}
+      {nonExisting && <DataGrid
+        sx={{
+          "& .MuiDataGrid-columnHeader:last-child .MuiDataGrid-columnSeparator": {
+            display: "none"
+          },
+          "& .MuiDataGrid-columnHeaders": {
+            textDecoration: "underline",
+          }
+
+        }}
+        rows={nonExisting}
         columns={columns}
         pageSize={20}
         rowsPerPageOptions={[20]}
