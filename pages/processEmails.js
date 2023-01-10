@@ -210,7 +210,7 @@ const processEmails = () => {
     return (
 
         <div>
-            <h2 className='text-center my-4'>Processed Emails</h2>
+            <h2 className='text-center my-4'>Process Emails</h2>
 
             {emailList.length < 1 && contactEmailList < 1 && noEmailList.length < 1 &&
                 <div className='text-center'>

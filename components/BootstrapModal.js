@@ -8,9 +8,9 @@ function BootstrapModal(props) {
     const tempData = props.nonExisting;
     const data = [];
 
-    for (let i=0; i<tempData.length; i++) {
+    for (let i = 0; i < tempData.length; i++) {
         // data.push({id: tempData[i].id, name: tempData[i].name, url: `'${tempData[i].url}',`, search: tempData[i].search})
-        data.push({id: tempData[i].id, name: tempData[i].name, url: tempData[i].url, search: tempData[i].search})
+        data.push({ id: tempData[i].id, name: tempData[i].name, url: tempData[i].url, search: tempData[i].search })
 
     }
 
@@ -48,6 +48,12 @@ function BootstrapModal(props) {
                     ))}
                 </Modal.Body>
                 <Modal.Footer>
+                    <a href='http://localhost:3000/processEmails' target='_blank'>
+                        <Button variant="secondary">
+                            Extract Emails
+                        </Button>
+                    </a>
+
                     <Button variant="secondary" onClick={handleClose}>
                         Close
                     </Button>
