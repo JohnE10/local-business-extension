@@ -1,8 +1,7 @@
 import { checkboxClasses, formControlLabelClasses } from "@mui/material";
 import { useEffect, useState } from "react";
 import ListingsTable from '../components/ListingsTable';
-import ReactModal from 'react-modal';
-import Modal from '../components/Modal';
+import BootstrapModal from '../components/BootstrapModal';
 
 export default function Show() {
 
@@ -73,7 +72,7 @@ export default function Show() {
         setIsOpen(true);
     }
 
-
+const tempText = 'some other temp text';
 
     return (
         <div>
@@ -85,8 +84,16 @@ export default function Show() {
             <div className="container w-75">
                 {error && <h3 className='text-danger text-center'>Error: {error}</h3>}
                 {!hide && listings && !error && <ListingsTable listings={listings} />}
-                {hide && !data && !error && <div className='text-center my-3'>...loading - This may take a moment</div>}
+                {hide && !data && !error && <div className='text-center my-3'>...Loading - This may take a moment</div>}
+                {hide && data && !error &&
+                    <div className='text-center m-3'>
 
+                        <BootstrapModal nonExisting={data}/>
+                        {/* <BootstrapModal nonExisting={tempText}/> */}
+                    </div>
+                   
+                    
+                }
 
                 {hide && data && !error && <ListingsTable nonExisting={data} />}
             </div>

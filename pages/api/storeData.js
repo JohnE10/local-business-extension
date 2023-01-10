@@ -26,17 +26,19 @@ export default async function handler(req, res) {
 
       if (!await Business.findOne({ url: url })) {
         const businessEntry = await Business.create({ name, url, search });
-        nonExisting.push({ id: id, name: name, url: url, search: search });
+        // nonExisting.push({ id: id, name: name, url: url, search: search });
+      } else {
+        nonExisting.push({ id: id, name: name, url: objArr[i].url, search: search });
       }
     }
 
-    if (nonExisting) {
-      if (nonExisting.length > 0) {
-        console.log('nonExisting is: ', nonExisting);
-      } else {
-        console.log('nonExisting is empty');
-      }
-    }
+    // if (nonExisting) {
+    //   if (nonExisting.length > 0) {
+    //     console.log('nonExisting is: ', nonExisting);
+    //   } else {
+    //     console.log('nonExisting is empty');
+    //   }
+    // }
 
     return res.status(200).send(JSON.stringify(nonExisting));
 

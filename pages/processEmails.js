@@ -2,6 +2,7 @@ import { set } from "mongoose";
 import { useEffect, useState } from "react";
 import EmailListTable from "../components/EmailListTable";
 
+
 const processEmails = () => {
 
     // declare helper functions
@@ -10,18 +11,18 @@ const processEmails = () => {
     // validate url
     function isValidUrl(string) {
         try {
-          new URL(string);
-          return true;
+            new URL(string);
+            return true;
         } catch (err) {
             console.log(err.message);
             console.log(string);
-          return false;
+            return false;
         }
-      }
+    }
 
     // strip url to just domain
     const stripDomain = (url) => {
-        if(isValidUrl(url)) {
+        if (isValidUrl(url)) {
             let domain = new URL(url);
             url = domain.hostname;
 
@@ -63,103 +64,64 @@ const processEmails = () => {
     const [contactUrls, setContactUrls] = useState([]);
     const [checkContact, setCheckContact] = useState([]);
     const [noEmailList, setNoEmailList] = useState([]);
+    // const [urls, setUrls] = useState(null);
     const [error, setError] = useState(null);
+    const [textArea, setTextArea] = useState('');
+    const [urls, setUrls] = useState(null);
 
     // urls to scrape
-    const urls = [
-        'https://leonardagenceweb.com/?utm_source=google&utm_medium=organic&utm_campaign=gmb',
-        'http://unikmedia.ca/',
-        'https://netleaf.ca/',
-        'https://www.gourouweb.com/',
-        'https://www.ixmedia.com/?utm_source=google&utm_medium=organic&utm_campaign=MyBusiness',
-        'http://www.novaxis.net/',
-        'https://www.instynctweb.com/',
-        'http://www.nurun.com/',
-        'https://www.jbimpact.com/',
-        'http://www.libeo.com/',
-        'https://wdi.solutions/',
-        'https://yankeemedia.ca/',
-        'http://agenceamiral.com/',
-        'https://yoomweb.com/',
-        'https://www.imasterweb.com/',
-        'https://infernal.media/',
-        'https://www.webself.net/',
-        'https://quotaweb.com/',
-        'http://www.volcan.design/',
-        'https://webventure.ca/',
-        'https://whitecrowstudios.ca/',
-        'http://www.propagandadesign.com/',
-        'https://www.effetmonstre.com/',
-        'https://progexpert.com/',
-        'https://firmecreative.com/',
-        'https://o2web.ca/',
-        'https://sebastienpaquet.ca/',
-        'https://agenceflex.ca/',
-        'http://ologix.ca/',
-        'http://www.dialoguenet.ca/',
-        'http://www.pyxel.ca/',
-        'https://totemweb.design/',
-        'https://www.webchallenge.ca/',
-        'https://wibo.ca/?utm_source=GMB&utm_medium=Googlemybusiness&utm_campaign=Adsearchmedia',
-        'http://www.sitequebec.ca/',
-        'https://capitaleweb.ca/',
-        'https://www.atelierhyper.com/',
-        'http://transistordesign.com/',
-        'http://www.bisscomm.com/',
-        'https://cansoft.com/fr/referencement-quebec.html',
-        'http://col-lab.ca/',
-        'http://petitemarianne.com/',
-        'http://klarr.agency/',
-        'http://omnigo.ca/',
-        'https://www.graphsynergie.com/',
-        'https://www.kabane.ca/',
-        'http://vizemedia.com/',
-        'http://ep4.com/',
-        'http://charlesdarras.com/',
-        'https://www.rssolutionsnumeriques.com/',
-        'https://www.inusti.com/',
-        'https://noovoweb.com/',
-        'http://webhostian.com/',
-        'https://triomphe.ca/',
-        'http://ilovebeet.com/',
-        'http://www.alphatek.ca/',
-        'https://olspsystem.com/join/496614',
-        'http://www.relation1.ca/',
-        'https://www.bkomstudios.com/',
-        'http://khalilyabi.com/',
-        'http://beenox.com/',
-        'http://oxyca.ca/',
-        'http://www.imarcom.net/',
-        'https://mambomambo.ca/',
-        'https://philnaud.ca/',
-        'http://www.devalto.com/',
-        'https://kumojin.com/',
-        'http://spektrummedia.com/',
-        'http://www.nexapp.ca/',
-        'https://www.crakmedia.com/',
-        'http://www.corsairedesign.com/',
-    ];
+    // const urls = [
+    //     //     'https://pixelcarve.com/',
+    //     //     'https://www.globalgraphicswebdesign.com/',
+    //     //     'https://eggsmedia.com/',
+    //     //     'https://simplistics.ca/',
+    //     //     'https://www.wiretree.ca/',
+    //     //     'https://www.awesomewebdesigns.ca/',
+    //     //     'https://www.maizonweb.ca/',
+    //     //     'http://mojo-agency.com/',
+    //     //     'https://canadianwebdesigns.ca/',
+    //     //     'https://www.netmatico.com/',
+    //     //     'http://www.anerdsworld.com/',
+    //     //     'https://www.inorbital.com/',
+    //     //     'http://torontowebdesign.ca/',
+    //     //     'https://www.websharx.ca/',
+    //     //     'https://parachutedesign.ca/?utm_source=GMB&utm_medium=organic',
+    //     //     'https://shift8web.ca/',
+    //     //     'https://www.intrangowebdesign.com/',
+    //     //     'http://makemycodewebdesigncompany.ca/',
+    //     //     'https://ecommercewebdesign.agency/',
+    //     //     'http://www.webluxx.com/',
+    // ];
+
+    const handleClick = (e) => {
+        if (textArea != '') {
+            setUrls(textArea.split('\n'));
+        }
+    }
 
     const emailRegEx = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/g;
 
     // fetch page content
     useEffect(() => {
-        urls.forEach((url) => {
-            const fetchData = async () => {
-                const response = await fetch('http://localhost:3000/api/getEmails', {
-                    method: 'POST',
-                    headers: {
-                        'content-type': 'application/json',
-                    },
-                    body: JSON.stringify({ url: url })
-                });
-                const data = await response.text();
-                setPageContent((pageContent) => [...pageContent, { url: url, data: data }]);
+        if (urls) {
+            urls.forEach((url) => {
+                const fetchData = async () => {
+                    const response = await fetch('http://localhost:3000/api/getEmails', {
+                        method: 'POST',
+                        headers: {
+                            'content-type': 'application/json',
+                        },
+                        body: JSON.stringify({ url: url })
+                    });
+                    const data = await response.text();
+                    setPageContent((pageContent) => [...pageContent, { url: url, data: data }]);
 
-            }
-            fetchData();
-        });
-    }, []);
+                }
+                fetchData();
+            });
+        }
+
+    }, [urls]);
 
 
 
@@ -248,11 +210,27 @@ const processEmails = () => {
     return (
 
         <div>
-            <h2 className='text-center my-4'>Email List</h2>
+            <h2 className='text-center my-4'>Processed Emails</h2>
+
+            {emailList.length < 1 && contactEmailList < 1 && noEmailList.length < 1 &&
+                <div className='text-center'>
+                    <label className='w-100 fw-bold mb-1'>Paste URLs:</label>
+                    <textarea className='w-50' rows={6}
+                        value={textArea}
+                        placeholder='Paste your urls here...'
+                        onChange={(e) => setTextArea(e.target.value)}
+                    />
+                    <div className='w100 m-3'>
+                        <button onClick={handleClick}>Submit</button>
+                    </div>
+
+                </div>
+            }
+            {emailList.length > 0 && <h2 className='text-center my-4'>Email List</h2>}
             <div className="container w-75">
                 {error && <h3 className='text-danger text-center'>Error: {error}</h3>}
                 {
-                    emailList &&
+                    emailList.length > 0 &&
                     <div>
                         {emailList.map((email, i) => (
                             <div key={i}>{email.email}</div>
@@ -262,11 +240,11 @@ const processEmails = () => {
 
                 }
             </div>
-            <h2 className='text-center my-4'>Contact Email List</h2>
+            {contactEmailList.length > 0 && <h2 className='text-center my-4'>Contact Email List</h2>}
             <div className="container w-75">
                 {error && <h3 className='text-danger text-center'>Error: {error}</h3>}
                 {
-                    contactEmailList &&
+                    contactEmailList.length > 0 &&
                     <div>
                         {contactEmailList.map((email, i) => (
                             <div key={i}>{email.email}</div>
@@ -276,11 +254,11 @@ const processEmails = () => {
 
                 }
             </div>
-            <h2 className='text-center my-4'>Urls with no Email</h2>
+            {noEmailList.length > 0 && <h2 className='text-center my-4'>Urls with no Email</h2>}
             <div className="container w-75">
                 {error && <h3 className='text-danger text-center'>Error: {error}</h3>}
                 {
-                    noEmailList &&
+                    noEmailList.length > 0 &&
                     <div>
                         {noEmailList.map((url, i) => (
                             <div key={i}>{url}</div>
