@@ -12,7 +12,7 @@ export default async function handler(req, res) {
     const listings = await Business.find();
     console.log(listings);
 
-    let search = 'web development agency dallas, tx';
+    let search = 'web development agency new york, ny';
 
     let deletedArr = [];
     let result = '';

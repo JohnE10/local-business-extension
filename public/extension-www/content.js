@@ -39,22 +39,32 @@ const thePage = () => {
 
     const entities = document.querySelectorAll('.VkpGBb');
 
+
     // loop through block
     if (entities.length >= 1) {
         Array.from(entities).forEach((entity) => {
             const name = entity.querySelector('.rllt__details .dbg0pd .OSrXXb'); // company name
+            console.log('name is: ', name);
+            // agencyName = name.innerHTML;
+            // console.log('agencyName is: ', agencyName);
 
             const anchors = entity.getElementsByTagName('a');  // anchors texts in block
+            console.log('anchors: ', anchors);
             if (anchors.length >= 1) {
                 for (let i = 0; i < anchors.length; i++) {
                     if (anchors[i].getAttribute('class')) {
-                        if (anchors[i].getAttribute('class') == 'yYlJEf Q7PwXb L48Cpd') {  // anchor text class
-                            const url = anchors[i].getAttribute('href'); // company site url
+                        // if (anchors[i].getAttribute('class') == 'yYlJEf Q7PwXb L48Cpd') {  // anchor text class
+                        if (anchors[i].getAttribute('class') == 'yYlJEf Q7PwXb L48Cpd brKmxb') {  // anchor text class
+    
+                        const url = anchors[i].getAttribute('href'); // company site url
                             if (!url.includes('adurl')) {  // leave out the ads
                                 index = index + 1;
                                 agencyName = name.innerHTML;
+                                // console.log('agencyName is: ', agencyName);
                                 agencyUrl = url;
+                                // console.log('agencyUrl is: ', agencyUrl);
                                 objArr.push({ id: index, name: agencyName, url: agencyUrl, search: search });
+                                
                             }
                         }
                     }

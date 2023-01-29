@@ -1,43 +1,36 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
-const Temp = () => {
+const capFirst = () => {
 
-
-    const [textArea, setTextArea] = useState('');
-    const [urls, setUrls] = useState(null);
-
-    const handleClick = (e) => {
-        if (textArea != '') {
-            setUrls(textArea.split('\n'));
+    const [str, setStr] = useState(null);
+    useEffect(() => {
+        if(str) {
+            setStr(str.toLowerCase().charAt(0).toUpperCase() + str.toLowerCase().substring(1));
         }
-    }
-
-    if (urls) {
-        for (let i = 0; i < urls.length; i++) {
-            console.log(urls[i]);
-        }
-    }
-
-
+    }, [str]);
 
     return (
 
-        <div>
-            <div className='text-center'>
-                <label className='w-100 fw-bold mb-1'>Paste URLs:</label>
-                <textarea className='w-50'
-                    value={textArea}
-                    placeholder='Paste your urls here...'
-                    onChange={(e) => setTextArea(e.target.value)}
-                />
-                <div className='w100 m-3'>
-                    <button onClick={handleClick}>Submit</button>
-                </div>
+        <div className="text-center">
+            <h1 style={{ marginBottom: '20px' }}>Capitalize First Letter</h1>
+            <label>Enter string:</label>
+            <input
+                type="text"
+                style={{marginBottom: '20px'}}
+                required
+                className="type"
+                placeholder="enter string"
+                onChange={(e) => setStr(e.target.value)}
+            />
+            {/* <button onClick={() => capFirst()}>Submit</button> */}
 
-            </div>
+            {/* {str != '' ? <div>Result: { str2 }</div> : ''} */}
+            {str && <div>Result: { str }</div>}
         </div>
+
+
 
     );
 }
 
-export default Temp;
+export default capFirst;

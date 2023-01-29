@@ -39,6 +39,10 @@ document.addEventListener('DOMContentLoaded', () => {
         chrome.tabs.create({ url: "http://localhost:3000/show" });
     })
 
+    document.getElementById('button2').addEventListener('click', () => {
+        chrome.tabs.create({ url: "http://localhost:3000/show" });
+    })
+
     for (let i=0; i<response.length; i++) {
         let id = `inner${i+2}`;
         let page = document.getElementById(id)[0].getAttribute('href');
@@ -50,5 +54,4 @@ document.addEventListener('DOMContentLoaded', () => {
             
         })
     }
-
 });

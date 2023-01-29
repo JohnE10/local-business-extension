@@ -3,7 +3,7 @@ import { DataGrid } from '@mui/x-data-grid';
 import { useState } from "react";
 import { fontWeight } from "@mui/system";
 
-const EmailListTable = (props) => {
+const EmailListingsTable = (props) => {
 
   // instantiate table component object and error variable
   const [emailList, setEmailList] = useState(props.emailList);
@@ -11,16 +11,16 @@ const EmailListTable = (props) => {
 
   // define Material UI table columns
   const columns = [
+    // {
+    //   field: 'id',
+    //   headerName: 'No.',
+    //   flex: 0.5,
+    //   align: 'center',
+    //   headerAlign: 'center'
+    // },
     {
-      field: 'id',
-      headerName: 'No.',
-      flex: 0.5,
-      align: 'center',
-      headerAlign: 'center'
-    },
-    {
-      field: 'name',
-      headerName: 'Business Name',
+      field: 'email',
+      headerName: 'Contact Email',
       flex: 3,
       align: 'center',
       headerAlign: 'center'
@@ -33,10 +33,11 @@ const EmailListTable = (props) => {
       headerAlign: 'center',
       renderCell: (params) => (
         <div className="container text-center text-truncate">
-        <Link href={`${params.row.url}`} target="_blank">{params.row.url}</Link>
+          <Link href={`${params.row.url}`} target="_blank">{params.row.url}</Link>
         </div>
 
       )
+
     },
 
   ];
@@ -44,10 +45,10 @@ const EmailListTable = (props) => {
   return (
     <div>
       {/* show error if there's a delete item issue */}
-      {tableError && <div className='bg-danger text-light mb-3 p-3'>{ tableError }</div>}
+      {tableError && <div className='bg-danger text-light mb-3 p-3'>{tableError}</div>}
 
       {/* show list of items in store */}
-      {emailList && <DataGrid
+      {emailList && <DataGrid getRowId={(row) => row.email}
         sx={{
           "& .MuiDataGrid-columnHeader:last-child .MuiDataGrid-columnSeparator": {
             display: "none"
@@ -64,8 +65,9 @@ const EmailListTable = (props) => {
         autoHeight
         sortable
       />}
+
     </div>
   );
 }
 
-export default EmailListTable;
+export default EmailListingsTable;

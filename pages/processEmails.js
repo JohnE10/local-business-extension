@@ -1,9 +1,29 @@
+import { selectedGridRowsCountSelector } from "@mui/x-data-grid";
 import { set } from "mongoose";
 import { useEffect, useState } from "react";
-import EmailListTable from "../components/EmailListTable";
+import EmailListTable from '../components/EmailListTable';
 
 
-const processEmails = () => {
+const ProcessEmails = () => {
+
+    // declare variables
+    const [pageContent, setPageContent] = useState([]);
+    const [contactPageContent, setContactPageContent] = useState([]);
+    const [emailList, setEmailList] = useState([]);
+    const [contactEmailList, setContactEmailList] = useState([]);
+    const [contactUrls, setContactUrls] = useState([]);
+    const [checkContact, setCheckContact] = useState([]);
+    const [noEmailList, setNoEmailList] = useState([]);
+    // const [urls, setUrls] = useState(null);
+    const [error, setError] = useState(null);
+    const [textArea, setTextArea] = useState('');
+    const [urls, setUrls] = useState(null);
+    const [isWorking, setIsWorking] = useState(false);
+
+    let counter1 = 0;
+    let counter2 = 0;
+
+    let leaveOut = ['email.com', 'mail.com'];
 
     // declare helper functions
     // strip url to host name
@@ -33,12 +53,24 @@ const processEmails = () => {
         }
     }
 
+    // check for dupes
+    const checkForDupes = (arr, key, value) => {
+        let found = false;
+        for (let i = 0; i < arr.length; i++) {
+            if (arr[i].key === value) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+    }
+
     // fetch data from next api
     const runFetch = async (urls) => {
         const pageContent = [];
         urls.forEach((url) => {
             const fetchData = async () => {
-                const response = await fetch('http://localhost:3000/api/getEmails', {
+                const response = await fetch('http://localhost:3000/api/handleVerifyEmails', {
                     method: 'POST',
                     headers: {
                         'content-type': 'application/json',
@@ -50,24 +82,14 @@ const processEmails = () => {
                 pageContent.push[{ url: url, data: data }];
 
             }
-            fetchData();
-
+            if (isValidUrl(url)) {
+                fetchData();
+            }
         });
         return pageContent;
     };
 
-    // declare variables
-    const [pageContent, setPageContent] = useState([]);
-    const [contactPageContent, setContactPageContent] = useState([]);
-    const [emailList, setEmailList] = useState([]);
-    const [contactEmailList, setContactEmailList] = useState([]);
-    const [contactUrls, setContactUrls] = useState([]);
-    const [checkContact, setCheckContact] = useState([]);
-    const [noEmailList, setNoEmailList] = useState([]);
-    // const [urls, setUrls] = useState(null);
-    const [error, setError] = useState(null);
-    const [textArea, setTextArea] = useState('');
-    const [urls, setUrls] = useState(null);
+
 
     // urls to scrape
     // const urls = [
@@ -95,6 +117,7 @@ const processEmails = () => {
 
     const handleClick = (e) => {
         if (textArea != '') {
+            setIsWorking(true);
             setUrls(textArea.split('\n'));
         }
     }
@@ -122,8 +145,6 @@ const processEmails = () => {
         }
 
     }, [urls]);
-
-
 
     // get a list of emails and a list of urls where no email was found
     if (pageContent.length > 0) {
@@ -165,13 +186,16 @@ const processEmails = () => {
                 // if an email is found, then stick it in the emailList array
                 for (let i = 0; i < tempArr.length; i++) {
 
-                    if (!emailList.map(a => a.email).includes(tempArr[i][0]) && !tempArr[i][0].includes('/')) { // no dupes and no junk 
-                        if (tempArr[i][0].substr(tempArr[i][0].length - 4) != '.png') { // remove any www.
+                    if (!emailList.map(a => a.email).includes(tempArr[i][0]) && !tempArr[i][0].includes('/') && !tempArr[i][0].includes("'")) { // no dupes and no junk 
+
+                        // if (!dupesArr.includes(tempArr[i][0]) && !tempArr[i][0].includes('/')) { // no dupes and no junk 
+                        if (tempArr[i][0].substr(tempArr[i][0].length - 4) != '.png' && tempArr[i][0].substr(tempArr[i][0].length - 4) != '.jpg' && !leaveOut.includes(tempArr[i][0].split('@')[1]) != '') { // remove any .png or .jpg
                             emailList.push({ url: strippedUrl, email: tempArr[i][0] }); // add to list
                         }
                     }
                 }
             }
+
         })
 
     }
@@ -184,10 +208,12 @@ const processEmails = () => {
             // if an email is found, then stick it in the contactEmailList array
             if (tempArr.length != 0) {
                 for (let i = 0; i < tempArr.length; i++) {
-                    if (!contactEmailList.map(a => a.email).includes(tempArr[i][0]) && !tempArr[i][0].includes('/')) { // no dupes and no junk 
-                        if (tempArr[i][0].substr(tempArr[i][0].length - 4) != '.png') { // remove any www.
+                    if (!contactEmailList.map(a => a.email).includes(tempArr[i][0]) && !tempArr[i][0].includes('/') && !tempArr[i][0].includes("'")) { // no dupes and no junk 
+                        if (tempArr[i][0].substr(tempArr[i][0].length - 4) != '.png' && tempArr[i][0].substr(tempArr[i][0].length - 4) != '.png') { // remove any .png or .jpg
                             contactEmailList.push({ url: strippedUrl, email: tempArr[i][0] }); // add to list
+                            counter2 = counter2 + 1;
                         }
+
                     }
                 }
             } else {
@@ -197,8 +223,19 @@ const processEmails = () => {
                     }
                 }
             }
+
         })
+
     }
+
+    let comboArr = [...emailList, ...contactEmailList];
+    // comboArr.push({url: 'example.com', email:'lastEmail'});
+
+    useEffect(() => {
+        if (urls) {
+            setIsWorking(false);
+        }
+    }, [comboArr]);
 
     console.log('contactPageContent: ', contactPageContent);
 
@@ -207,11 +244,15 @@ const processEmails = () => {
     console.log('contactUrls is: ', contactUrls);
     console.log('contactEmailList', contactEmailList);
 
+    // console.log('counter1 is: ', counter1);
+    // console.log('counter2 is: ', counter2);
+    console.log('comboArr.length is: ', comboArr.length);
+    console.log('emailList.length is: ', emailList.length);
+    console.log('contactEmailList.length is: ', contactEmailList.length);
+
     return (
 
         <div>
-            <h2 className='text-center my-4'>Process Emails</h2>
-
             {emailList.length < 1 && contactEmailList < 1 && noEmailList.length < 1 &&
                 <div className='text-center'>
                     <label className='w-100 fw-bold mb-1'>Paste URLs:</label>
@@ -226,50 +267,21 @@ const processEmails = () => {
 
                 </div>
             }
-            {emailList.length > 0 && <h2 className='text-center my-4'>Email List</h2>}
-            <div className="container w-75">
-                {error && <h3 className='text-danger text-center'>Error: {error}</h3>}
-                {
-                    emailList.length > 0 &&
-                    <div>
-                        {emailList.map((email, i) => (
-                            <div key={i}>{email.email}</div>
-                        ))}
-                        <div>Count is: {emailList.length}</div>
-                    </div>
 
-                }
-            </div>
-            {contactEmailList.length > 0 && <h2 className='text-center my-4'>Contact Email List</h2>}
-            <div className="container w-75">
-                {error && <h3 className='text-danger text-center'>Error: {error}</h3>}
-                {
-                    contactEmailList.length > 0 &&
-                    <div>
-                        {contactEmailList.map((email, i) => (
-                            <div key={i}>{email.email}</div>
-                        ))}
-                        <div>Count is: {contactEmailList.length}</div>
-                    </div>
+            {comboArr.length > 0 && <h4 className='text-center m-3'>Email List</h4>}
 
-                }
-            </div>
-            {noEmailList.length > 0 && <h2 className='text-center my-4'>Urls with no Email</h2>}
-            <div className="container w-75">
-                {error && <h3 className='text-danger text-center'>Error: {error}</h3>}
-                {
-                    noEmailList.length > 0 &&
-                    <div>
-                        {noEmailList.map((url, i) => (
-                            <div key={i}>{url}</div>
-                        ))}
-                        <div>Count is: {noEmailList.length}</div>
-                    </div>
+            {/* {isWorking && <div className='text-center m-3'>...Working</div>} */}
 
-                }
-            </div>
+            {comboArr.length > 0 &&
+                <div className='text-center'>
+                    <h5 className='text-center mb-3'>Count: {comboArr.length}</h5>
+                    {comboArr.map((email, i) => (
+                        <div key={i}>{email.email}</div>
+                    ))}
+                </div>
+            }
         </div>
     );
 }
 
-export default processEmails;
+export default ProcessEmails;
