@@ -1,0 +1,14 @@
+.main {
+    display: flex;
+    flex-flow: column;
+    width: 95%;
+    margin: auto;
+}
+
+button {
+    margin: 10px;
+}
+
+input {
+    margin: 10px;
+}

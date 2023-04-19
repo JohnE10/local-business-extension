@@ -5,12 +5,11 @@ export default async function handler(req, res) {
 
     // connect to db and insert business - leave out any duplicates
 
-
     await dbConnect();
     console.log('connected to db');
 
-    const listings = await Business.find();
-    console.log(listings);
+    // const listings = await Business.find();
+    // console.log(listings);
 
     let search = 'web development agency new york, ny';
 

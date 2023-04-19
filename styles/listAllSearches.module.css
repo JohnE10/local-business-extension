@@ -1,0 +1,14 @@
+.pageContainer {
+    display: flex;
+    flex-flow: column;
+    width: 95%;
+    margin: auto;
+}
+
+.pageTitle {
+    text-align: start;
+}
+
+.searchInput {
+    width: 350px;
+}
