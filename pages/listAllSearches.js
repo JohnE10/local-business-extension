@@ -16,7 +16,7 @@ const listAllSearches = () => {
 
         try {
 
-            console.log(searchQuery);
+            console.log('searchQuery: ', searchQuery);
 
             const response = await fetch(`/api/listAllSearches?searchQuery=${searchQuery}`);
 

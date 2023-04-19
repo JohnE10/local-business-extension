@@ -4,22 +4,45 @@ import { dbConnect } from '../../middleware/dbConnect';
 const handler = async (req, res) => {
 
     let searchQuery = '';
-    let searchQueryResult = '';
+    let searchQueryResult = [];
 
     // console.log('req.query: ', req.query);
 
     try {
-        searchQuery = req.query.searchQuery;
-        console.log('searchQuery: ', req.query.searchQuery);
+        searchQuery = req.query.searchQuery.trim();
+        console.log('searchQuery: ', searchQuery);
 
         // db connect
         await dbConnect();
         console.log('connected to db');
 
-        searchQueryResult = await Business.find({ search: searchQuery });
+        // searchQueryResult = await Business.find({ search: searchQuery }, {search: 1, _id:0});
+        // const results = await Business.find().limit(3).skip(100);
+        const results = await Business.find();
 
-        if (searchQueryResult.length > 0) {
-            console.log('searchQueryResult: ', searchQueryResult);
+
+        if (results.length > 0) {
+
+            // console.log('searchQueryResult: ', searchQueryResult);
+            // searchQueryResult = results.map((ele) => {
+                results.map((ele) => {
+                // console.log(ele.search);
+                // if(ele.search.includes('hamilton')) {
+                //     console.log(ele.search);
+                // }
+                // else {
+                //     console.log('not found');
+                // }
+
+                if (ele.search) {
+                    if (ele.search.includes(searchQuery)) {
+                        console.log(ele.search);
+                        searchQueryResult.push(ele.search);
+                    }
+                }
+
+            })
+
             res.json(searchQueryResult);
         }
         else {
@@ -28,6 +51,7 @@ const handler = async (req, res) => {
         }
     } catch (err) {
         console.log(err.message);
+        res.json(`Error: ${err.message}`);
     }
 
 
