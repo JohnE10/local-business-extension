@@ -7,8 +7,15 @@
 
 .pageTitle {
     text-align: start;
+    margin: 20px 0;
 }
 
 .searchInput {
     width: 350px;
+}
+
+.loading {
+    text-align: center;
+    font-size: 24px;
+    margin: 15px;
 }

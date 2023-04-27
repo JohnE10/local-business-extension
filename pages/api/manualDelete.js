@@ -11,7 +11,7 @@ export default async function handler(req, res) {
     // const listings = await Business.find();
     // console.log(listings);
 
-    let search = 'web development agency new york, ny';
+    let search = 'dentist new york, ny';
 
     let deletedArr = [];
     let result = '';
@@ -26,9 +26,6 @@ export default async function handler(req, res) {
         res.status(200).send('Error: ' + err);
     }
 
-
     return res.status(200).send({ success: `Task completed! - $(deletedArr)` });
-
-
 
 }

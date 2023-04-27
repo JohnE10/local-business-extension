@@ -1,19 +1,17 @@
 const emailValidator = require('deep-email-validator');
 
-const ApiTemp2 = async () => {
+const ApiTemp2 = async (req, res) => {
 
     async function isEmailValid(email) {
         return emailValidator.validate(email)
     }
 
-    const temp = await isEmailValid('info@wld.ikc.mybluehost.me');
+    let email = 'csworg@gmail.com';
+
+    const temp = await isEmailValid(email);
     console.log(temp.valid, temp.reason);
 
-    return (
-        <div>
-
-        </div>
-    );
+    res.json({isEmailValid: temp, email: email, 'is it valid': temp.valid, 'reason': temp.reason});
 
 }
 

@@ -46,6 +46,7 @@ const listAllSearches = () => {
         <div className={styles.pageContainer}>
             <div className={styles.pageTitle}>
                 <h3>Search Database</h3>
+                {loading && !data && !error && <div className={styles.loading}>... loading</div>}
             </div>
             <div>
                 <p>Search by:</p>
@@ -58,8 +59,6 @@ const listAllSearches = () => {
                 />
                 <button onClick={handleSubmit}>Submit</button>
             </div>
-
-            {loading && !data && !error && <div>... loading</div>}
 
         </div>
 
