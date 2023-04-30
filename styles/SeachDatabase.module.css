@@ -1,0 +1,20 @@
+.search {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.searchBlock {
+    display: flex;
+    flex-flow: column;
+    justify-content: flex-end;
+    align-items: flex-end;
+}
+
+@media (max-width: 700px) {
+    .search {
+        flex-flow: column;
+        border-bottom: 1px solid;
+        padding-bottom: 30px;
+    }
+  }

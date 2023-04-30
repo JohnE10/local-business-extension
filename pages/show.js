@@ -2,6 +2,8 @@ import { checkboxClasses, formControlLabelClasses } from "@mui/material";
 import { useEffect, useState } from "react";
 import ListingsTable from '../components/ListingsTable';
 import BootstrapModal from '../components/BootstrapModal';
+import Button from 'react-bootstrap/Button';
+import styles from '../styles/Show.module.css';
 
 export default function Show() {
 
@@ -72,30 +74,34 @@ export default function Show() {
         setIsOpen(true);
     }
 
-const tempText = 'some other temp text';
-
     return (
-        <div>
+        <div className='w-100'>
             <h2 className='text-center m-4'>Business Listings</h2>
-            <div className='text-center m-3'>
-                <label className='me-2'>Hide Previously Seen</label>
-                <input type="checkbox" name="checkbox" onChange={handleCheckbox}></input>
+            {hide && !data && !error && <div className='text-center my-3'>...Loading - This may take a moment</div>}
+
+            <div className='d-flex justify-content-center align-items-center m-3'>
+                <div><label className='text-end'>Hide Previously Seen</label></div>
+                <div><input type="checkbox" name="checkbox" className={styles.input} onChange={handleCheckbox} /></div>
             </div>
+
             <div className="container w-75">
                 {error && <h3 className='text-danger text-center'>Error: {error}</h3>}
+
+                {!hide && listings && !error &&
+                    <div className='text-center m-3'>
+                        <BootstrapModal allData={listings} />
+                    </div>
+                }
+
                 {!hide && listings && !error && <ListingsTable listings={listings} />}
-                {hide && !data && !error && <div className='text-center my-3'>...Loading - This may take a moment</div>}
                 {hide && data && !error &&
                     <div className='text-center m-3'>
-
-                        <BootstrapModal nonExisting={data}/>
-                        {/* <BootstrapModal nonExisting={tempText}/> */}
+                        <BootstrapModal nonExisting={data} />
                     </div>
-                   
-                    
                 }
 
                 {hide && data && !error && <ListingsTable nonExisting={data} />}
+                
             </div>
 
         </div>

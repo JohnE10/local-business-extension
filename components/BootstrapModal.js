@@ -1,23 +1,31 @@
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 
 function BootstrapModal(props) {
 
-    const tempData = props.nonExisting;
+    const [tempData, setTempData] = useState([]);
+
+    useEffect(() => {
+        if (props.allData) {
+            setTempData(props.allData);
+        }
+        else if (props.nonExisting) {
+            setTempData(props.nonExisting);
+        }
+    }, []);
+
     const data = [];
 
-    for (let i = 0; i < tempData.length; i++) {
-        // data.push({id: tempData[i].id, name: tempData[i].name, url: `'${tempData[i].url}',`, search: tempData[i].search})
-        data.push({ id: tempData[i].id, name: tempData[i].name, url: tempData[i].url, search: tempData[i].search })
+    if (tempData) {
+        if (tempData.length) {
+            for (let i = 0; i < tempData.length; i++) {
+                data.push({ id: tempData[i].id, name: tempData[i].name, url: tempData[i].url, search: tempData[i].search })
+            }
+        }
 
     }
-
-    // for(const ele in tempData) {
-    //     console.log('ele is: ', ele)
-    //     // data.push({id: ele.id, name: ele.name, url: ele.url, search: ele.search})
-    // }
 
     console.log('data is: ', data);
 
@@ -46,8 +54,16 @@ function BootstrapModal(props) {
                     {data.map((ele) => (
                         <div key={ele.id}>{ele.url}</div>
                     ))}
+                    
                 </Modal.Body>
+
                 <Modal.Footer>
+                <a href='http://localhost:3000/utilities' target='_blank'>
+                        <Button variant="secondary">
+                            Utilities
+                        </Button>
+                    </a>
+
                     <a href='http://localhost:3000/processEmails' target='_blank'>
                         <Button variant="secondary">
                             Extract Emails

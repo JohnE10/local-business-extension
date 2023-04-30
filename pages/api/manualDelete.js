@@ -3,29 +3,31 @@ import { dbConnect } from '../../middleware/dbConnect';
 
 export default async function handler(req, res) {
 
-    // connect to db and insert business - leave out any duplicates
+    let search = req.query.searchQuery;
 
+    // connect to db and insert business - leave out any duplicates
     await dbConnect();
     console.log('connected to db');
 
-    // const listings = await Business.find();
-    // console.log(listings);
-
-    let search = 'dentist new york, ny';
-
     let deletedArr = [];
-    let result = '';
+    let results = '';
 
     try {
         if (await Business.find({ search: search })) {
-            result = await Business.deleteMany({ search: search })
+            results = await Business.deleteMany({ search: search })
         }
 
-        res.status(200).send('Task Completed - ' + JSON.stringify(result))
+        console.log(results);
+        console.log('Done');
+
+        res.status(200).json({success: 'Task Completed - ' + search + ' - ' + JSON.stringify(results)})
+
     } catch (err) {
-        res.status(200).send('Error: ' + err);
+        console.log('api/manualDelete error:', err.message)
+        console.log('Done');
+        res.status(200).json({error: `api/manualDelete error: ${err.message}`});
     }
 
-    return res.status(200).send({ success: `Task completed! - $(deletedArr)` });
+    // return res.status(200).json({ success: 'Task Completed - ' + search + ' - ' + JSON.stringify(results) });
 
 }

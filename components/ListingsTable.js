@@ -46,7 +46,7 @@ const ListingsTable = (props) => {
   console.log('nonExisting is: ', nonExisting);
 
   return (
-    <div>
+    <div className='w-100'>
       {/* show error if there's a delete item issue */}
       {tableError && <div className='bg-danger text-light mb-3 p-3'>This is a tableError: {tableError}</div>}
 
@@ -68,7 +68,7 @@ const ListingsTable = (props) => {
         autoHeight
         sortable
       />}
-      {!nonExisting && <div>...loading</div>}
+      {/* {!nonExisting && <div>...loading</div>} */}
       {nonExisting && <DataGrid
         sx={{
           "& .MuiDataGrid-columnHeader:last-child .MuiDataGrid-columnSeparator": {
