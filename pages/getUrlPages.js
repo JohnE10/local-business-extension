@@ -3,7 +3,7 @@ import { isValidUrl } from '../utils/helpers';
 const cheerio = require('cheerio');
 
 
-const processUrl = () => {
+const getUrlPages = () => {
 
     const [url, setUrl] = useState('');
     const [html, setHtml] = useState(null);
@@ -22,7 +22,7 @@ const processUrl = () => {
 
                 setLoading(true);
 
-                const response = await fetch(`/api/processUrlApi?url=${url}`);
+                const response = await fetch(`/api/fetchUrlData?url=${url}`);
                 const data = await response.json();
 
                 if (data.error) {
@@ -113,4 +113,4 @@ const processUrl = () => {
     )
 }
 
-export default processUrl;
+export default getUrlPages;

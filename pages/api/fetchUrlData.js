@@ -1,6 +1,9 @@
+import { fetchUrlData } from '../../utils/helpers';
+
 const handler = async (req, res) => {
 
-    const url = req.query.url
+    const url = req.query.url;
+    console.log(url);
 
     try {
         const response = await fetch(url);

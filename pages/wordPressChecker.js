@@ -6,6 +6,8 @@ const wordPressChecker = () => {
     const [urls, setUrls] = useState([]);
     const [jsxString, setJsxString] = useState('');
     const [results, setResults] = useState('');
+    const [isWpResults, setIsWpResults] = useState('');
+    const [isNotWpResults, setIsNotWpResults] = useState('');
     const [textArea, setTextArea] = useState('');
     const [isLoading, setIsLoading] = useState(false);
     const [isWordPress, setIsWordPress] = useState(false);
@@ -26,16 +28,15 @@ const wordPressChecker = () => {
         }
     };
 
-    let tempResults = [];
+    let wordPressArr = [];
+    let notWordPrssArr = [];
 
     const fetchHtml = async (url) => {
 
 
-
         try {
 
-            const parsedUrl = new URL(url);
-
+            // const parsedUrl = new URL(url);
             // url = parsedUrl.host + parsedUrl.host
 
             const response = await fetch(`/api/fetchUrlData?url=${url}`);
@@ -45,26 +46,18 @@ const wordPressChecker = () => {
                 console.log('there\'s an error: ', data.error);
                 setError(data.error);
                 setIsLoading(false);
-                // throw Error(data.error);
 
             }
 
             if (data.success) {
-                // console.log('data.success: ', data.success);
                 if (isWordPressSite(data.success)) {
-                    // setIsWordPress(true);
-                    // setResults({ ...results, url: url, isWP: true});
-                    // tempResults.push({ url, isWP: true });
-                    tempResults.push(JSON.stringify({ url, isWP: true }));
-                    setResults(tempResults.join('\r\n'));
+                    wordPressArr.push(url);
+                    setIsWpResults(wordPressArr.join('\r\n'));
 
                 }
                 else {
-                    // setIsWordPress(false);
-                    // setResults({ ...results, url: url, isWP: false});
-                    // tempResults.push({ url, isWP: false });
-                    tempResults.push(JSON.stringify({ url, isWP: false }));
-                    setResults(tempResults.join('\r\n'));
+                    notWordPrssArr.push(url);
+                    setIsNotWpResults(notWordPrssArr.join('\r\n'));
 
                 }
             }
@@ -95,7 +88,8 @@ const wordPressChecker = () => {
         }
     }, [urls]);
 
-    console.log('results: ', results);
+    console.log('isWordPress: ', isWpResults.toString());
+    console.log('isNotWordPress: ', isNotWpResults.toString());
     console.log('urls.length: ', urls.length);
     console.log('results.length: ', results.length);
 
@@ -117,11 +111,9 @@ const wordPressChecker = () => {
                 <button onClick={handleClick}>Submit</button>
             </div>
 
-
             {inputError && <div className='text-danger' >{inputError}</div>}
 
-
-            {results}
+            {isWpResults.toString()}
 
             {/* {isLoading && (
                 <div>
