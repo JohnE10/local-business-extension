@@ -25,6 +25,8 @@ const utilities = () => {
         <div><Link href='/googlePageSpeedInsights'><p>Google PageSpeed Insights</p></Link></div>
         <div><Link href='/searchDatabase'><p>Search database</p></Link></div>
         <div><Link href='/manualDeletePage'><p>Delete from database</p></Link></div>
+        <div><Link href='/getCss'><p>Get website CSS</p></Link></div>
+        <div><Link href='/createPage'><p>Create page</p></Link></div>
         
       </div>
     </>

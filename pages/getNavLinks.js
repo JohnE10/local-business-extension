@@ -8,6 +8,7 @@ const getNavLinks = () => {
 
     const [url, setUrl] = useState('');
     const [html, setHtml] = useState(null);
+    const [navLinksState, setNavLinksState] = useState([]);
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(null);
 
@@ -66,8 +67,9 @@ const getNavLinks = () => {
                 $('nav > ul > li > a').map((i, ele) => {
                     if ($(ele).attr('href')) {
                         const href = $(ele).attr('href');
-                        if (!navLinks.includes(href)) {
-                            navLinks.push(href);
+                        if (!navLinks.includes(href.trim())) {
+                            navLinks.push(href.trim());
+                            setNavLinksState(previous => [...previous, href.trim()]);
                             // if (isValidUrl(href)) {
                             //     console.log(href, ' is a valid url');
                             // }
@@ -95,7 +97,7 @@ const getNavLinks = () => {
                     console.log('No link[rel]');
                 }
 
-                if($('style')) {
+                if ($('style')) {
                     cssLinks.push($('style').text());
                 }
                 else {
@@ -135,6 +137,12 @@ const getNavLinks = () => {
 
             {loading && <div>... Loading</div>}
             {error && <div className='text-danger'>{error}</div>}
+            {navLinksState &&
+
+                navLinksState.map((ele, i) => (
+                    <div key={i}>{ele}</div>
+                ))
+            }
 
         </>
 

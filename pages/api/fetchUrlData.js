@@ -1,4 +1,4 @@
-import { fetchUrlData } from '../../utils/helpers';
+
 
 const handler = async (req, res) => {
 
