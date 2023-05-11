@@ -7,6 +7,7 @@ const test = () => {
     return (
         <>
 
+
             <div id="page" className="site">
                 <a className="skip-link screen-reader-text" href="#content">Skip to content</a>
 
@@ -15,12 +16,12 @@ const test = () => {
                     <div className="custom-header">
 
                         <div className="custom-header-media">
-                            <div id="wp-custom-header" className="wp-custom-header"><img src="https://www.midcitysmiles.com/blog/wp-content/uploads/2022/06/Untitled-3-2.jpg" width="2000" height="1200" alt="" srcset="https://www.midcitysmiles.com/blog/wp-content/uploads/2022/06/Untitled-3-2.jpg 2000w, https://www.midcitysmiles.com/blog/wp-content/uploads/2022/06/Untitled-3-2-300x180.jpg 300w, https://www.midcitysmiles.com/blog/wp-content/uploads/2022/06/Untitled-3-2-1024x614.jpg 1024w, https://www.midcitysmiles.com/blog/wp-content/uploads/2022/06/Untitled-3-2-768x461.jpg 768w, https://www.midcitysmiles.com/blog/wp-content/uploads/2022/06/Untitled-3-2-1536x922.jpg 1536w" sizes="100vw"></div>		</div>
+                            <div id="wp-custom-header" className="wp-custom-header"><Image src="https://www.midcitysmiles.com/blog/wp-content/uploads/2022/06/Untitled-3-2.jpg" width="2000" height="1200" alt="" srcset="https://www.midcitysmiles.com/blog/wp-content/uploads/2022/06/Untitled-3-2.jpg 2000w, https://www.midcitysmiles.com/blog/wp-content/uploads/2022/06/Untitled-3-2-300x180.jpg 300w, https://www.midcitysmiles.com/blog/wp-content/uploads/2022/06/Untitled-3-2-1024x614.jpg 1024w, https://www.midcitysmiles.com/blog/wp-content/uploads/2022/06/Untitled-3-2-768x461.jpg 768w, https://www.midcitysmiles.com/blog/wp-content/uploads/2022/06/Untitled-3-2-1536x922.jpg 1536w" sizes="100vw" /></div>		</div>
 
                         <div className="site-branding">
                             <div className="wrap">
 
-                                <a href="https://www.midcitysmiles.com/blog/" className="custom-logo-link" rel="home" aria-current="page"><img width="281" height="250" src="https://www.midcitysmiles.com/blog/wp-content/uploads/2022/06/cropped-Untitled-1-3.png" className="custom-logo" alt="Mid-City Smiles Family Dentistry" decoding="async" sizes="100vw"></a>
+                                <a href="https://www.midcitysmiles.com/blog/" className="custom-logo-link" rel="home" aria-current="page"><Image width="281" height="250" src="https://www.midcitysmiles.com/blog/wp-content/uploads/2022/06/cropped-Untitled-1-3.png" className="custom-logo" alt="Mid-City Smiles Family Dentistry" decoding="async" sizes="100vw" /></a>
                                 <div className="site-branding-text">
                                     <h1 className="site-title"><a href="https://www.midcitysmiles.com/blog/" rel="home">Mid-City Smiles Family Dentistry</a></h1>
 
@@ -87,10 +88,10 @@ const test = () => {
 
 
 
-                                                <hr className="wp-block-separator has-text-color has-red-color has-css-opacity has-red-background-color has-background is-style-wide">
+                                                <hr className="wp-block-separator has-text-color has-red-color has-css-opacity has-red-background-color has-background is-style-wide" />
 
 
-                                                    <p style="text-align: center;"><iframe loading="lazy" src="https://summerlou.smugmug.com/frame/slideshow?key=8vk8wf&amp;speed=3&amp;transition=fade&amp;autoStart=1&amp;captions=0&amp;navigation=0&amp;playButton=0&amp;randomize=0&amp;transitionSpeed=2" width="800" height="600" frameborder="no" scrolling="no"></iframe></p>			</div>
+                                                <p style="text-align: center;"><iframe loading="lazy" src="https://summerlou.smugmug.com/frame/slideshow?key=8vk8wf&amp;speed=3&amp;transition=fade&amp;autoStart=1&amp;captions=0&amp;navigation=0&amp;playButton=0&amp;randomize=0&amp;transitionSpeed=2" width="800" height="600" frameborder="no" scrolling="no"></iframe></p>			</div>
 
                                         </div>
                                     </div>
@@ -166,7 +167,7 @@ const test = () => {
                                         <div className="is-layout-flow wp-block-group"><div className="wp-block-group__inner-container">
                                             <div className="is-layout-flex wp-container-2 wp-block-columns">
                                                 <div className="is-layout-flow wp-block-column" style="flex-basis:100%">
-                                                    <figure className="wp-block-image size-full"><img decoding="async" loading="lazy" width="348" height="250" src="https://www.midcitysmiles.com/blog/wp-content/uploads/2022/06/cropped-pels.png" alt="" className="wp-image-206" srcset="https://www.midcitysmiles.com/blog/wp-content/uploads/2022/06/cropped-pels.png 348w, https://www.midcitysmiles.com/blog/wp-content/uploads/2022/06/cropped-pels-300x216.png 300w" sizes="(max-width: 348px) 100vw, 348px"></figure>
+                                                    <figure className="wp-block-image size-full"><Image decoding="async" loading="lazy" width="348" height="250" src="https://www.midcitysmiles.com/blog/wp-content/uploads/2022/06/cropped-pels.png" alt="" className="wp-image-206" srcset="https://www.midcitysmiles.com/blog/wp-content/uploads/2022/06/cropped-pels.png 348w, https://www.midcitysmiles.com/blog/wp-content/uploads/2022/06/cropped-pels-300x216.png 300w" sizes="(max-width: 348px) 100vw, 348px" /></figure>
                                                 </div>
                                             </div>
                                         </div></div>
@@ -181,8 +182,11 @@ const test = () => {
                     </footer>
                 </div>
             </div>
-            <style id="core-block-supports-inline-css">
-                .wp-block-columns.wp-container-2{flex - wrap:nowrap;}
+            <style jsx id="core-block-supports-inline-css">{`
+                .wp-block-columns.wp-container-2 {
+                    flex - wrap:nowrap;
+                }
+            `}
             </style>
             <script id="twentyseventeen-skip-link-focus-fix-js-extra">
                 var twentyseventeenScreenReaderText = {"quote":"<svg className=\"icon icon-quote-right\" aria-hidden=\"true\" role=\"img\"> <use href=\"#icon-quote-right\" xlink:href=\"#icon-quote-right\"><\/use> <\/svg>","expand":"Expand child menu","collapse":"Collapse child menu","icon":"<svg className=\"icon icon-angle-down\" aria-hidden=\"true\" role=\"img\"> <use href=\"#icon-angle-down\" xlink:href=\"#icon-angle-down\"><\/use> <span className=\"svg-fallback icon-angle-down\"><\/span><\/svg>"};
@@ -192,6 +196,8 @@ const test = () => {
             <script src="https://www.midcitysmiles.com/blog/wp-content/themes/twentyseventeen/assets/js/global.js?ver=20190121" id="twentyseventeen-global-js"></script>
             <script src="https://www.midcitysmiles.com/blog/wp-content/themes/twentyseventeen/assets/js/jquery.scrollTo.js?ver=2.1.2" id="jquery-scrollto-js"></script>
             <script src="https://www.midcitysmiles.com/blog/wp-content/plugins/social-icons-widget-by-wpzoom/assets/js/social-icons-widget-frontend.js?ver=1679942358" id="zoom-social-icons-widget-frontend-js"></script>
+
+
 
 
 

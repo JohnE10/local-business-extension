@@ -2,16 +2,39 @@ const emailValidator = require('deep-email-validator');
 
 const ApiTemp2 = async (req, res) => {
 
-    async function isEmailValid(email) {
-        return emailValidator.validate(email)
-    }
+    const content = `
+    <html>
+      <head><title>This is the page title</title></head>
+      <body>
+        <p>
+          Some text with <b>a few <span>HTML</span></b> tags.
+        </p>
+        <div>
+          <img src="https://site.com/image1" width="30rem" height="150px" />
+          <img src="https://site.com/image2" >
+          <img src="https://site.com/image3" >
+        </div>
+        <h1>
+          This is the page title
+        </h1>
+      </body>
+    </html>
+    `;
 
-    let email = 'csworg@gmail.com';
+    const updatedContent = content.replace(/<img.*?>/g, (match) => {
+      if (!match.endsWith('/>')) {
+        // return `${match}/>`;
+        console.log('match: ', match);
+        console.log(typeof match);
+        return match.replace('>', '') + ' />';
+      }
+      return match;
+    });
+    
+    console.log('updatedContent: ', updatedContent); // '<img src="https://site.com/image1" width="30rem" height="150px"/>'
+    
 
-    const temp = await isEmailValid(email);
-    console.log(temp.valid, temp.reason);
-
-    res.json({isEmailValid: temp, email: email, 'is it valid': temp.valid, 'reason': temp.reason});
+    return res.send(updatedContent);
 
 }
 
