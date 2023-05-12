@@ -1,4 +1,11 @@
 
+                import Image from 'next/image';
+                import Script from 'next/script';
+
+                const our-team = () => {
+                    return (
+                        <>
+                            
 <div id="page" className="site">
 	<a className="skip-link screen-reader-text" href="#content">Skip to content</a>
 
@@ -61,7 +68,7 @@
 		<p style="text-align: center;"><iframe src="https://summerlou.smugmug.com/frame/slideshow?key=8vk8wf&amp;autoStart=1&amp;captions=0&amp;navigation=0&amp;playButton=0&amp;speed=3&amp;transition=fade&amp;transitionSpeed=2" width="800" height="600" frameborder="no" scrolling="no"></iframe></p>
 
 
-<hr className="wp-block-separator has-alpha-channel-opacity">
+<hr className="wp-block-separator has-alpha-channel-opacity" />
 
 
 
@@ -112,7 +119,7 @@
 
 
 
-<hr className="wp-block-separator has-alpha-channel-opacity">
+<hr className="wp-block-separator has-alpha-channel-opacity" />
 
 
 
@@ -135,7 +142,7 @@
 
 
 
-<hr className="wp-block-separator has-alpha-channel-opacity">
+<hr className="wp-block-separator has-alpha-channel-opacity" />
 
 
 
@@ -162,7 +169,7 @@
 
 
 
-<hr className="wp-block-separator has-alpha-channel-opacity">
+<hr className="wp-block-separator has-alpha-channel-opacity" />
 
 
 
@@ -181,7 +188,7 @@
 
 
 
-<hr className="wp-block-separator has-alpha-channel-opacity">
+<hr className="wp-block-separator has-alpha-channel-opacity" />
 
 
 
@@ -196,7 +203,7 @@
 <figure className="aligncenter size-full"><Image src="https://www.midcitysmiles.com/blog/wp-content/uploads/2022/05/image-2.png" alt="/" width="250" height="350" /></figure></div>
 
 
-<hr className="wp-block-separator has-alpha-channel-opacity">
+<hr className="wp-block-separator has-alpha-channel-opacity" />
 
 
 
@@ -207,7 +214,7 @@
 <figure className="aligncenter"><Image src="https://www.midcitysmiles.com/images/shan.jpg" alt="/" width="150" height="150" /></figure></div>
 
 
-<hr className="wp-block-separator has-alpha-channel-opacity">
+<hr className="wp-block-separator has-alpha-channel-opacity" />
 
 
 
@@ -218,7 +225,7 @@
 <figure className="aligncenter size-full"><Image src="https://www.midcitysmiles.com/blog/wp-content/uploads/2022/05/gab.jpg" alt="/" width="252" height="349" /></figure></div>
 
 
-<hr className="wp-block-separator has-alpha-channel-opacity">
+<hr className="wp-block-separator has-alpha-channel-opacity" />
 
 
 
@@ -229,7 +236,7 @@
 <figure className="aligncenter size-full"><Image src="https://www.midcitysmiles.com/blog/wp-content/uploads/2022/06/haar-1.jpg" alt="/" width="250" height="350" /></figure></div>
 
 
-<hr className="wp-block-separator has-alpha-channel-opacity">
+<hr className="wp-block-separator has-alpha-channel-opacity" />
 
 
 
@@ -244,7 +251,7 @@
 <figure className="aligncenter size-full"><Image src="https://www.midcitysmiles.com/blog/wp-content/uploads/2022/05/cea.jpg" alt="/" width="252" height="349" /></figure></div>
 
 
-<hr className="wp-block-separator has-alpha-channel-opacity">
+<hr className="wp-block-separator has-alpha-channel-opacity" />
 
 
 
@@ -255,7 +262,7 @@
 <figure className="aligncenter"><Image src="https://www.midcitysmiles.com/images/Xo%20-%20Copy.jpg" alt="/" width="150" height="150" /></figure></div>
 
 
-<hr className="wp-block-separator has-alpha-channel-opacity">
+<hr className="wp-block-separator has-alpha-channel-opacity" />
 
 
 
@@ -266,7 +273,7 @@
 <figure className="aligncenter size-full"><Image src="https://www.midcitysmiles.com/blog/wp-content/uploads/2022/05/mary.jpg" alt="/" width="252" height="349" /></figure></div>
 
 
-<hr className="wp-block-separator has-alpha-channel-opacity">
+<hr className="wp-block-separator has-alpha-channel-opacity" />
 
 
 
@@ -277,7 +284,7 @@
 <figure className="aligncenter size-full"><Image src="https://www.midcitysmiles.com/blog/wp-content/uploads/2022/06/am.jpg" alt="/" width="250" height="350" /></figure></div>
 
 
-<hr className="wp-block-separator has-alpha-channel-opacity">
+<hr className="wp-block-separator has-alpha-channel-opacity" />
 
 
 
@@ -288,7 +295,7 @@
 <figure className="aligncenter size-full"><Image src="https://www.midcitysmiles.com/blog/wp-content/uploads/2022/05/image-3.png" alt="/" width="250" height="350" /></figure></div>
 
 
-<hr className="wp-block-separator has-alpha-channel-opacity">
+<hr className="wp-block-separator has-alpha-channel-opacity" />
 
 
 
@@ -296,7 +303,7 @@
 
 
 
-<hr className="wp-block-separator has-alpha-channel-opacity">
+<hr className="wp-block-separator has-alpha-channel-opacity" />
 
 
 
@@ -311,7 +318,7 @@
 <figure className="aligncenter size-full"><Image src="https://www.midcitysmiles.com/blog/wp-content/uploads/2022/06/rosi.jpg" alt="/" width="250" height="350" /></figure></div>
 
 
-<hr className="wp-block-separator has-alpha-channel-opacity">
+<hr className="wp-block-separator has-alpha-channel-opacity" />
 
 
 
@@ -322,7 +329,7 @@
 <figure className="aligncenter size-full"><Image src="https://www.midcitysmiles.com/blog/wp-content/uploads/2022/05/js.jpg" alt="/" width="252" height="349" /></figure></div>
 
 
-<hr className="wp-block-separator has-alpha-channel-opacity">
+<hr className="wp-block-separator has-alpha-channel-opacity" />
 
 
 
@@ -333,7 +340,7 @@
 <figure className="aligncenter"><Image src="https://www.midcitysmiles.com/images/houria.jpg" alt="/" width="150" height="150" /></figure></div>
 
 
-<hr className="wp-block-separator has-alpha-channel-opacity">
+<hr className="wp-block-separator has-alpha-channel-opacity" />
 
 
 
@@ -344,7 +351,7 @@
 <figure className="aligncenter size-full"><Image src="https://www.midcitysmiles.com/blog/wp-content/uploads/2022/05/mona.jpg" alt="/" width="252" height="349" /></figure></div>
 
 
-<hr className="wp-block-separator has-alpha-channel-opacity">
+<hr className="wp-block-separator has-alpha-channel-opacity" />
 
 
 
@@ -355,7 +362,7 @@
 <figure className="aligncenter"><Image src="https://www.midcitysmiles.com/images/kim.jpg" alt="/" width="150" height="150" /></figure></div>
 
 
-<hr className="wp-block-separator has-alpha-channel-opacity">
+<hr className="wp-block-separator has-alpha-channel-opacity" />
 
 
 
@@ -366,7 +373,7 @@
 <figure className="aligncenter"><Image src="https://www.midcitysmiles.com/images/kris%20-%20Copy.jpg" alt="/" width="150" height="150" /></figure></div>
 
 
-<hr className="wp-block-separator has-alpha-channel-opacity">
+<hr className="wp-block-separator has-alpha-channel-opacity" />
 
 
 
@@ -459,18 +466,24 @@
 		</footer>
 	</div>
 </div>
-<style id="core-block-supports-inline-css">
+<style id="core-block-supports-inline-css" className="">{`
 .wp-block-columns.wp-container-2{flex-wrap:nowrap;}
-</style>
-<script id="twentyseventeen-skip-link-focus-fix-js-extra">
+`}</style>
+<script id="twentyseventeen-skip-link-focus-fix-js-extra" className="">{`
 var twentyseventeenScreenReaderText = {"quote":"<svg className=\"icon icon-quote-right\" aria-hidden=\"true\" role=\"img\"> <use href=\"#icon-quote-right\" xlink:href=\"#icon-quote-right\"><\/use> <\/svg>","expand":"Expand child menu","collapse":"Collapse child menu","icon":"<svg className=\"icon icon-angle-down\" aria-hidden=\"true\" role=\"img\"> <use href=\"#icon-angle-down\" xlink:href=\"#icon-angle-down\"><\/use> <span className=\"svg-fallback icon-angle-down\"><\/span><\/svg>"};
-</script>
-<script src="https://www.midcitysmiles.com/blog/wp-content/themes/twentyseventeen/assets/js/skip-link-focus-fix.js?ver=20161114" id="twentyseventeen-skip-link-focus-fix-js"></script>
-<script src="https://www.midcitysmiles.com/blog/wp-content/themes/twentyseventeen/assets/js/navigation.js?ver=20161203" id="twentyseventeen-navigation-js"></script>
-<script src="https://www.midcitysmiles.com/blog/wp-content/themes/twentyseventeen/assets/js/global.js?ver=20190121" id="twentyseventeen-global-js"></script>
-<script src="https://www.midcitysmiles.com/blog/wp-content/themes/twentyseventeen/assets/js/jquery.scrollTo.js?ver=2.1.2" id="jquery-scrollto-js"></script>
-<script src="https://www.midcitysmiles.com/blog/wp-content/plugins/social-icons-widget-by-wpzoom/assets/js/social-icons-widget-frontend.js?ver=1679942358" id="zoom-social-icons-widget-frontend-js"></script>
+`}</script>
+<script id="twentyseventeen-skip-link-focus-fix-js" className="">{``}</script>
+<script id="twentyseventeen-navigation-js" className="">{``}</script>
+<script id="twentyseventeen-global-js" className="">{``}</script>
+<script id="jquery-scrollto-js" className="">{``}</script>
+<script id="zoom-social-icons-widget-frontend-js" className="">{``}</script>
 
 
 
 
+
+                        </>
+                    )    
+                }
+                export default siteFiles/our-team;
+                

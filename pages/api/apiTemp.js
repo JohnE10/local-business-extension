@@ -31,6 +31,14 @@ export default function PageScraper(req, res) {
       <h1>
         This is the page title
       </h1>
+      
+      <figure className="wp-block-embed is-type-video is-provider-youtube wp-block-embed-youtube wp-embed-aspect-16-9 wp-has-aspect-ratio">
+        <div className="wp-block-embed__wrapper">
+          <iframe id="VpmVNiU4CTs" title="YouTube video player">
+            filler text
+          </iframe>
+        </div>
+    </figure>
     </body>
   </html>
   `;
@@ -45,7 +53,10 @@ export default function PageScraper(req, res) {
   const temp = 'https://site.com/image1';
 
   images = $('body').find('img');
-  let styles = $('body').find('style');
+
+  const styles = $('body').find('style');
+  const scripts = $('body').find('script');
+  const iframes = $('body').find('iframe');
 
   // console.log('styles.html(): ', styles.html());
 
@@ -89,6 +100,10 @@ export default function PageScraper(req, res) {
 
   });
 
+  iframes.each((i, el) => {
+    console.log('$(el).parent: ', $(el).parent().prop('tagName'));
+  });
+
   body = $('body').html();
 
   // function to add self closing slash to all Image tags.
@@ -96,13 +111,13 @@ export default function PageScraper(req, res) {
   body = body.replace(/<img.*?>/g, (match) => {
     if (!match.endsWith('/>')) {
 
-      console.log(match + ' - ' + 'yes');
+      // console.log(match + ' - ' + 'yes');
       return `${match}/>`;
     }
     return match;
   });
 
-  console.log('body.html(): ', body);
+  // console.log('body.html(): ', body);
 
   return res.send(body);
 

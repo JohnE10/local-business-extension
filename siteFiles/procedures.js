@@ -1,4 +1,11 @@
 
+                import Image from 'next/image';
+                import Script from 'next/script';
+
+                const procedures = () => {
+                    return (
+                        <>
+                            
 <div id="page" className="site">
 	<a className="skip-link screen-reader-text" href="#content">Skip to content</a>
 
@@ -75,7 +82,7 @@
 
 
 
-<hr className="wp-block-separator has-alpha-channel-opacity">
+<hr className="wp-block-separator has-alpha-channel-opacity" />
 
 
 
@@ -91,7 +98,7 @@
 
 
 
-<hr className="wp-block-separator has-alpha-channel-opacity">
+<hr className="wp-block-separator has-alpha-channel-opacity" />
 
 
 
@@ -113,7 +120,7 @@
 
 
 
-<hr className="wp-block-separator has-alpha-channel-opacity">
+<hr className="wp-block-separator has-alpha-channel-opacity" />
 
 
 
@@ -135,7 +142,7 @@
 
 
 
-<hr className="wp-block-separator has-alpha-channel-opacity">
+<hr className="wp-block-separator has-alpha-channel-opacity" />
 
 
 
@@ -147,7 +154,7 @@
 
 
 
-<hr className="wp-block-separator has-alpha-channel-opacity">
+<hr className="wp-block-separator has-alpha-channel-opacity" />
 
 
 
@@ -169,7 +176,7 @@
 
 
 
-<hr className="wp-block-separator has-alpha-channel-opacity">
+<hr className="wp-block-separator has-alpha-channel-opacity" />
 
 
 
@@ -181,7 +188,7 @@
 
 
 
-<hr className="wp-block-separator has-alpha-channel-opacity">
+<hr className="wp-block-separator has-alpha-channel-opacity" />
 
 
 
@@ -207,7 +214,7 @@
 
 
 
-<hr className="wp-block-separator has-alpha-channel-opacity">
+<hr className="wp-block-separator has-alpha-channel-opacity" />
 
 
 
@@ -223,7 +230,7 @@
 
 
 
-<hr className="wp-block-separator has-alpha-channel-opacity">
+<hr className="wp-block-separator has-alpha-channel-opacity" />
 
 
 
@@ -235,7 +242,7 @@
 
 
 
-<hr className="wp-block-separator has-alpha-channel-opacity">
+<hr className="wp-block-separator has-alpha-channel-opacity" />
 
 
 
@@ -257,7 +264,7 @@
 
 
 
-<hr className="wp-block-separator has-alpha-channel-opacity">
+<hr className="wp-block-separator has-alpha-channel-opacity" />
 
 
 
@@ -273,7 +280,7 @@
 
 
 
-<hr className="wp-block-separator has-alpha-channel-opacity">
+<hr className="wp-block-separator has-alpha-channel-opacity" />
 
 
 
@@ -293,7 +300,7 @@
 
 
 
-<hr className="wp-block-separator has-alpha-channel-opacity">
+<hr className="wp-block-separator has-alpha-channel-opacity" />
 
 
 
@@ -309,7 +316,7 @@
 
 
 
-<hr className="wp-block-separator has-alpha-channel-opacity">
+<hr className="wp-block-separator has-alpha-channel-opacity" />
 
 
 
@@ -329,7 +336,7 @@
 
 
 
-<hr className="wp-block-separator has-alpha-channel-opacity">
+<hr className="wp-block-separator has-alpha-channel-opacity" />
 
 
 
@@ -341,7 +348,7 @@
 
 
 
-<hr className="wp-block-separator has-alpha-channel-opacity">
+<hr className="wp-block-separator has-alpha-channel-opacity" />
 
 
 
@@ -365,7 +372,7 @@
 
 
 
-<hr className="wp-block-separator has-alpha-channel-opacity">
+<hr className="wp-block-separator has-alpha-channel-opacity" />
 
 
 
@@ -387,7 +394,7 @@
 
 
 
-<hr className="wp-block-separator has-alpha-channel-opacity">
+<hr className="wp-block-separator has-alpha-channel-opacity" />
 
 
 
@@ -399,7 +406,7 @@
 
 
 
-<hr className="wp-block-separator has-alpha-channel-opacity">
+<hr className="wp-block-separator has-alpha-channel-opacity" />
 
 
 
@@ -411,7 +418,7 @@
 
 
 
-<hr className="wp-block-separator has-alpha-channel-opacity">
+<hr className="wp-block-separator has-alpha-channel-opacity" />
 
 
 
@@ -423,7 +430,7 @@
 
 
 
-<hr className="wp-block-separator has-alpha-channel-opacity">
+<hr className="wp-block-separator has-alpha-channel-opacity" />
 
 
 
@@ -445,7 +452,7 @@
 
 
 
-<hr className="wp-block-separator has-alpha-channel-opacity">
+<hr className="wp-block-separator has-alpha-channel-opacity" />
 
 
 
@@ -461,7 +468,7 @@
 
 
 
-<hr className="wp-block-separator has-alpha-channel-opacity">
+<hr className="wp-block-separator has-alpha-channel-opacity" />
 
 
 
@@ -489,7 +496,7 @@
 
 
 
-<hr className="wp-block-separator has-alpha-channel-opacity">
+<hr className="wp-block-separator has-alpha-channel-opacity" />
 
 
 
@@ -501,7 +508,7 @@
 
 
 
-<hr className="wp-block-separator has-alpha-channel-opacity">
+<hr className="wp-block-separator has-alpha-channel-opacity" />
 
 
 
@@ -598,18 +605,24 @@
 		</footer>
 	</div>
 </div>
-<style id="core-block-supports-inline-css">
+<style id="core-block-supports-inline-css" className="">{`
 .wp-block-columns.wp-container-2{flex-wrap:nowrap;}
-</style>
-<script id="twentyseventeen-skip-link-focus-fix-js-extra">
+`}</style>
+<script id="twentyseventeen-skip-link-focus-fix-js-extra" className="">{`
 var twentyseventeenScreenReaderText = {"quote":"<svg className=\"icon icon-quote-right\" aria-hidden=\"true\" role=\"img\"> <use href=\"#icon-quote-right\" xlink:href=\"#icon-quote-right\"><\/use> <\/svg>","expand":"Expand child menu","collapse":"Collapse child menu","icon":"<svg className=\"icon icon-angle-down\" aria-hidden=\"true\" role=\"img\"> <use href=\"#icon-angle-down\" xlink:href=\"#icon-angle-down\"><\/use> <span className=\"svg-fallback icon-angle-down\"><\/span><\/svg>"};
-</script>
-<script src="https://www.midcitysmiles.com/blog/wp-content/themes/twentyseventeen/assets/js/skip-link-focus-fix.js?ver=20161114" id="twentyseventeen-skip-link-focus-fix-js"></script>
-<script src="https://www.midcitysmiles.com/blog/wp-content/themes/twentyseventeen/assets/js/navigation.js?ver=20161203" id="twentyseventeen-navigation-js"></script>
-<script src="https://www.midcitysmiles.com/blog/wp-content/themes/twentyseventeen/assets/js/global.js?ver=20190121" id="twentyseventeen-global-js"></script>
-<script src="https://www.midcitysmiles.com/blog/wp-content/themes/twentyseventeen/assets/js/jquery.scrollTo.js?ver=2.1.2" id="jquery-scrollto-js"></script>
-<script src="https://www.midcitysmiles.com/blog/wp-content/plugins/social-icons-widget-by-wpzoom/assets/js/social-icons-widget-frontend.js?ver=1679942358" id="zoom-social-icons-widget-frontend-js"></script>
+`}</script>
+<script id="twentyseventeen-skip-link-focus-fix-js" className="">{``}</script>
+<script id="twentyseventeen-navigation-js" className="">{``}</script>
+<script id="twentyseventeen-global-js" className="">{``}</script>
+<script id="jquery-scrollto-js" className="">{``}</script>
+<script id="zoom-social-icons-widget-frontend-js" className="">{``}</script>
 
 
 
 
+
+                        </>
+                    )    
+                }
+                export default siteFiles/procedures;
+                
