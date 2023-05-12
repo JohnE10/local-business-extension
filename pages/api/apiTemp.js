@@ -10,6 +10,16 @@ export default function PageScraper(req, res) {
   <html>
     <head><title>This is the page title</title></head>
     <body>
+      <style id="core-block-supports-inline-css">
+        .wp - block - columns.wp - container - 2 {
+          flex - wrap: nowrap;
+        }
+      </style>
+      <style id="core-block-supports-inline-css2">
+      .wp - block - columns.wp - container - 22 {
+        flex - wrap: nowrap;
+      }
+    </style>
       <p>
         Some text with <b>a few <span>HTML</span></b> tags.
       </p>
@@ -34,33 +44,56 @@ export default function PageScraper(req, res) {
 
   const temp = 'https://site.com/image1';
 
-  // console.log('body: ', body);
   images = $('body').find('img');
+  let styles = $('body').find('style');
 
-  images.each((i, el) => {
-    // console.log('results: ', $(el).attr('src'));
-    const imgAttr = $(el).attr('src');
-    console.log('imgAttr: ', imgAttr);
+  // console.log('styles.html(): ', styles.html());
 
-    if ($(el).attr('width')) {
-      let imgWidth = $(el).attr('width');
-      let imgHeight = $(el).attr('height');
-      imgWidth = imgWidth.replace('px', '').replace('rem', '').replace('em', '');
-      imgHeight = imgHeight.replace('px', '').replace('rem', '').replace('em', '');
-      $(`img[src='${imgAttr}']`).replaceWith(`<img src='${imgAttr}' alt='/' width='${imgWidth}' height='${imgHeight}' >`);
+  // images.each((i, el) => {
+  //   // console.log('results: ', $(el).attr('src'));
+  //   const imgAttr = $(el).attr('src');
+  //   console.log('imgAttr: ', imgAttr);
+
+  //   if ($(el).attr('width')) {
+  //     let imgWidth = $(el).attr('width');
+  //     let imgHeight = $(el).attr('height');
+  //     imgWidth = imgWidth.replace('px', '').replace('rem', '').replace('em', '');
+  //     imgHeight = imgHeight.replace('px', '').replace('rem', '').replace('em', '');
+  //     $(`img[src='${imgAttr}']`).replaceWith(`<img src='${imgAttr}' alt='/' width='${imgWidth}' height='${imgHeight}' >`);
+  //   }
+  //   else {
+  //     $(`img[src='${imgAttr}']`).replaceWith(`<img src='${imgAttr}' alt='/' width='150' height='150' >`);
+  //   }
+  // });
+
+  styles.each((i, el) => {
+    let elementHtml = $(el).html();
+    let attrId = '';
+    let attrClass = '';
+    if ($(el).attr('id')) {
+      attrId = $(el).attr('id');
+      console.log('attrId: ', attrId);
     }
-    else {
-      $(`img[src='${imgAttr}']`).replaceWith(`<img src='${imgAttr}' alt='/' width='150' height='150' >`);
+
+    if ($(el).attr('class')) {
+      attrClass = $(el).attr('class');
+      console.log('attrClass: ', attrClass);
     }
+
+    if (attrId != '') {
+      $('body').find(`style[id="${attrId}"]`).replaceWith(`<style id='${attrId}'>` + '{`' + $(el).html() + '`}' + '</style>')
+    }
+    else if(attrClass != '') {
+      $('body').find(`style[class="${attrClass}"]`).replaceWith(`<style id='${attrId}'>` + '{`' + $(el).html() + '`}' + '</style>')
+    }
+
   });
 
-  body = body.html();
-
-  let content = '<img src="https://site.com/image1" width="30rem" height="150px">';
+  body = $('body').html();
 
   // function to add self closing slash to all Image tags.
   // const updatedBody = body.replace(/<img.*?>/g, (match) => {
-    body = body.replace(/<img.*?>/g, (match) => {
+  body = body.replace(/<img.*?>/g, (match) => {
     if (!match.endsWith('/>')) {
 
       console.log(match + ' - ' + 'yes');
