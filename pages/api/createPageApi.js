@@ -159,9 +159,13 @@ const createPageApi = async (req, res) => {
             // maneuver to make image tags self closing
             body = body.replaceAll('>needsClosingSlash>', ' />');
 
-            // make any hr tag self closing
+            // make all hr tags self closing
             const hrRegEx = /<hr([^>]*)>/g;
             body = body.replaceAll(hrRegEx, '<hr$1 />');
+
+            // make all br tags self closing
+            const brRegEx = /<br([^>]*)>/g;
+            body = body.replaceAll(brRegEx, '<br$1 />');
 
             // make sure LiteYouTubeEmbed is of the right case format and is self closing
             body = body.replaceAll('liteyoutubeembed', 'LiteYouTubeEmbed');
