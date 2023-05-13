@@ -1,6 +1,8 @@
 
                 import Image from 'next/image';
                 import Script from 'next/script';
+                import LiteYouTubeEmbed from "react-lite-youtube-embed"
+                import "react-lite-youtube-embed/dist/LiteYouTubeEmbed.css"
 
                 const patient-forms = () => {
                     return (

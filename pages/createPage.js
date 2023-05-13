@@ -9,6 +9,25 @@ const createPage = () => {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
 
+    const replaceStr = 'blog/';
+
+    const sendToCreatePageApi = async (siteUrl) => {
+
+        const response = await fetch(`/api/createPageApi?url=${siteUrl}&replaceStr=${replaceStr}`);
+        const data = await response.json();
+
+        if (data.success) {
+            setLoading(false);
+            console.log(data.success);
+
+        }
+        else if (data.error) {
+            console.log(data.error);
+            setLoading(false);
+            setError(data.error);
+        }
+    }
+
     useEffect(() => {
         setUrlArr(urls.split('\n'));
     }, [urls]);
@@ -16,29 +35,29 @@ const createPage = () => {
     const handleSubmit = () => {
 
         setLoading(true);
-        const replaceStr = 'blog/';
+
 
         console.log('urlArr: ', urlArr);
 
         try {
 
             urlArr.forEach((url, index) => {
-                const sendToCreatePageApi = async (siteUrl) => {
+                // const sendToCreatePageApi = async (siteUrl) => {
 
-                    const response = await fetch(`/api/createPageApi?url=${siteUrl}&replaceStr=${replaceStr}`);
-                    const data = await response.json();
+                //     const response = await fetch(`/api/createPageApi?url=${siteUrl}&replaceStr=${replaceStr}`);
+                //     const data = await response.json();
 
-                    if (data.success) {
-                        setLoading(false);
-                        console.log(data.success);
+                //     if (data.success) {
+                //         setLoading(false);
+                //         console.log(data.success);
 
-                    }
-                    else if (data.error) {
-                        console.log(data.error);
-                        setLoading(false);
-                        setError(data.error);
-                    }
-                }
+                //     }
+                //     else if (data.error) {
+                //         console.log(data.error);
+                //         setLoading(false);
+                //         setError(data.error);
+                //     }
+                // }
                 sendToCreatePageApi(url);
             })
 

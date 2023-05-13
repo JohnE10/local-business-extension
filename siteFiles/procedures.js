@@ -1,6 +1,8 @@
 
                 import Image from 'next/image';
                 import Script from 'next/script';
+                import LiteYouTubeEmbed from "react-lite-youtube-embed"
+                import "react-lite-youtube-embed/dist/LiteYouTubeEmbed.css"
 
                 const procedures = () => {
                     return (
@@ -107,7 +109,9 @@
 
 
 <figure className="wp-block-embed is-type-rich is-provider-embed-handler wp-block-embed-embed-handler wp-embed-aspect-16-9 wp-has-aspect-ratio"><div className="wp-block-embed__wrapper">
-<iframe title="What is Orthodontics?" width="740" height="416" src="https://www.youtube.com/embed/SgA26wTq9cg?feature=oembed" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe>
+
+                                        <LiteYouTubeEmbed id="SgA26wTq9cg" title="YouTube video player">
+                                        </LiteYouTubeEmbed>
 </div></figure>
 
 
@@ -129,7 +133,9 @@
 
 
 <figure className="wp-block-embed is-type-rich is-provider-embed-handler wp-block-embed-embed-handler wp-embed-aspect-16-9 wp-has-aspect-ratio"><div className="wp-block-embed__wrapper">
-<iframe loading="lazy" title="What is Prosthodontics?" width="740" height="416" src="https://www.youtube.com/embed/NksNZX_bqEg?feature=oembed" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe>
+
+                                        <LiteYouTubeEmbed id="NksNZX_bqEg" title="YouTube video player">
+                                        </LiteYouTubeEmbed>
 </div></figure>
 
 
@@ -163,7 +169,9 @@
 
 
 <figure className="wp-block-embed is-type-rich is-provider-embed-handler wp-block-embed-embed-handler wp-embed-aspect-16-9 wp-has-aspect-ratio"><div className="wp-block-embed__wrapper">
-<iframe loading="lazy" title="Crowns" width="740" height="416" src="https://www.youtube.com/embed/WLDn4AU9Dm8?feature=oembed" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe>
+
+                                        <LiteYouTubeEmbed id="WLDn4AU9Dm8" title="YouTube video player">
+                                        </LiteYouTubeEmbed>
 </div></figure>
 
 
@@ -201,7 +209,9 @@
 
 
 <figure className="wp-block-embed is-type-rich is-provider-embed-handler wp-block-embed-embed-handler wp-embed-aspect-16-9 wp-has-aspect-ratio"><div className="wp-block-embed__wrapper">
-<iframe loading="lazy" title="Crowns" width="740" height="416" src="https://www.youtube.com/embed/WLDn4AU9Dm8?feature=oembed" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe>
+
+                                        <LiteYouTubeEmbed id="WLDn4AU9Dm8" title="YouTube video player">
+                                        </LiteYouTubeEmbed>
 </div></figure>
 
 
@@ -251,7 +261,9 @@
 
 
 <figure className="wp-block-embed is-type-rich is-provider-embed-handler wp-block-embed-embed-handler wp-embed-aspect-16-9 wp-has-aspect-ratio"><div className="wp-block-embed__wrapper">
-<iframe loading="lazy" title="Fluoride: The Superhero of Cavity Fighting" width="740" height="416" src="https://www.youtube.com/embed/o9UuXmQH1fo?feature=oembed" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe>
+
+                                        <LiteYouTubeEmbed id="o9UuXmQH1fo" title="YouTube video player">
+                                        </LiteYouTubeEmbed>
 </div></figure>
 
 
@@ -381,7 +393,9 @@
 
 
 <figure className="wp-block-embed is-type-rich is-provider-embed-handler wp-block-embed-embed-handler"><div className="wp-block-embed__wrapper">
- <iframe loading="lazy" title="What is Prosthodontics?" width="740" height="416" src="https://www.youtube.com/embed/NksNZX_bqEg?feature=oembed" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe>
+ 
+                                        <LiteYouTubeEmbed id="NksNZX_bqEg" title="YouTube video player">
+                                        </LiteYouTubeEmbed>
 </div></figure>
 
 
@@ -439,7 +453,9 @@
 
 
 <figure className="wp-block-embed is-type-video is-provider-youtube wp-block-embed-youtube wp-embed-aspect-16-9 wp-has-aspect-ratio"><div className="wp-block-embed__wrapper">
-<iframe loading="lazy" title="How to Seal Out Tooth Decay" width="740" height="416" src="https://www.youtube.com/embed/XOeKfLMk6WU?feature=oembed" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe>
+
+                                        <LiteYouTubeEmbed id="XOeKfLMk6WU" title="YouTube video player">
+                                        </LiteYouTubeEmbed>
 </div></figure>
 
 

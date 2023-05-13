@@ -111,15 +111,21 @@ const createPageApi = async (req, res) => {
                     iframes.each((i, el) => {
                         if ($(el).attr('src')) {
                             if ($(el).attr('src').includes('youtube.com')) {
-                                const ytVideoSrc = $('body').find('iframe').attr('src');
-                                const videoId = extractVideoId(ytVideoSrc);
-                                // console.log('videoId: ', videoId);
-                                $('body').find(`iframe[src="${ytVideoSrc}"]`).replaceWith(`
-                                <LiteYouTubeEmbed
-                                id=${videoId}
-                                title='YouTube video player'
-                                />
-                                `)
+                                if ($('body').find('iframe').attr('src')) {
+                                    const ytVideoSrc = $('body').find('iframe').attr('src');
+                                    if (ytVideoSrc != '') {
+                                        const videoId = extractVideoId(ytVideoSrc);
+                                        // console.log('videoId: ', videoId);
+                                        $('body').find(`iframe[src="${ytVideoSrc}"]`).replaceWith(`
+                                        <LiteYouTubeEmbed
+                                        id=${videoId}
+                                        title='YouTube video player'
+                                        />
+                                        `)
+                                    }
+                                }
+
+
                             }
                         }
                     });

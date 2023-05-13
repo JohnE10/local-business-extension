@@ -1,4 +1,4 @@
-const emailValidator = require('deep-email-validator');
+import { fetchUrlData } from './backEndHelpers';
 
 const ApiTemp2 = async (req, res) => {
 
@@ -21,20 +21,18 @@ const ApiTemp2 = async (req, res) => {
     </html>
     `;
 
-    const updatedContent = content.replace(/<img.*?>/g, (match) => {
-      if (!match.endsWith('/>')) {
-        // return `${match}/>`;
-        console.log('match: ', match);
-        console.log(typeof match);
-        return match.replace('>', '') + ' />';
-      }
-      return match;
-    });
-    
-    console.log('updatedContent: ', updatedContent); // '<img src="https://site.com/image1" width="30rem" height="150px"/>'
-    
+const url = 'https://www.midcitysmiles.com/blog/';
 
-    return res.send(updatedContent);
+// const html = await fetchUrlData(url);
+
+const response = await fetch(url);
+const data = await response.text();
+
+console.log('data: ', data);
+
+return res.send(JSON.stringify(data));
+
+// console.log('html: ', html);
 
 }
 
