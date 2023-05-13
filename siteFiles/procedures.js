@@ -624,14 +624,14 @@
 <style id="core-block-supports-inline-css" className="">{`
 .wp-block-columns.wp-container-2{flex-wrap:nowrap;}
 `}</style>
-<script id="twentyseventeen-skip-link-focus-fix-js-extra" className="">{`
+<Script id="twentyseventeen-skip-link-focus-fix-js-extra" className="">{`
 var twentyseventeenScreenReaderText = {"quote":"<svg className=\"icon icon-quote-right\" aria-hidden=\"true\" role=\"img\"> <use href=\"#icon-quote-right\" xlink:href=\"#icon-quote-right\"><\/use> <\/svg>","expand":"Expand child menu","collapse":"Collapse child menu","icon":"<svg className=\"icon icon-angle-down\" aria-hidden=\"true\" role=\"img\"> <use href=\"#icon-angle-down\" xlink:href=\"#icon-angle-down\"><\/use> <span className=\"svg-fallback icon-angle-down\"><\/span><\/svg>"};
-`}</script>
-<script id="twentyseventeen-skip-link-focus-fix-js" className="">{``}</script>
-<script id="twentyseventeen-navigation-js" className="">{``}</script>
-<script id="twentyseventeen-global-js" className="">{``}</script>
-<script id="jquery-scrollto-js" className="">{``}</script>
-<script id="zoom-social-icons-widget-frontend-js" className="">{``}</script>
+`}</Script>
+<Script id="twentyseventeen-skip-link-focus-fix-js" className="">{``}</Script>
+<Script id="twentyseventeen-navigation-js" className="">{``}</Script>
+<Script id="twentyseventeen-global-js" className="">{``}</Script>
+<Script id="jquery-scrollto-js" className="">{``}</Script>
+<Script id="zoom-social-icons-widget-frontend-js" className="">{``}</Script>
 
 
 
@@ -640,5 +640,5 @@ var twentyseventeenScreenReaderText = {"quote":"<svg className=\"icon icon-quote
                         </>
                     )    
                 }
-                export default siteFiles/procedures;
+                export default procedures;
                 

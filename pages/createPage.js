@@ -6,26 +6,30 @@ const createPage = () => {
 
     const [urls, setUrls] = useState('');
     const [urlArr, setUrlArr] = useState([]);
+    const [text, setText] = useState(null);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
 
     const replaceStr = 'blog/';
 
-    const sendToCreatePageApi = async (siteUrl) => {
+    const sendToCreatePageApi = async (siteUrl, str) => {
 
-        const response = await fetch(`/api/createPageApi?url=${siteUrl}&replaceStr=${replaceStr}`);
-        const data = await response.json();
+        setTimeout(async () => {
+            const response = await fetch(`/api/createPageApi?url=${siteUrl}&replaceStr=${str}`);
+            const data = await response.json();
 
-        if (data.success) {
-            setLoading(false);
-            console.log(data.success);
+            if (data.success) {
+                setLoading(false);
+                console.log(data.success);
 
-        }
-        else if (data.error) {
-            console.log(data.error);
-            setLoading(false);
-            setError(data.error);
-        }
+            }
+            else if (data.error) {
+                console.log(data.error);
+                setLoading(false);
+                setError(data.error);
+            }
+        }, 1000)
+
     }
 
     useEffect(() => {
@@ -36,38 +40,50 @@ const createPage = () => {
 
         setLoading(true);
 
-
         console.log('urlArr: ', urlArr);
 
         try {
+            let i = 0;
+            const runControl = () => {
+                sendToCreatePageApi(urlArr[i], replaceStr);
+                console.log('i: ', i);
+                i++;
+                if (i < urlArr.length) {
+                    runControl();
+                }
+                else {
+                    setLoading(false);
+                    setText('Done!')
+                }
+            }
+            runControl();
 
-            urlArr.forEach((url, index) => {
-                // const sendToCreatePageApi = async (siteUrl) => {
+            // urlArr.forEach((url, index) => {
 
-                //     const response = await fetch(`/api/createPageApi?url=${siteUrl}&replaceStr=${replaceStr}`);
-                //     const data = await response.json();
+            //     sendToCreatePageApi(url);
+            //     // const sendToCreatePageApi = async (siteUrl) => {
 
-                //     if (data.success) {
-                //         setLoading(false);
-                //         console.log(data.success);
+            //     //     const response = await fetch(`/api/createPageApi?url=${siteUrl}&replaceStr=${replaceStr}`);
+            //     //     const data = await response.json();
 
-                //     }
-                //     else if (data.error) {
-                //         console.log(data.error);
-                //         setLoading(false);
-                //         setError(data.error);
-                //     }
-                // }
-                sendToCreatePageApi(url);
-            })
+            //     //     if (data.success) {
+            //     //         setLoading(false);
+            //     //         console.log(data.success);
 
+            //     //     }
+            //     //     else if (data.error) {
+            //     //         console.log(data.error);
+            //     //         setLoading(false);
+            //     //         setError(data.error);
+            //     //     }
+            //     // }
 
+            // })
 
         } catch (err) {
             setError(err.message);
             console.log(err.message);
         }
-
 
     }
 
@@ -86,6 +102,7 @@ const createPage = () => {
                 <div>
                     <button onClick={handleSubmit}>Submit</button>
                 </div>
+                {text && <div className='mt-5'>Done.</div>}
             </div>
 
         </>
