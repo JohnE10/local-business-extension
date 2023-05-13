@@ -36,25 +36,30 @@ export const fetchUrlData = async (url) => {
 
 }
 
-// export const saveFile = async (url) => {
+export const toCamelCase = (str) => {
+
+  str = str.trim();
   
-//   try {
+  let words = [];
 
-//     const parsedUrl = new URL(url);
-//     const file = parsedUrl.pathname.replace('/', '');
+  let divider = '-:5:-';
+  const chars = ['-', '_'];
 
-//     const data = await fetchUrlData(url);
+  chars.forEach(ele => {
+    if(str.includes(ele)) {
+      str = str.replaceAll(ele, divider);
+    }
+  })
 
-//     if(data.error) {
-//       throw Error(data.error);
-//     }
-//     else if(data.success) {
-//       fs.writeFileSync(file, data);
-//       return {success: 'Page Created'}
-//     }
+  words = str.split(divider);
 
-//   } catch (err) {
-//     return res.status(200).json({ error: err.message });
-//   }
+  const camelCaseString = words.map((word, index) => {
+    if (index === 0) {
+      return word.toLowerCase();
+    } else {
+      return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
+    }
+  }).join('');
 
-// }
+  return camelCaseString;
+}

@@ -4,7 +4,7 @@
                 import LiteYouTubeEmbed from "react-lite-youtube-embed"
                 import "react-lite-youtube-embed/dist/LiteYouTubeEmbed.css"
 
-                const our-team = () => {
+                const ourTeam = () => {
                     return (
                         <>
                             
@@ -487,5 +487,5 @@ var twentyseventeenScreenReaderText = {"quote":"<svg className=\"icon icon-quote
                         </>
                     )    
                 }
-                export default siteFiles/our-team;
+                export default siteFiles/ourTeam;
                 

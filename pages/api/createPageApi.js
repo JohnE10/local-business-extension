@@ -1,3 +1,4 @@
+import { toCamelCase } from '../../utils/helpers';
 import { fetchUrlData } from './backEndHelpers';
 
 const fs = require('fs');
@@ -9,6 +10,7 @@ const createPageApi = async (req, res) => {
 
     const commentRegEx = /<!--.*?-->/gs;
     const siteFileDir = 'siteFiles/';
+    let pathNameArr = [];
 
     setTimeout(async () => {
         const url = req.query.url;
@@ -20,11 +22,21 @@ const createPageApi = async (req, res) => {
 
             const parsedUrl = new URL(url);
 
-            let fileToCreate = siteFileDir + parsedUrl.pathname.replace(replaceStr, '').replaceAll('/', '') + '.js';
+            let urlPathName = parsedUrl.pathname.replace(replaceStr, '').replaceAll('/', '');
+            urlPathName = toCamelCase(urlPathName);
+
+            let fileToCreate = siteFileDir + urlPathName + '.js';
 
             if (parsedUrl.pathname.replace(replaceStr, '').replaceAll('/', '') == '') {
                 fileToCreate = `${siteFileDir}index.js`;
             }
+
+
+            // let fileToCreate = siteFileDir + parsedUrl.pathname.replace(replaceStr, '').replaceAll('/', '') + '.js';
+
+            // if (parsedUrl.pathname.replace(replaceStr, '').replaceAll('/', '') == '') {
+            //     fileToCreate = `${siteFileDir}index.js`;
+            // }
 
             const html = await fetchUrlData(url);
 

@@ -4,7 +4,7 @@
                 import LiteYouTubeEmbed from "react-lite-youtube-embed"
                 import "react-lite-youtube-embed/dist/LiteYouTubeEmbed.css"
 
-                const payment-insurance = () => {
+                const patientForms = () => {
                     return (
                         <>
                             
@@ -45,8 +45,8 @@
 <li id="menu-item-148" className="menu-item menu-item-type-post_type menu-item-object-page menu-item-148"><a href="https://www.midcitysmiles.com/blog/contact-us/">CONTACT US</a></li>
 <li id="menu-item-161" className="menu-item menu-item-type-post_type menu-item-object-page menu-item-161"><a href="https://www.midcitysmiles.com/blog/procedures/">PROCEDURES</a></li>
 <li id="menu-item-164" className="menu-item menu-item-type-post_type menu-item-object-page menu-item-164"><a href="https://www.midcitysmiles.com/blog/orthodontics/">INVISALIGN</a></li>
-<li id="menu-item-153" className="menu-item menu-item-type-post_type menu-item-object-page menu-item-153"><a href="https://www.midcitysmiles.com/blog/patient-forms/">PATIENT FORMS</a></li>
-<li id="menu-item-321" className="menu-item menu-item-type-post_type menu-item-object-page current-menu-item page_item page-item-320 current_page_item menu-item-321"><a href="https://www.midcitysmiles.com/blog/payment-insurance/" aria-current="page">PAYMENT/INSURANCE</a></li>
+<li id="menu-item-153" className="menu-item menu-item-type-post_type menu-item-object-page current-menu-item page_item page-item-152 current_page_item menu-item-153"><a href="https://www.midcitysmiles.com/blog/patient-forms/" aria-current="page">PATIENT FORMS</a></li>
+<li id="menu-item-321" className="menu-item menu-item-type-post_type menu-item-object-page menu-item-321"><a href="https://www.midcitysmiles.com/blog/payment-insurance/">PAYMENT/INSURANCE</a></li>
 </ul></div>
 	</nav>
 				</div>
@@ -63,70 +63,32 @@
 		<main id="main" className="site-main">
 
 			
-<article id="post-320" className="post-320 page type-page status-publish hentry">
+<article id="post-152" className="post-152 page type-page status-publish hentry">
 	<header className="entry-header">
-		<h1 className="entry-title">PAYMENT/INSURANCE</h1>			</header>
+		<h1 className="entry-title">PATIENT FORMS</h1>			</header>
 	<div className="entry-content">
 		
-<p><em><a href="https://www.midcitysmiles.com/Pay.pdf" target="_blank" rel="noreferrer noopener">CLICK HERE </a>to view the full financial policy.</em></p>
+<p>In order to save time at your first appointment at our office, click on the links below to fill out the necessary paperwork.&nbsp; We look forward to your visit!&nbsp; Thank you!</p>
 
 
 
-<p>Thank you for choosing Mid-City Smiles Family Dentistry. Our primary mission is to deliver the best and most comprehensive dental care available. An important part of the mission is making the cost of optimal care as easy and manageable for our patients as possible by offering several payment options. </p>
+<h3>Patient Information Forms</h3>
 
 
 
-<p><strong>Payment Options:</strong> </p>
+<p>ONLINE OPTION:&nbsp;<a href="https://yapi.me/co?m=dfrq607o7h51k" target="_blank" rel="noreferrer noopener">click here</a></p>
 
 
 
-<p>●We accept most insurance plans and file ALL insurance for you. </p>
+<p>PRINTABLE VERSIONS:<br><a href="https://www.midcitysmiles.com/Medical_History.pdf" target="_blank" rel="noreferrer noopener">Medical History</a><br><a href="https://www.midcitysmiles.com/Patient_Registration.pdf" target="_blank" rel="noreferrer noopener">Registration</a><br><a href="https://www.midcitysmiles.com/Pay.pdf" target="_blank" rel="noreferrer noopener">Payment/Insurance</a><br><a href="https://www.midcitysmiles.com/Hipaa.pdf" target="_blank" rel="noreferrer noopener">HIPAA</a></p>
 
 
 
-<p>●Cash, Visa, Mastercard, American Express, Discover Card or Check (per approval) ¹ </p>
+<h3>En Español</h3>
 
 
 
-<p>●We offer a 5% courtesy accounting adjustment to patients who pay for their treatment with cash or check prior to completion of care for treatment plans of $500 or more. </p>
-
-
-
-<p>●NO INTEREST Payment Plans from <a href="https://www.carecredit.com/apply/" target="_blank" rel="noreferrer noopener">CareCredit</a> </p>
-
-
-
-<p>●<a href="https://member.kleer.com/?slug=US8U" target="_blank" rel="noreferrer noopener">KLEER</a> membership plan</p>
-
-
-
-<p><strong>INSURANCE </strong></p>
-
-
-
-<p>Our patients are our first priority and we want to assure that you get the highest standard of care at Mid-City Smiles.&nbsp; We are excited to inform you that we have begun working with the insurance companies to renegotiate fees and assure that the services provided in our office are processed at the maximum benefit for our patients and doctors.&nbsp; In the meantime, you may receive a letter from your insurance company stating a change of network status as things get updated.&nbsp; Don’t worry, WE ARE STILL ACCEPTING ALL INSURANCE PLANS AND FILING ALL CLAIMS FOR OUR PATIENTS!*&nbsp;</p>
-
-
-
-<p><strong>What does this mean for you?</strong></p>
-
-
-
-<ul>
-<li><em>We will continue to file your insurance claims and accept payments directly from carriers. The deductible and coinsurance are your responsibilities, although in many cases your total out-of-pocket amounts may not change or may be less.</em></li>
-
-
-
-<li>You can DEFINITELY continue to receive your dental care at our office!&nbsp;&nbsp;</li>
-
-
-
-<li><em>If you have any questions, we would love the opportunity to review your plan with you and make sure that you fully understand how this might or might not impact you.&nbsp; We are also available to discuss your specific treatment plan, if you are still in the middle of completing your outstanding treatment.</em></li>
-
-
-
-<li><em>&nbsp;We appreciate your loyalty, and hope that this has only a positive impact on your dental care.&nbsp;</em></li>
-</ul>
+<p><a href="https://www.midcitysmiles.com/Spanish_Med_Hx.pdf">Medical History</a><br><a href="https://www.midcitysmiles.com/Sp%20reg.pdf" target="_blank" rel="noreferrer noopener">Registration</a><br><a href="https://www.midcitysmiles.com/SP%20pay.pdf" target="_blank" rel="noreferrer noopener">Payment/Insurance</a><br><a href="https://www.midcitysmiles.com/Sp%20Hipaa.pdf" target="_blank" rel="noreferrer noopener">HIPAA</a></p>
 	</div>
 </article>
 
@@ -188,8 +150,8 @@
 <li className="menu-item menu-item-type-post_type menu-item-object-page menu-item-148"><a href="https://www.midcitysmiles.com/blog/contact-us/">CONTACT US</a></li>
 <li className="menu-item menu-item-type-post_type menu-item-object-page menu-item-161"><a href="https://www.midcitysmiles.com/blog/procedures/">PROCEDURES</a></li>
 <li className="menu-item menu-item-type-post_type menu-item-object-page menu-item-164"><a href="https://www.midcitysmiles.com/blog/orthodontics/">INVISALIGN</a></li>
-<li className="menu-item menu-item-type-post_type menu-item-object-page menu-item-153"><a href="https://www.midcitysmiles.com/blog/patient-forms/">PATIENT FORMS</a></li>
-<li className="menu-item menu-item-type-post_type menu-item-object-page current-menu-item page_item page-item-320 current_page_item menu-item-321"><a href="https://www.midcitysmiles.com/blog/payment-insurance/" aria-current="page">PAYMENT/INSURANCE</a></li>
+<li className="menu-item menu-item-type-post_type menu-item-object-page current-menu-item page_item page-item-152 current_page_item menu-item-153"><a href="https://www.midcitysmiles.com/blog/patient-forms/" aria-current="page">PATIENT FORMS</a></li>
+<li className="menu-item menu-item-type-post_type menu-item-object-page menu-item-321"><a href="https://www.midcitysmiles.com/blog/payment-insurance/">PAYMENT/INSURANCE</a></li>
 </ul></nav></section><section id="block-4" className="widget widget_block widget_text">
 <p></p>
 </section><section id="block-3" className="widget widget_block widget_text">
@@ -234,5 +196,5 @@ var twentyseventeenScreenReaderText = {"quote":"<svg className=\"icon icon-quote
                         </>
                     )    
                 }
-                export default siteFiles/payment-insurance;
+                export default siteFiles/patientForms;
                 
