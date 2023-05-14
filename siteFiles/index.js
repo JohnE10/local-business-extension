@@ -16,12 +16,12 @@
 		<div className="custom-header">
 
 		<div className="custom-header-media">
-			<div id="wp-custom-header" className="wp-custom-header"><Image src="https://www.midcitysmiles.com/blog/wp-content/uploads/2022/06/Untitled-3-2.jpg" alt="/" width="2000" height="1200" /></div>		</div>
+			<div id="wp-custom-header" className="wp-custom-header"><Image src="/wp-content/uploads/2022/06/Untitled-3-2.jpg" alt="/" width="2000" height="1200" /></div>		</div>
 
 	<div className="site-branding">
 	<div className="wrap">
 
-		<a href="https://www.midcitysmiles.com/blog/" className="custom-logo-link" rel="home" aria-current="page"><Image src="https://www.midcitysmiles.com/blog/wp-content/uploads/2022/06/cropped-Untitled-1-3.png" alt="/" width="281" height="250" /></a>
+		<a href="https://www.midcitysmiles.com/blog/" className="custom-logo-link" rel="home" aria-current="page"><Image src="/wp-content/uploads/2022/06/cropped-Untitled-1-3.png" alt="/" width="281" height="250" /></a>
 		<div className="site-branding-text">
 							<h1 className="site-title"><a href="https://www.midcitysmiles.com/blog/" rel="home">Mid-City Smiles Family Dentistry</a></h1>
 			
@@ -171,7 +171,7 @@
 <div className="is-layout-flow wp-block-group"><div className="wp-block-group__inner-container">
 <div className="is-layout-flex wp-container-2 wp-block-columns">
 <div className="is-layout-flow wp-block-column" style={{flexBasis: '100%'}}>
-<figure className="wp-block-image size-full"><Image src="https://www.midcitysmiles.com/blog/wp-content/uploads/2022/06/cropped-pels.png" alt="/" width="348" height="250" /></figure>
+<figure className="wp-block-image size-full"><Image src="/wp-content/uploads/2022/06/cropped-pels.png" alt="/" width="348" height="250" /></figure>
 </div>
 </div>
 </div></div>

@@ -72,17 +72,19 @@ const createPageApi = async (req, res) => {
 
             //replace <img> tags with img, src, width, height
             images.each((i, el) => {
-                const imgAttr = $(el).attr('src');
+                const imgSrc = $(el).attr('src');
+                const tempImgSrc = new URL(imgSrc.trim());
+                const newImgSrc = tempImgSrc.pathname.replace(replaceStr, '');
 
                 if ($(el).attr('width')) {
                     let imgWidth = $(el).attr('width');
                     let imgHeight = $(el).attr('height');
                     imgWidth = imgWidth.replace('px', '').replace('rem', '').replace('em', '');
                     imgHeight = imgHeight.replace('px', '').replace('rem', '').replace('em', '');
-                    $(`img[src='${imgAttr}']`).replaceWith(`<img src='${imgAttr}' alt='/' width='${imgWidth}' height='${imgHeight}' >`);
+                    $(`img[src='${imgSrc}']`).replaceWith(`<img src='${newImgSrc}' alt='/' width='${imgWidth}' height='${imgHeight}' >`);
                 }
                 else {
-                    $(`img[src='${imgAttr}']`).replaceWith(`<img src='${imgAttr}' alt='/' width='150' height='150' >`);
+                    $(`img[src='${imgSrc}']`).replaceWith(`<img src='${imgSrc}' alt='/' width='150' height='150' >`);
                 }
             });
 
