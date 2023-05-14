@@ -65,8 +65,8 @@
 		<article id="post-12" className="twentyseventeen-panel  post-12 page type-page status-publish has-post-thumbnail hentry">
 
 	
-		<div className="panel-image" style="background-image: url(https://www.midcitysmiles.com/blog/wp-content/uploads/2022/06/horiz-1-2000x1200.png);">
-			<div className="panel-image-prop" style="padding-top: 60%"></div>
+		<div className="panel-image" style={{backgroundImage: 'url(https://www.midcitysmiles.com/blog/wp-content/uploads/2022/06/horiz-1-2000x1200.png)'}}>
+			<div className="panel-image-prop" style={{paddingTop: '60%'}}></div>
 		</div>
 
 	
@@ -94,7 +94,7 @@
 <hr className="wp-block-separator has-text-color has-red-color has-css-opacity has-red-background-color has-background is-style-wide" />
 
 
-<p style="text-align: center;"><iframe loading="lazy" src="https://summerlou.smugmug.com/frame/slideshow?key=8vk8wf&amp;speed=3&amp;transition=fade&amp;autoStart=1&amp;captions=0&amp;navigation=0&amp;playButton=0&amp;randomize=0&amp;transitionSpeed=2" width="800" height="600" frameborder="no" scrolling="no"></iframe></p>			</div>
+<p style={{textAlign: 'center'}}><iframe loading="lazy" src="https://summerlou.smugmug.com/frame/slideshow?key=8vk8wf&amp;speed=3&amp;transition=fade&amp;autoStart=1&amp;captions=0&amp;navigation=0&amp;playButton=0&amp;randomize=0&amp;transitionSpeed=2" width="800" height="600" frameborder="no" scrolling="no"></iframe></p>			</div>
 
 		</div>
 	</div>
@@ -124,7 +124,7 @@
 									
 						<span className="screen-reader-text">facebook</span>
 			
-						<span className="zoom-social_icons-list-span social-icon socicon socicon-facebook" data-hover-rule="background-color" data-hover-color="#727272" style="background-color : #1877F2"></span>
+						<span className="zoom-social_icons-list-span social-icon socicon socicon-facebook" data-hover-rule="background-color" data-hover-color="#727272" style={{backgroundColor: '#1877F2'}}></span>
 			
 					</a>
 	</li>
@@ -135,7 +135,7 @@
 									
 						<span className="screen-reader-text">instagram</span>
 			
-						<span className="zoom-social_icons-list-span social-icon socicon socicon-instagram" data-hover-rule="background-color" data-hover-color="#727272" style="background-color : #d13aab"></span>
+						<span className="zoom-social_icons-list-span social-icon socicon socicon-instagram" data-hover-rule="background-color" data-hover-color="#727272" style={{backgroundColor: '#d13aab'}}></span>
 			
 					</a>
 	</li>
@@ -146,7 +146,7 @@
 									
 						<span className="screen-reader-text">snapchat</span>
 			
-						<span className="zoom-social_icons-list-span social-icon socicon socicon-snapchat" data-hover-rule="background-color" data-hover-color="#727272" style="background-color : #eeee22"></span>
+						<span className="zoom-social_icons-list-span social-icon socicon socicon-snapchat" data-hover-rule="background-color" data-hover-color="#727272" style={{backgroundColor: '#eeee22'}}></span>
 			
 					</a>
 	</li>
@@ -170,7 +170,7 @@
 				<section id="block-11" className="widget widget_block">
 <div className="is-layout-flow wp-block-group"><div className="wp-block-group__inner-container">
 <div className="is-layout-flex wp-container-2 wp-block-columns">
-<div className="is-layout-flow wp-block-column" style="flex-basis:100%">
+<div className="is-layout-flow wp-block-column" style={{flexBasis: '100%'}}>
 <figure className="wp-block-image size-full"><Image src="https://www.midcitysmiles.com/blog/wp-content/uploads/2022/06/cropped-pels.png" alt="/" width="348" height="250" /></figure>
 </div>
 </div>

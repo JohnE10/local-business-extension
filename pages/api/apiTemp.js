@@ -77,11 +77,13 @@ const apiTemp = (req, res) => {
     if (styleAttr.length > 0) {
       console.log(i + ' - ', styleAttr);
     }
+    $(el).attr('style', styleAttr);
+    
   });
 
-  let body = $('body');
+console.log($.html());
 
-  return res.send('styleAttr: ');
+  return res.send($.html());
 
 }
 

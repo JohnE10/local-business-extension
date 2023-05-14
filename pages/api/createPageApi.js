@@ -88,12 +88,13 @@ const createPageApi = async (req, res) => {
 
             // make css style attribute adhere to next.js rules
             tagsWithStyle.each((i, el) => {
-                // console.log('html(el): ', $.html(el.style));
+                // console.log('html(el): ', $.html(el));
                 // console.log('html(el): ', $(el).attr('style'));
                 let styleStr = $(el).attr('style');
                 if (styleStr.trim() != '') {
                     styleStr = styleAttrToNext(styleStr)
-                    console.log('styleStr: ', styleStr);
+                    // console.log('styleStr: ', styleStr);
+                    $(el).attr('style', styleStr);
                 }
             });
 
@@ -210,6 +211,8 @@ const createPageApi = async (req, res) => {
             // change <script> to next's <Script>
             body = body.replaceAll('<script', '<Script');
             body = body.replaceAll('</script', '</Script')
+            body = body.replaceAll('"{{', '{{');
+            body = body.replaceAll('}}"', '}}');
 
             // construct next.js page
             const nextPage = `

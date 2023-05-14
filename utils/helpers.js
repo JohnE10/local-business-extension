@@ -140,7 +140,5 @@ const strArr = propValueArr.map(obj => Object.keys(obj)[0] + ': ' + `'${Object.v
 
 const joinedStr = '{{' + strArr.join(', ') + '}}';
 
-
-
 return joinedStr;
 }
