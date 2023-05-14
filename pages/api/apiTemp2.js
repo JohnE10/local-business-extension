@@ -1,4 +1,4 @@
-import { toCamelCase } from '../../utils/helpers';
+import { capFirst, toCamelCase } from '../../utils/helpers';
 
 
 const ApiTemp2 = async (req, res) => {
@@ -7,30 +7,21 @@ const ApiTemp2 = async (req, res) => {
 
     try {
 
-        const tempFunc = async (siteUrl) => {
+        let string = 'take_our-doing-now';
+        string = capFirst(string);
 
-            let tempData = '';
-            setTimeout(async () => {
-            
-                const response = await fetch(siteUrl);
-                tempData = await response.json();
+        // const capitalizedString = string.replace(/\b\w/g, letter => letter.toUpperCase());
+        // const url = 'https://www.midcitysmiles.com/blog/contact-us/';
 
-            }, 500);
-            return tempData;
-        }
+        // const parsedUrl = new URL(url);
+        // console.log('host: ', parsedUrl.host);
+        // console.log('pathname: ', parsedUrl.pathname);
 
-        await tempFunc(url)
-        .then((results) => {
-            console.log('results: ', results);
-            return res.json({results});
-        });
-    
-        // console.log('data: ', data);
-
-        // return res.json({data});
+        return res.send(string);
 
     } catch (err) {
         console.log(err.message);
+        return res.send(err.message);
     }
 
 }

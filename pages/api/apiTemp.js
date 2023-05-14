@@ -2,7 +2,7 @@ import axios from 'axios';
 import cheerio from 'cheerio';
 import { promises as fs } from 'fs';
 
-export default function PageScraper(req, res) {
+const apiTemp = (req, res) => {
 
   const cheerio = require('cheerio');
 
@@ -10,6 +10,21 @@ export default function PageScraper(req, res) {
   <html>
     <head><title>This is the page title</title></head>
     <body>
+      <nav id="site-navigation" class="main-navigation" aria-label="Top Menu">
+        <div class="menu-top-container">
+          <ul id="top-menu" class="menu">
+            <li id="menu-item-80" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-home current-menu-item page_item page-item-12 current_page_item menu-item-80">
+              <a href="https://www.midcitysmiles.com/blog/" aria-current="page">HOME</a></li>
+              <li id="menu-item-144" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-144"><a href="https://www.midcitysmiles.com/blog/our-team/">OUR TEAM</a></li>
+              <li id="menu-item-148" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-148"><a href="https://www.midcitysmiles.com/blog/contact-us/">CONTACT US</a></li>
+              <li id="menu-item-161" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-161"><a href="https://www.midcitysmiles.com/blog/procedures/">PROCEDURES</a></li>
+              <li id="menu-item-164" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-164"><a href="https://www.midcitysmiles.com/blog/orthodontics/">INVISALIGN</a></li>
+              <li id="menu-item-153" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-153"><a href="https://www.midcitysmiles.com/blog/patient-forms/">PATIENT FORMS</a></li>
+              <li id="menu-item-321" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-321"><a href="https://www.midcitysmiles.com/blog/payment-insurance/">PAYMENT/INSURANCE</a>
+            </li>
+          </ul>
+        </div>
+      </nav>
       <style id="core-block-supports-inline-css">
         .wp - block - columns.wp - container - 2 {
           flex - wrap: nowrap;
@@ -57,6 +72,9 @@ export default function PageScraper(req, res) {
   const styles = $('body').find('style');
   const scripts = $('body').find('script');
   const iframes = $('body').find('iframe');
+  const navLinks = $('body').find('nav').find('ul').find('li');
+
+
 
   // console.log('styles.html(): ', styles.html());
 
@@ -77,48 +95,50 @@ export default function PageScraper(req, res) {
   //   }
   // });
 
-  styles.each((i, el) => {
-    let elementHtml = $(el).html();
-    let attrId = '';
-    let attrClass = '';
-    if ($(el).attr('id')) {
-      attrId = $(el).attr('id');
-      console.log('attrId: ', attrId);
-    }
+  // styles.each((i, el) => {
+  //   let elementHtml = $(el).html();
+  //   let attrId = '';
+  //   let attrClass = '';
+  //   if ($(el).attr('id')) {
+  //     attrId = $(el).attr('id');
+  //     console.log('attrId: ', attrId);
+  //   }
 
-    if ($(el).attr('class')) {
-      attrClass = $(el).attr('class');
-      console.log('attrClass: ', attrClass);
-    }
+  //   if ($(el).attr('class')) {
+  //     attrClass = $(el).attr('class');
+  //     console.log('attrClass: ', attrClass);
+  //   }
 
-    if (attrId != '') {
-      $('body').find(`style[id="${attrId}"]`).replaceWith(`<style id='${attrId}'>` + '{`' + $(el).html() + '`}' + '</style>')
-    }
-    else if(attrClass != '') {
-      $('body').find(`style[class="${attrClass}"]`).replaceWith(`<style id='${attrId}'>` + '{`' + $(el).html() + '`}' + '</style>')
-    }
+  //   if (attrId != '') {
+  //     $('body').find(`style[id="${attrId}"]`).replaceWith(`<style id='${attrId}'>` + '{`' + $(el).html() + '`}' + '</style>')
+  //   }
+  //   else if(attrClass != '') {
+  //     $('body').find(`style[class="${attrClass}"]`).replaceWith(`<style id='${attrId}'>` + '{`' + $(el).html() + '`}' + '</style>')
+  //   }
 
-  });
+  // });
 
-  iframes.each((i, el) => {
-    console.log('$(el).parent: ', $(el).parent().prop('tagName'));
-  });
+  // iframes.each((i, el) => {
+  //   console.log('$(el).parent: ', $(el).parent().prop('tagName'));
+  // });
 
-  body = $('body').html();
+  // body = $('body').html();
 
   // function to add self closing slash to all Image tags.
   // const updatedBody = body.replace(/<img.*?>/g, (match) => {
-  body = body.replace(/<img.*?>/g, (match) => {
-    if (!match.endsWith('/>')) {
+  // body = body.replace(/<img.*?>/g, (match) => {
+  //   if (!match.endsWith('/>')) {
 
-      // console.log(match + ' - ' + 'yes');
-      return `${match}/>`;
-    }
-    return match;
-  });
+  //     // console.log(match + ' - ' + 'yes');
+  //     return `${match}/>`;
+  //   }
+  //   return match;
+  // });
 
   // console.log('body.html(): ', body);
 
-  return res.send(body);
+  return res.send(navLinks);
 
 }
+
+export default apiTemp;

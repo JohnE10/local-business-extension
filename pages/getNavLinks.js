@@ -32,7 +32,6 @@ const getNavLinks = () => {
                     setError(data.error);
                 }
                 else if (data.success) {
-                    // setHtml(JSON.stringify(data.success));
                     setHtml(data.success);
                 }
             }

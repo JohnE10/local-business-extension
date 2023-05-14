@@ -1,4 +1,5 @@
-import { toCamelCase } from '../../utils/helpers';
+import { gridColumnsTotalWidthSelector } from '@mui/x-data-grid';
+import { capFirst, toCamelCase } from '../../utils/helpers';
 import { fetchUrlData } from './backEndHelpers';
 
 const fs = require('fs');
@@ -9,13 +10,10 @@ const createPageApi = async (req, res) => {
 
     const commentRegEx = /<!--.*?-->/gs;
     const siteFileDir = 'siteFiles/';
-    // let pathNameArr = [];
 
-    // setTimeout(async () => {
     const url = req.query.url;
     console.log('url: ', url);
     const replaceStr = req.query.replaceStr;
-    // console.log('replaceStr: ', replaceStr);
 
     try {
 
@@ -44,7 +42,30 @@ const createPageApi = async (req, res) => {
             let images = $('body').find('img');
             let styles = $('body').find('style');
             let scripts = $('body').find('script');
+            let navLinks = $('body').find('nav').find('div').find('ul').find('li').find('a');
 
+            navLinks.each((i, el) => {
+
+                let href = $(el).attr('href');
+                href = href.trim();
+                let newHref = new URL(href);
+                let anchorText = newHref.pathname.replace(replaceStr, '').replaceAll('/', '');
+                anchorText = capFirst(anchorText);
+                newHref = newHref.pathname.replace(replaceStr, '').replaceAll('/', '');
+                newHref = '/' + toCamelCase(newHref);
+                if (newHref == '/') {
+                    newHref = '/' + 'index';
+                }
+                let elementClass = '';
+                if ($(el).attr('class')) {
+                    elementClass = $(el).attr('class');
+                }
+                let elementId = '';
+                if ($(el).attr('id')) {
+                    elementId = $(el).attr('id');
+                }
+                $('body').find('nav').find('div').find('ul').find('li').find(`a[href='${href}']`).replaceWith(`<a id= '${elementId}' class='${elementClass}' href='${newHref}'>${anchorText}</a>`);
+            });
 
             //replace <img> tags with img, src, width, height
             images.each((i, el) => {
@@ -188,7 +209,7 @@ const createPageApi = async (req, res) => {
                         </>
                     )    
                 }
-                export default ${urlPathName};
+                export default ${urlPathName == '' ? 'index' : urlPathName};
                 `
 
             // save file

@@ -39,14 +39,14 @@ export const fetchUrlData = async (url) => {
 export const toCamelCase = (str) => {
 
   str = str.trim();
-  
+
   let words = [];
 
   let divider = '-:5:-';
   const chars = ['-', '_'];
 
   chars.forEach(ele => {
-    if(str.includes(ele)) {
+    if (str.includes(ele)) {
       str = str.replaceAll(ele, divider);
     }
   })
@@ -62,4 +62,23 @@ export const toCamelCase = (str) => {
   }).join('');
 
   return camelCaseString;
+}
+
+export const capFirst = (str) => {
+
+  let capitalizedString = '';
+  const chars = ['-', '_'];
+
+  if (str) {
+    chars.forEach((ele) => {
+      if (str.includes(ele)) {
+        str = str.replaceAll(ele, ' ');
+      }
+    })
+    capitalizedString = str.replace(/\b\w/g, letter => letter.toUpperCase());
+    
+  }
+
+  return capitalizedString;
+
 }

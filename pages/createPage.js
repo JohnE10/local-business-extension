@@ -15,6 +15,7 @@ const createPage = () => {
     const sendToCreatePageApi = async (siteUrl, str) => {
 
         setTimeout(async () => {
+            console.log('sendToCreatePageApi ran');
             const response = await fetch(`/api/createPageApi?url=${siteUrl}&replaceStr=${str}`);
             const data = await response.json();
 
@@ -57,28 +58,6 @@ const createPage = () => {
                 }
             }
             runControl();
-
-            // urlArr.forEach((url, index) => {
-
-            //     sendToCreatePageApi(url);
-            //     // const sendToCreatePageApi = async (siteUrl) => {
-
-            //     //     const response = await fetch(`/api/createPageApi?url=${siteUrl}&replaceStr=${replaceStr}`);
-            //     //     const data = await response.json();
-
-            //     //     if (data.success) {
-            //     //         setLoading(false);
-            //     //         console.log(data.success);
-
-            //     //     }
-            //     //     else if (data.error) {
-            //     //         console.log(data.error);
-            //     //         setLoading(false);
-            //     //         setError(data.error);
-            //     //     }
-            //     // }
-
-            // })
 
         } catch (err) {
             setError(err.message);
