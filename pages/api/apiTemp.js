@@ -1,6 +1,8 @@
 import axios from 'axios';
 import cheerio from 'cheerio';
 import { promises as fs } from 'fs';
+import { styleAttrToNext } from '../../utils/helpers';
+
 
 const apiTemp = (req, res) => {
 
@@ -11,7 +13,7 @@ const apiTemp = (req, res) => {
     <head><title>This is the page title</title></head>
     <body>
       <nav id="site-navigation" class="main-navigation" aria-label="Top Menu">
-        <div class="menu-top-container">
+        <div class="menu-top-container" style="background-image: url(https://www.midcitysmiles.com/blog/wp-content/uploads/2022/06/horiz-1-2000x1200.png); padding-bottom: 60%; margin-top: 25px;">
           <ul id="top-menu" class="menu">
             <li id="menu-item-80" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-home current-menu-item page_item page-item-12 current_page_item menu-item-80">
               <a href="https://www.midcitysmiles.com/blog/" aria-current="page">HOME</a></li>
@@ -35,10 +37,10 @@ const apiTemp = (req, res) => {
         flex - wrap: nowrap;
       }
     </style>
-      <p>
+      <p style="padding-top: 60%">
         Some text with <b>a few <span>HTML</span></b> tags.
       </p>
-      <div>
+      <div style="text-align: center;">
         <img src="https://site.com/image1" width="30rem" height="150px" />
         <img src="https://site.com/image2" >
         <img src="https://site.com/image3" >
@@ -61,83 +63,25 @@ const apiTemp = (req, res) => {
   let images;
   let imageSRCs = [];
 
+
   let $ = cheerio.load(html);
+
+  let tagsWithStyle = $('[style]');
+
+  // make css style attribute adhere to next.js rules
+  tagsWithStyle.each((i, el) => {
+    const tagWithStyle = $.html(el);
+    let styleAttr = $(el).attr('style');
+    // console.log('html(el): ', styleAttr);
+    styleAttr = styleAttrToNext(styleAttr)
+    if (styleAttr.length > 0) {
+      console.log(i + ' - ', styleAttr);
+    }
+  });
 
   let body = $('body');
 
-  const temp = 'https://site.com/image1';
-
-  images = $('body').find('img');
-
-  const styles = $('body').find('style');
-  const scripts = $('body').find('script');
-  const iframes = $('body').find('iframe');
-  const navLinks = $('body').find('nav').find('ul').find('li');
-
-
-
-  // console.log('styles.html(): ', styles.html());
-
-  // images.each((i, el) => {
-  //   // console.log('results: ', $(el).attr('src'));
-  //   const imgAttr = $(el).attr('src');
-  //   console.log('imgAttr: ', imgAttr);
-
-  //   if ($(el).attr('width')) {
-  //     let imgWidth = $(el).attr('width');
-  //     let imgHeight = $(el).attr('height');
-  //     imgWidth = imgWidth.replace('px', '').replace('rem', '').replace('em', '');
-  //     imgHeight = imgHeight.replace('px', '').replace('rem', '').replace('em', '');
-  //     $(`img[src='${imgAttr}']`).replaceWith(`<img src='${imgAttr}' alt='/' width='${imgWidth}' height='${imgHeight}' >`);
-  //   }
-  //   else {
-  //     $(`img[src='${imgAttr}']`).replaceWith(`<img src='${imgAttr}' alt='/' width='150' height='150' >`);
-  //   }
-  // });
-
-  // styles.each((i, el) => {
-  //   let elementHtml = $(el).html();
-  //   let attrId = '';
-  //   let attrClass = '';
-  //   if ($(el).attr('id')) {
-  //     attrId = $(el).attr('id');
-  //     console.log('attrId: ', attrId);
-  //   }
-
-  //   if ($(el).attr('class')) {
-  //     attrClass = $(el).attr('class');
-  //     console.log('attrClass: ', attrClass);
-  //   }
-
-  //   if (attrId != '') {
-  //     $('body').find(`style[id="${attrId}"]`).replaceWith(`<style id='${attrId}'>` + '{`' + $(el).html() + '`}' + '</style>')
-  //   }
-  //   else if(attrClass != '') {
-  //     $('body').find(`style[class="${attrClass}"]`).replaceWith(`<style id='${attrId}'>` + '{`' + $(el).html() + '`}' + '</style>')
-  //   }
-
-  // });
-
-  // iframes.each((i, el) => {
-  //   console.log('$(el).parent: ', $(el).parent().prop('tagName'));
-  // });
-
-  // body = $('body').html();
-
-  // function to add self closing slash to all Image tags.
-  // const updatedBody = body.replace(/<img.*?>/g, (match) => {
-  // body = body.replace(/<img.*?>/g, (match) => {
-  //   if (!match.endsWith('/>')) {
-
-  //     // console.log(match + ' - ' + 'yes');
-  //     return `${match}/>`;
-  //   }
-  //   return match;
-  // });
-
-  // console.log('body.html(): ', body);
-
-  return res.send(navLinks);
+  return res.send('styleAttr: ');
 
 }
 

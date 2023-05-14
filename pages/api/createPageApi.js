@@ -1,6 +1,7 @@
 import { gridColumnsTotalWidthSelector } from '@mui/x-data-grid';
 import { capFirst, toCamelCase } from '../../utils/helpers';
 import { fetchUrlData } from './backEndHelpers';
+import { styleAttrToNext } from '../../utils/helpers';
 
 const fs = require('fs');
 
@@ -38,12 +39,14 @@ const createPageApi = async (req, res) => {
             let $ = cheerio.load(html.success);
             $('svg').remove();
 
-            // handle images
+            // Html element manipulation
             let images = $('body').find('img');
             let styles = $('body').find('style');
             let scripts = $('body').find('script');
             let navLinks = $('body').find('nav').find('div').find('ul').find('li').find('a');
+            let tagsWithStyle = $('[style]');
 
+            // change url host on all nav links
             navLinks.each((i, el) => {
 
                 let href = $(el).attr('href');
@@ -83,7 +86,20 @@ const createPageApi = async (req, res) => {
                 }
             });
 
-            // make style abide by next.js rules
+            // make css style attribute adhere to next.js rules
+            tagsWithStyle.each((i, el) => {
+                // console.log('html(el): ', $.html(el.style));
+                // console.log('html(el): ', $(el).attr('style'));
+                let styleStr = $(el).attr('style');
+                if (styleStr.trim() != '') {
+                    styleStr = styleAttrToNext(styleStr)
+                    console.log('styleStr: ', styleStr);
+                }
+            });
+
+
+
+            // make style tags adhere to next.js rules
             styles.each((i, el) => {
                 let attrId = '';
                 let attrClass = '';
@@ -107,7 +123,7 @@ const createPageApi = async (req, res) => {
 
             });
 
-            // make script abide by next.js rules
+            // make script adhere to next.js rules
             scripts.each((i, el) => {
 
                 let attrId = '';

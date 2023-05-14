@@ -11,6 +11,8 @@ const temp = () => {
         </div>
     </figure>
     `
+  
+
   return (
     <div>temp</div>
   )

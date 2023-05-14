@@ -1,3 +1,4 @@
+import temp from '../pages/temp';
 
 
 export const validateURL = (url) => {
@@ -15,26 +16,26 @@ export const isValidUrl = (url) => {
   return urlRegex.test(url);
 }
 
-export const fetchUrlData = async (url) => {
+// export const fetchUrlData = async (url) => {
 
-  try {
-    const response = await fetch(url);
-    if (!response.ok) {
-      throw Error('Did not get a response from server.');
-    }
+//   try {
+//     const response = await fetch(url);
+//     if (!response.ok) {
+//       throw Error('Did not get a response from server.');
+//     }
 
-    const data = await response.text();
-    // console.log(data);
-    console.log('Done');
+//     const data = await response.text();
+//     // console.log(data);
+//     console.log('Done');
 
-    return { success: data };
+//     return { success: data };
 
-  } catch (err) {
-    console.log(err);
-    return { error: err.message };
-  }
+//   } catch (err) {
+//     console.log(err);
+//     return { error: err.message };
+//   }
 
-}
+// }
 
 export const toCamelCase = (str) => {
 
@@ -76,9 +77,70 @@ export const capFirst = (str) => {
       }
     })
     capitalizedString = str.replace(/\b\w/g, letter => letter.toUpperCase());
-    
+
   }
 
   return capitalizedString;
 
+}
+
+export const styleAttrToNext = (style) => {
+
+  let semiColonSplitArr = [];
+  let propValueArr = [];
+  let cssProp = '';
+  let cssValue = '';
+
+  const toNextCss = (str) => {
+    if (str.trim() != '') {
+      if (!str.includes('https:') && !str.includes('http:')) {
+        if (str.includes(':')) {
+          let tempObj = {};
+          let key = toCamelCase(str.split(':')[0]);
+          tempObj[key.trim()] = str.split(':')[1].trim();
+          propValueArr.push(tempObj);
+        }
+
+      }
+      else {
+        if (str.includes(':')) {
+          const tempArr = ['https:', 'http:'];
+          tempArr.forEach((temp) => {
+            if (str.includes(temp)) {
+              str = str.replaceAll(temp, '-(tempDivider)-');
+              let tempObj = {};
+              let key = toCamelCase(str.split(':')[0]);
+              let tempValue = str.split(':')[1].trim();
+              tempValue = tempValue.replaceAll('-(tempDivider)-', temp);
+              tempObj[key.trim()] = tempValue;
+              if (!propValueArr.includes(tempObj)) {
+                propValueArr.push(tempObj);
+              }
+            }
+          });
+        }
+      }
+
+    }
+  }
+
+  style = style.trim();
+
+  if (style.includes(';')) {
+    semiColonSplitArr = style.split(';');
+    semiColonSplitArr.map((ele) => {
+      toNextCss(ele);
+    })
+  }
+  else { 
+  toNextCss(style);
+}
+
+const strArr = propValueArr.map(obj => Object.keys(obj)[0] + ': ' + `'${Object.values(obj)[0]}'`);
+
+const joinedStr = '{{' + strArr.join(', ') + '}}';
+
+
+
+return joinedStr;
 }
