@@ -37,6 +37,7 @@ const apiTemp = (req, res) => {
         flex - wrap: nowrap;
       }
     </style>
+    <script src="https://www.midcitysmiles.com/blog/wp-content/themes/twentyseventeen/assets/js/skip-link-focus-fix.js?ver=20161114" id="twentyseventeen-skip-link-focus-fix-js">some text</script>
       <p style="padding-top: 60%">
         Some text with <b>a few <span>HTML</span></b> tags.
       </p>
@@ -60,25 +61,36 @@ const apiTemp = (req, res) => {
   </html>
   `;
 
-  let images;
-  let imageSRCs = [];
-
-
   let $ = cheerio.load(html);
 
-  let tagsWithStyle = $('[style]');
+  let images;
+  let imageSRCs = [];
+  let scripts = $('body').find('script');
 
-  // make css style attribute adhere to next.js rules
-  tagsWithStyle.each((i, el) => {
-    const tagWithStyle = $.html(el);
-    let styleAttr = $(el).attr('style');
-    // console.log('html(el): ', styleAttr);
-    styleAttr = styleAttrToNext(styleAttr)
-    if (styleAttr.length > 0) {
-      console.log(i + ' - ', styleAttr);
-    }
-    $(el).attr('style', styleAttr);
+
+
+  // let tagsWithStyle = $('[style]');
+
+  // // make css style attribute adhere to next.js rules
+  // tagsWithStyle.each((i, el) => {
+  //   const tagWithStyle = $.html(el);
+  //   let styleAttr = $(el).attr('style');
+  //   // console.log('html(el): ', styleAttr);
+  //   styleAttr = styleAttrToNext(styleAttr)
+  //   if (styleAttr.length > 0) {
+  //     console.log(i + ' - ', styleAttr);
+  //   }
+  //   $(el).attr('style', styleAttr);
     
+  // });
+
+  scripts.each((i, el) => {
+
+    const temp = $(el).text();
+    if($(el).text().trim() != '') {
+      $(el).text('{`' + temp + '`}');
+    }
+
   });
 
 console.log($.html());

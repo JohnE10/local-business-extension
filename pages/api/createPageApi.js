@@ -43,7 +43,8 @@ const createPageApi = async (req, res) => {
             let images = $('body').find('img');
             let styles = $('body').find('style');
             let scripts = $('body').find('script');
-            let navLinks = $('body').find('nav').find('div').find('ul').find('li').find('a');
+            // let navLinks = $('body').find('nav').find('div').find('ul').find('li').find('a');
+             let navLinks = $('body').find('nav').find('ul').find('li').find('a');
             let tagsWithStyle = $('[style]');
 
             // change url host on all nav links
@@ -52,13 +53,17 @@ const createPageApi = async (req, res) => {
                 let href = $(el).attr('href');
                 href = href.trim();
                 let newHref = new URL(href);
-                let anchorText = newHref.pathname.replace(replaceStr, '').replaceAll('/', '');
+                // let anchorText = newHref.pathname.replace(replaceStr, '').replaceAll('/', '');
+                let anchorText = $(el).text();
                 anchorText = capFirst(anchorText);
+                if(anchorText.trim() == '') {
+                    anchorText = 'Home';
+                }
                 newHref = newHref.pathname.replace(replaceStr, '').replaceAll('/', '');
                 newHref = '/' + toCamelCase(newHref);
-                if (newHref == '/') {
-                    newHref = '/' + 'index';
-                }
+                // if (newHref == '/') {
+                //     newHref = '/' + 'index';
+                // }
                 let elementClass = '';
                 if ($(el).attr('class')) {
                     elementClass = $(el).attr('class');
@@ -67,7 +72,9 @@ const createPageApi = async (req, res) => {
                 if ($(el).attr('id')) {
                     elementId = $(el).attr('id');
                 }
-                $('body').find('nav').find('div').find('ul').find('li').find(`a[href='${href}']`).replaceWith(`<a id= '${elementId}' class='${elementClass}' href='${newHref}'>${anchorText}</a>`);
+                // $('body').find('nav').find('div').find('ul').find('li').find(`a[href='${href}']`).replaceWith(`<a id= '${elementId}' class='${elementClass}' href='${newHref}'>${anchorText}</a>`);
+
+                $('body').find('nav').find('ul').find('li').find(`a[href='${href}']`).replaceWith(`<a id= '${elementId}' class='${elementClass}' href='${newHref}'>${anchorText}</a>`);
             });
 
             //replace <img> tags with img, src, width, height
@@ -127,26 +134,35 @@ const createPageApi = async (req, res) => {
             });
 
             // make script adhere to next.js rules
+            // scripts.each((i, el) => {
+
+            //     let attrId = '';
+            //     let attrClass = '';
+            //     if ($(el).attr('id')) {
+            //         attrId = $(el).attr('id');
+            //     }
+
+            //     if ($(el).attr('class')) {
+            //         attrClass = $(el).attr('class');
+            //     }
+
+            //     if (attrId != '') {
+            //         $('body').find(`Script[id="${attrId}"]`).replaceWith(`<Script id='${attrId}' class='${attrClass}'>` + '{`' + $(el).html() + '`}' + '</Script>')
+            //     }
+            //     else if (attrClass != '') {
+            //         $('body').find(`Script[class="${attrClass}"]`).replaceWith(`<Script id='${attrId} class='${attrClass}''>` + '{`' + $(el).html() + '`}' + '</Script>')
+            //     }
+            //     else {
+            //         $('body').find(`Script`).replaceWith(`<Script>` + '{`' + $(el).html() + '`}' + '</Script>')
+            //     }
+
+            // });
+
             scripts.each((i, el) => {
 
-                let attrId = '';
-                let attrClass = '';
-                if ($(el).attr('id')) {
-                    attrId = $(el).attr('id');
-                }
-
-                if ($(el).attr('class')) {
-                    attrClass = $(el).attr('class');
-                }
-
-                if (attrId != '') {
-                    $('body').find(`Script[id="${attrId}"]`).replaceWith(`<Script id='${attrId}' class='${attrClass}'>` + '{`' + $(el).html() + '`}' + '</Script>')
-                }
-                else if (attrClass != '') {
-                    $('body').find(`Script[class="${attrClass}"]`).replaceWith(`<Script id='${attrId} class='${attrClass}''>` + '{`' + $(el).html() + '`}' + '</Script>')
-                }
-                else {
-                    $('body').find(`Script`).replaceWith(`<Script>` + '{`' + $(el).html() + '`}' + '</Script>')
+                const temp = $(el).text();
+                if($(el).text().trim() != '') {
+                  $(el).text('{`' + temp + '`}');
                 }
 
             });

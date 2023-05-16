@@ -1,11 +1,21 @@
-import React from 'react'
 
 const temp = () => {
 
-  const replaceStr = 'blog/';
-const temp = new URL('https://www.midcitysmiles.com/blog/wp-content/uploads/2022/06/cropped-pels.png');
+  const cheerio = require('cheerio');
 
-console.log(temp.pathname.replace(replaceStr, ''));
+let html =  `<html><script src="https://www.midcitysmiles.com/blog/wp-content/themes/twentyseventeen/assets/js/skip-link-focus-fix.js?ver=20161114" id="twentyseventeen-skip-link-focus-fix-js">some text</script></html>`;
+
+let $ = cheerio.load(html);
+
+console.log($('style').text());
+
+
+
+// const scriptRegex = /<script([^>]*)<\/script>/g;;
+// // str = str.replaceAll(scriptRegex, '<script$1>{`$1`}</script>');
+// str = str.replaceAll(scriptRegex, 'Text');
+
+
 
   
 
