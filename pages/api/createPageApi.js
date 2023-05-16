@@ -44,7 +44,7 @@ const createPageApi = async (req, res) => {
             let styles = $('body').find('style');
             let scripts = $('body').find('script');
             // let navLinks = $('body').find('nav').find('div').find('ul').find('li').find('a');
-             let navLinks = $('body').find('nav').find('ul').find('li').find('a');
+            let navLinks = $('body').find('nav').find('ul').find('li').find('a');
             let tagsWithStyle = $('[style]');
 
             // change url host on all nav links
@@ -56,7 +56,7 @@ const createPageApi = async (req, res) => {
                 // let anchorText = newHref.pathname.replace(replaceStr, '').replaceAll('/', '');
                 let anchorText = $(el).text();
                 anchorText = capFirst(anchorText);
-                if(anchorText.trim() == '') {
+                if (anchorText.trim() == '') {
                     anchorText = 'Home';
                 }
                 newHref = newHref.pathname.replace(replaceStr, '').replaceAll('/', '');
@@ -107,30 +107,36 @@ const createPageApi = async (req, res) => {
                 }
             });
 
+            // // make style tags adhere to next.js rules
+            // styles.each((i, el) => {
+            //     let attrId = '';
+            //     let attrClass = '';
+            //     if ($(el).attr('id')) {
+            //         attrId = $(el).attr('id');
+            //     }
 
+            //     if ($(el).attr('class')) {
+            //         attrClass = $(el).attr('class');
+            //     }
+
+            //     if (attrId != '') {
+            //         $('body').find(`style[id="${attrId}"]`).replaceWith(`<style id='${attrId}' class='${attrClass}'>` + '{`' + $(el).html() + '`}' + '</style>')
+            //     }
+            //     else if (attrClass != '') {
+            //         $('body').find(`style[class="${attrClass}"]`).replaceWith(`<style id='${attrId} class='${attrClass}''>` + '{`' + $(el).html() + '`}' + '</style>')
+            //     }
+            //     else {
+            //         $('body').find(`style`).replaceWith(`<style>` + '{`' + $(el).html() + '`}' + '</style>')
+            //     }
+
+            // });
 
             // make style tags adhere to next.js rules
             styles.each((i, el) => {
-                let attrId = '';
-                let attrClass = '';
-                if ($(el).attr('id')) {
-                    attrId = $(el).attr('id');
+                const temp = $(el).text();
+                if ($(el).text().trim() != '') {
+                    $(el).text('{`' + temp + '`}');
                 }
-
-                if ($(el).attr('class')) {
-                    attrClass = $(el).attr('class');
-                }
-
-                if (attrId != '') {
-                    $('body').find(`style[id="${attrId}"]`).replaceWith(`<style id='${attrId}' class='${attrClass}'>` + '{`' + $(el).html() + '`}' + '</style>')
-                }
-                else if (attrClass != '') {
-                    $('body').find(`style[class="${attrClass}"]`).replaceWith(`<style id='${attrId} class='${attrClass}''>` + '{`' + $(el).html() + '`}' + '</style>')
-                }
-                else {
-                    $('body').find(`style`).replaceWith(`<style>` + '{`' + $(el).html() + '`}' + '</style>')
-                }
-
             });
 
             // make script adhere to next.js rules
@@ -161,8 +167,8 @@ const createPageApi = async (req, res) => {
             scripts.each((i, el) => {
 
                 const temp = $(el).text();
-                if($(el).text().trim() != '') {
-                  $(el).text('{`' + temp + '`}');
+                if ($(el).text().trim() != '') {
+                    $(el).text('{`' + temp + '`}');
                 }
 
             });
