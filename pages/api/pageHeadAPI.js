@@ -1,6 +1,6 @@
 import script from 'next/script';
 import { fetchUrlData } from './backEndHelpers';
-import { styleAttrToNext } from '../../utils/helpers';
+import { randomStr, styleAttrToNext } from '../../utils/helpers';
 
 const fs = require('fs');
 
@@ -12,7 +12,7 @@ const pageHeadAPI = async (req, res) => {
 
     const siteFileDir = 'siteFiles/';
 
-    let fileToCreate = siteFileDir + 'jsxHead' + '.js';
+    let appHeadCode = siteFileDir + 'appHead' + '.js';
 
     try {
 
@@ -24,30 +24,21 @@ const pageHeadAPI = async (req, res) => {
         let scripts = $('head').find('script');
         let styles = $('head').find('style');
         let tagsWithStyle = $('[style]');
+        let TagsWithStylesheet = $('link[rel="stylesheet"]');
+        let TagsWithPreload = $('link[rel="preload"]');
 
         // make script adhere to next.js rules
         scripts.each((i, el) => {
-
-            let attrId = '';
-            let attrClass = '';
-            if ($(el).attr('id')) {
-                attrId = $(el).attr('id');
+            const temp = $(el).text();
+            const tag = $.html(el);
+            if (!tag.includes('id=')) {
+                const scriptId = randomStr(10);
+                $(el).attr('id', scriptId);
             }
 
-            if ($(el).attr('class')) {
-                attrClass = $(el).attr('class');
+            if ($(el).text().trim() != '') {
+                $(el).text('{`' + temp + '`}');
             }
-
-            if (attrId != '') {
-                $('head').find(`script[id="${attrId}"]`).replaceWith(`<script id='${attrId}' class='${attrClass}'>` + '{`' + $(el).html() + '`}' + '</script>')
-            }
-            else if (attrClass != '') {
-                $('head').find(`script[class="${attrClass}"]`).replaceWith(`<script id='${attrId} class='${attrClass}''>` + '{`' + $(el).html() + '`}' + '</script>')
-            }
-            else {
-                $('head').find(`script`).replaceWith(`<script>` + '{`' + $(el).html() + '`}' + '</script>')
-            }
-
         });
 
         // make style tags adhere to next.js rules
@@ -83,7 +74,37 @@ const pageHeadAPI = async (req, res) => {
             }
         });
 
+        let tempDocumnetHead = '';
+
+        // move style tags with attribute rel='stylesheet' to documentHeadCode
+        TagsWithStylesheet.each((i, el) => {
+            let temp = $.html(el);
+            const linkRegEx = /<link([^>]*)>/g;
+            temp = temp.replaceAll(linkRegEx, '<link$1 />');
+            tempDocumnetHead = tempDocumnetHead + temp + '\n';
+            // console.log('$.html(el): ', temp);
+        })
+
+        const documentHeadJsx = `
+        <>
+         ${tempDocumnetHead}
+        </>
+        `;
+
+        const documentHeadCode = siteFileDir + 'documentHead' + '.js';
+
+        // save file
+        fs.writeFileSync(documentHeadCode, documentHeadJsx);
+
+        TagsWithStylesheet.remove();
+
         let head = $('head').html();
+
+        // comment out link tags with rel="preload"
+        TagsWithPreload.each((i, el) => {
+            let temp = $.html(el);
+            head = head.replaceAll(temp, '{/* ' + temp + ' */}');
+        });
 
         // make all meta tags self closing
         const metaRegEx = /<meta([^>]*)>/g;
@@ -102,17 +123,17 @@ const pageHeadAPI = async (req, res) => {
         head = head.replaceAll('</script', '</Script')
         head = head.replaceAll('"{{', '{{');
         head = head.replaceAll('}}"', '}}');
-
-        // console.log('head: ', head);
+        head = head.replaceAll('crossorigin', 'crossOrigin');
 
         const headJsx = `
         <>
-        ${head}
+            ${head}
         </>
         `;
 
         // save file
-        fs.writeFileSync(fileToCreate, headJsx);
+        fs.writeFileSync(appHeadCode, headJsx);
+        console.log('Done');
         return res.json({ success: 'Page created.', results: head })
 
     } catch (error) {
@@ -122,4 +143,4 @@ const pageHeadAPI = async (req, res) => {
 
 }
 
-export default pageHeadAPI
+export default pageHeadAPI;

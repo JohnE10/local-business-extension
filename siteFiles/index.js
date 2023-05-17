@@ -5,7 +5,7 @@
                 import LiteYouTubeEmbed from "react-lite-youtube-embed"
                 import "react-lite-youtube-embed/dist/LiteYouTubeEmbed.css"
 
-                const contactUs = () => {
+                const index = () => {
                     return (
                         <>
                             
@@ -22,9 +22,9 @@
 	<div className="site-branding">
 	<div className="wrap">
 
-		<Link href="https://www.midcitysmiles.com/blog/" className="custom-logo-link" rel="home"><Image src="/wp-content/uploads/2022/06/cropped-Untitled-1-3.png" alt="/" width="281" height="250" priority="false" /></Link>
+		<Link href="https://www.midcitysmiles.com/blog/" className="custom-logo-link" rel="home" aria-current="page"><Image src="/wp-content/uploads/2022/06/cropped-Untitled-1-3.png" alt="/" width="281" height="250" priority="false" /></Link>
 		<div className="site-branding-text">
-							<p className="site-title"><Link href="https://www.midcitysmiles.com/blog/" rel="home">Mid-City Smiles Family Dentistry</Link></p>
+							<h1 className="site-title"><Link href="https://www.midcitysmiles.com/blog/" rel="home">Mid-City Smiles Family Dentistry</Link></h1>
 			
 							<p className="site-description">Welcome to Mid-City Smiles Family Dentistry! We are a dental practice located in New Orleans. Our team specializes in family dentistry and orthodontic care – Diamond Invisalign Providers..</p>
 					</div>
@@ -41,14 +41,15 @@
 	<button className="menu-toggle" aria-controls="top-menu" aria-expanded="false">
 		Menu	</button>
 
-	<div className="menu-top-container"><ul id="top-menu" className="menu"><li id="menu-item-80" className="menu-item menu-item-type-post_type menu-item-object-page menu-item-home menu-item-80"><Link id="" className="" href="/">HOME</Link></li>
+	<div className="menu-top-container"><ul id="top-menu" className="menu"><li id="menu-item-80" className="menu-item menu-item-type-post_type menu-item-object-page menu-item-home current-menu-item page_item page-item-12 current_page_item menu-item-80"><Link id="" className="" href="/">HOME</Link></li>
 <li id="menu-item-144" className="menu-item menu-item-type-post_type menu-item-object-page menu-item-144"><Link id="" className="" href="/ourTeam">OUR TEAM</Link></li>
-<li id="menu-item-148" className="menu-item menu-item-type-post_type menu-item-object-page current-menu-item page_item page-item-146 current_page_item menu-item-148"><Link id="" className="" href="/contactUs">CONTACT US</Link></li>
+<li id="menu-item-148" className="menu-item menu-item-type-post_type menu-item-object-page menu-item-148"><Link id="" className="" href="/contactUs">CONTACT US</Link></li>
 <li id="menu-item-161" className="menu-item menu-item-type-post_type menu-item-object-page menu-item-161"><Link id="" className="" href="/procedures">PROCEDURES</Link></li>
 <li id="menu-item-164" className="menu-item menu-item-type-post_type menu-item-object-page menu-item-164"><Link id="" className="" href="/orthodontics">INVISALIGN</Link></li>
 <li id="menu-item-153" className="menu-item menu-item-type-post_type menu-item-object-page menu-item-153"><Link id="" className="" href="/patientForms">PATIENT FORMS</Link></li>
 <li id="menu-item-321" className="menu-item menu-item-type-post_type menu-item-object-page menu-item-321"><Link id="" className="" href="/paymentInsurance">PAYMENT/INSURANCE</Link></li>
 </ul></div>
+			<Link href="#content" className="menu-scroll-down"><span className="screen-reader-text">Scroll down to content</span></Link>
 	</nav>
 				</div>
 			</div>
@@ -59,42 +60,50 @@
 	<div className="site-content-contain">
 		<div id="content" className="site-content">
 
-<div className="wrap">
-	<div id="primary" className="content-area">
-		<main id="main" className="site-main">
+<div id="primary" className="content-area">
+	<main id="main" className="site-main">
 
-			
-<article id="post-146" className="post-146 page type-page status-publish hentry">
-	<header className="entry-header">
-		<h1 className="entry-title">CONTACT US</h1>			</header>
-	<div className="entry-content">
-		
-<p><strong>ADDRESS</strong>:&nbsp;&nbsp;<Link href="https://www.google.com/maps/place/Mid-City+Smiles+Family+Dentistry/@29.971974,-90.0983803,17z/data=!3m1!4b1!4m5!3m4!1s0x8620a58a4f8c6d79:0x3d0ad5c9061e5eb2!8m2!3d29.9719414!4d-90.0962141" target="_blank" rel="noreferrer noopener">3625 Canal Street, New Orleans, LA 70119</Link>&nbsp;</p>
+		<article id="post-12" className="twentyseventeen-panel  post-12 page type-page status-publish has-post-thumbnail hentry">
 
+	
+		<div className="panel-image" style={{backgroundImage: 'url(https://www.midcitysmiles.com/blog/wp-content/uploads/2022/06/horiz-1-2000x1200.png)'}}>
+			<div className="panel-image-prop" style={{paddingTop: '60%'}}></div>
+		</div>
 
+	
+	<div className="panel-content">
+		<div className="wrap">
+			<header className="entry-header">
+				<h2 className="entry-title">WELCOME</h2>
+				
+			</header>
 
-<p><strong>PHONE</strong>:&nbsp;&nbsp;(504)485-6575</p>
-
-
-
-<p><strong>EMAIL</strong>:&nbsp;&nbsp;<Link href="mailto:frontoffice@midcitysmiles.com?subject=Emailed%20from%20the%20website">frontoffice@midcitysmiles.com</Link></p>
-
-
-
-<hr className="wp-block-separator has-alpha-channel-opacity" />
+			<div className="entry-content">
+				
+<p>Your smile is one of the first things people notice.&nbsp; Dr. Mark D. Anderson, Dr. Perla Hernandez, Dr. Delmy Urbina, and Dr. Caylin Frye, along with their caring team, use the most advanced technology and techniques to create and restore beautiful and healthy smiles.  We are a dental practice located in the heart of New Orleans. We specialize in family dentistry and provide complete dental care for all ages, including orthodontic care, placement of dental implants, and cosmetic procedures.  Being located in Mid-City, we are convenient to all areas of town.&nbsp; Come visit our state-of-the-art office!</p>
 
 
 
-<h3 className="has-text-align-left">HOURS:</h3>
+<figure className="wp-block-embed is-type-video is-provider-youtube wp-block-embed-youtube wp-embed-aspect-16-9 wp-has-aspect-ratio"><div className="wp-block-embed__wrapper">
+
+                                        <LiteYouTubeEmbed id="VpmVNiU4CTs" title="YouTube video player">
+                                        </LiteYouTubeEmbed>
+</div></figure>
 
 
 
-<figure className="wp-block-table is-style-stripes has-medium-font-size"><table className="has-text-color" style={{color: '#f30d0d'}}><tbody><tr><td><strong>Monday</strong></td><td>8 am-5 pm</td></tr><tr><td><strong>Tuesday</strong></td><td>8 am-5 pm</td></tr><tr><td><strong>Wednesday</strong></td><td>9 am-6 pm</td></tr><tr><td><strong>Thursday</strong></td><td>8 am-5 pm</td></tr><tr><td><strong>Friday</strong></td><td>8 am-3 pm</td></tr><tr><td><strong>Saturday</strong></td><td>9&nbsp;am-1 pm</td></tr><tr><td><strong>S</strong><strong>unday</strong></td><td>CLOSED</td></tr></tbody></table></figure>
+<hr className="wp-block-separator has-text-color has-red-color has-css-opacity has-red-background-color has-background is-style-wide" />
+
+
+<p style={{textAlign: 'center'}}><iframe loading="lazy" src="https://summerlou.smugmug.com/frame/slideshow?key=8vk8wf&amp;speed=3&amp;transition=fade&amp;autoStart=1&amp;captions=0&amp;navigation=0&amp;playButton=0&amp;randomize=0&amp;transitionSpeed=2" width="800" height="600" frameborder="no" scrolling="no"></iframe></p>			</div>
+
+		</div>
 	</div>
+
 </article>
 
-		</main>
-	</div>
+		
+	</main>
 </div>
 
 
@@ -146,9 +155,9 @@
 	
 </ul>
 
-		</section><section id="nav_menu-7" className="widget widget_nav_menu"><nav className="menu-top-container" aria-label="Menu"><ul id="menu-top" className="menu"><li className="menu-item menu-item-type-post_type menu-item-object-page menu-item-home menu-item-80"><Link id="" className="" href="/">HOME</Link></li>
+		</section><section id="nav_menu-7" className="widget widget_nav_menu"><nav className="menu-top-container" aria-label="Menu"><ul id="menu-top" className="menu"><li className="menu-item menu-item-type-post_type menu-item-object-page menu-item-home current-menu-item page_item page-item-12 current_page_item menu-item-80"><Link id="" className="" href="/">HOME</Link></li>
 <li className="menu-item menu-item-type-post_type menu-item-object-page menu-item-144"><Link id="" className="" href="/ourTeam">OUR TEAM</Link></li>
-<li className="menu-item menu-item-type-post_type menu-item-object-page current-menu-item page_item page-item-146 current_page_item menu-item-148"><Link id="" className="" href="/contactUs">CONTACT US</Link></li>
+<li className="menu-item menu-item-type-post_type menu-item-object-page menu-item-148"><Link id="" className="" href="/contactUs">CONTACT US</Link></li>
 <li className="menu-item menu-item-type-post_type menu-item-object-page menu-item-161"><Link id="" className="" href="/procedures">PROCEDURES</Link></li>
 <li className="menu-item menu-item-type-post_type menu-item-object-page menu-item-164"><Link id="" className="" href="/orthodontics">INVISALIGN</Link></li>
 <li className="menu-item menu-item-type-post_type menu-item-object-page menu-item-153"><Link id="" className="" href="/patientForms">PATIENT FORMS</Link></li>
@@ -197,5 +206,5 @@ var twentyseventeenScreenReaderText = {"quote":"<svg className=\"icon icon-quote
                         </>
                     )    
                 }
-                export default contactUs;
+                export default index;
                 

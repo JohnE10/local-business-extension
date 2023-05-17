@@ -1,7 +1,8 @@
 import { gridColumnsTotalWidthSelector } from '@mui/x-data-grid';
-import { capFirst, toCamelCase } from '../../utils/helpers';
+import { capFirst, randomStr, toCamelCase } from '../../utils/helpers';
 import { fetchUrlData } from './backEndHelpers';
 import { styleAttrToNext } from '../../utils/helpers';
+
 
 const fs = require('fs');
 
@@ -77,7 +78,7 @@ const createPageApi = async (req, res) => {
                 $('body').find('nav').find('ul').find('li').find(`a[href='${href}']`).replaceWith(`<a id= '${elementId}' class='${elementClass}' href='${newHref}'>${anchorText}</a>`);
             });
 
-            //replace <img> tags with img, src, width, height
+            //replace <img> tags with img, src, width, height and priority
             images.each((i, el) => {
                 const imgSrc = $(el).attr('src');
                 const tempImgSrc = new URL(imgSrc.trim());
@@ -88,7 +89,7 @@ const createPageApi = async (req, res) => {
                     let imgHeight = $(el).attr('height');
                     imgWidth = imgWidth.replace('px', '').replace('rem', '').replace('em', '');
                     imgHeight = imgHeight.replace('px', '').replace('rem', '').replace('em', '');
-                    $(`img[src='${imgSrc}']`).replaceWith(`<img src='${newImgSrc}' alt='/' width='${imgWidth}' height='${imgHeight}' >`);
+                    $(`img[src='${imgSrc}']`).replaceWith(`<img src='${newImgSrc}' alt='/' width='${imgWidth}' height='${imgHeight}' priority='false' >`);
                 }
                 else {
                     $(`img[src='${imgSrc}']`).replaceWith(`<img src='${imgSrc}' alt='/' width='150' height='150' >`);
@@ -97,8 +98,6 @@ const createPageApi = async (req, res) => {
 
             // make css style attribute adhere to next.js rules
             tagsWithStyle.each((i, el) => {
-                // console.log('html(el): ', $.html(el));
-                // console.log('html(el): ', $(el).attr('style'));
                 let styleStr = $(el).attr('style');
                 if (styleStr.trim() != '') {
                     styleStr = styleAttrToNext(styleStr)
@@ -106,30 +105,6 @@ const createPageApi = async (req, res) => {
                     $(el).attr('style', styleStr);
                 }
             });
-
-            // // make style tags adhere to next.js rules
-            // styles.each((i, el) => {
-            //     let attrId = '';
-            //     let attrClass = '';
-            //     if ($(el).attr('id')) {
-            //         attrId = $(el).attr('id');
-            //     }
-
-            //     if ($(el).attr('class')) {
-            //         attrClass = $(el).attr('class');
-            //     }
-
-            //     if (attrId != '') {
-            //         $('body').find(`style[id="${attrId}"]`).replaceWith(`<style id='${attrId}' class='${attrClass}'>` + '{`' + $(el).html() + '`}' + '</style>')
-            //     }
-            //     else if (attrClass != '') {
-            //         $('body').find(`style[class="${attrClass}"]`).replaceWith(`<style id='${attrId} class='${attrClass}''>` + '{`' + $(el).html() + '`}' + '</style>')
-            //     }
-            //     else {
-            //         $('body').find(`style`).replaceWith(`<style>` + '{`' + $(el).html() + '`}' + '</style>')
-            //     }
-
-            // });
 
             // make style tags adhere to next.js rules
             styles.each((i, el) => {
@@ -140,37 +115,18 @@ const createPageApi = async (req, res) => {
             });
 
             // make script adhere to next.js rules
-            // scripts.each((i, el) => {
-
-            //     let attrId = '';
-            //     let attrClass = '';
-            //     if ($(el).attr('id')) {
-            //         attrId = $(el).attr('id');
-            //     }
-
-            //     if ($(el).attr('class')) {
-            //         attrClass = $(el).attr('class');
-            //     }
-
-            //     if (attrId != '') {
-            //         $('body').find(`Script[id="${attrId}"]`).replaceWith(`<Script id='${attrId}' class='${attrClass}'>` + '{`' + $(el).html() + '`}' + '</Script>')
-            //     }
-            //     else if (attrClass != '') {
-            //         $('body').find(`Script[class="${attrClass}"]`).replaceWith(`<Script id='${attrId} class='${attrClass}''>` + '{`' + $(el).html() + '`}' + '</Script>')
-            //     }
-            //     else {
-            //         $('body').find(`Script`).replaceWith(`<Script>` + '{`' + $(el).html() + '`}' + '</Script>')
-            //     }
-
-            // });
-
             scripts.each((i, el) => {
-
                 const temp = $(el).text();
+                const tag = $.html(el);
+                if (!tag.includes('id=')) {
+                    const scriptId = randomStr(10);
+                    tag.attr('id', scriptId);
+                }
+
+                console.log('tag: ', tag);
                 if ($(el).text().trim() != '') {
                     $(el).text('{`' + temp + '`}');
                 }
-
             });
 
             // if YT video, use Next Video Compnent
@@ -205,8 +161,10 @@ const createPageApi = async (req, res) => {
 
             // remove html comments
             body = body.replaceAll(commentRegEx, '');
+
             // replace class with className
             body = body.replaceAll('class=', 'className=');
+
             // replace img with Image tag
             body = body.replaceAll('<img', '<Image');
 
@@ -238,10 +196,15 @@ const createPageApi = async (req, res) => {
             body = body.replaceAll('"{{', '{{');
             body = body.replaceAll('}}"', '}}');
 
+            // change a tags to Link tags
+            body = body.replaceAll('<a ', '<Link ');
+            body = body.replaceAll('</a>', '</Link>');
+
             // construct next.js page
             const nextPage = `
                 import Image from 'next/image';
                 import Script from 'next/script';
+                import Link from 'next/link';
                 import LiteYouTubeEmbed from "react-lite-youtube-embed"
                 import "react-lite-youtube-embed/dist/LiteYouTubeEmbed.css"
 
@@ -286,30 +249,3 @@ export const extractVideoId = (url) => {
         console.error("Invalid YouTube URL");
     }
 }
-
-// export const fixStyleAndScript = (styles) => {
-
-//     styles.each((i, el) => {
-//         let attrId = '';
-//         let attrClass = '';
-//         if ($(el).attr('id')) {
-//           attrId = $(el).attr('id');
-//         }
-
-//         if ($(el).attr('class')) {
-//           attrClass = $(el).attr('class');
-//         }
-
-//         if (attrId != '') {
-//           $('body').find(`style[id="${attrId}"]`).replaceWith(`<style id='${attrId}' class='${attrClass}'>` + '{`' + $(el).html() + '`}' + '</style>')
-//         }
-//         else if(attrClass != '') {
-//           $('body').find(`style[class="${attrClass}"]`).replaceWith(`<style id='${attrId} class='${attrClass}''>` + '{`' + $(el).html() + '`}' + '</style>')
-//         }
-//         else {
-//             $('body').find(`style`).replaceWith(`<style>` + '{`' + $(el).html() + '`}' + '</style>')
-//         }
-
-//       });
-
-// };

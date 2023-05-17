@@ -14,28 +14,20 @@ export const validateURL = (url) => {
 export const isValidUrl = (url) => {
   const urlRegex = /^(ftp|http|https):\/\/[^ "]+$/;
   return urlRegex.test(url);
-}
+};
 
-// export const fetchUrlData = async (url) => {
+export const randomStr = (length) => {
+  // declare all characters
+  const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  let randomString = ' ';
+    for (let i = 0; i < length; i++) {
+      const randomIndex = Math.floor(Math.random() * characters.length);
+      randomString += characters.charAt(randomIndex);
+    }
 
-//   try {
-//     const response = await fetch(url);
-//     if (!response.ok) {
-//       throw Error('Did not get a response from server.');
-//     }
+    return randomString;
 
-//     const data = await response.text();
-//     // console.log(data);
-//     console.log('Done');
-
-//     return { success: data };
-
-//   } catch (err) {
-//     console.log(err);
-//     return { error: err.message };
-//   }
-
-// }
+};
 
 export const toCamelCase = (str) => {
 
@@ -63,7 +55,7 @@ export const toCamelCase = (str) => {
   }).join('');
 
   return camelCaseString;
-}
+};
 
 export const capFirst = (str) => {
 
@@ -82,7 +74,7 @@ export const capFirst = (str) => {
 
   return capitalizedString;
 
-}
+};
 
 export const styleAttrToNext = (style) => {
 
@@ -132,13 +124,34 @@ export const styleAttrToNext = (style) => {
       toNextCss(ele);
     })
   }
-  else { 
-  toNextCss(style);
-}
+  else {
+    toNextCss(style);
+  }
 
-const strArr = propValueArr.map(obj => Object.keys(obj)[0] + ': ' + `'${Object.values(obj)[0]}'`);
+  const strArr = propValueArr.map(obj => Object.keys(obj)[0] + ': ' + `'${Object.values(obj)[0]}'`);
 
-const joinedStr = '{{' + strArr.join(', ') + '}}';
+  const joinedStr = '{{' + strArr.join(', ') + '}}';
 
-return joinedStr;
-}
+  return joinedStr;
+};
+
+// export const fetchUrlData = async (url) => {
+
+//   try {
+//     const response = await fetch(url);
+//     if (!response.ok) {
+//       throw Error('Did not get a response from server.');
+//     }
+
+//     const data = await response.text();
+//     // console.log(data);
+//     console.log('Done');
+
+//     return { success: data };
+
+//   } catch (err) {
+//     console.log(err);
+//     return { error: err.message };
+//   }
+
+// }
