@@ -2,6 +2,7 @@ import { gridColumnsTotalWidthSelector } from '@mui/x-data-grid';
 import { capFirst, randomStr, toCamelCase } from '../../utils/helpers';
 import { fetchUrlData } from './backEndHelpers';
 import { styleAttrToNext } from '../../utils/helpers';
+import path from 'path';
 
 
 const fs = require('fs');
@@ -123,10 +124,17 @@ const createPageApi = async (req, res) => {
                     tag.attr('id', scriptId);
                 }
 
-                console.log('tag: ', tag);
+                if($(el).attr('src')) {
+                    let temp = $(el).attr('src').trim();
+                    // console.log('replace: ', `${parsedUrl.protocol}//${parsedUrl.host}/${replaceStr}`)
+                    temp = temp.replace(`${parsedUrl.protocol}//${parsedUrl.host}/${replaceStr}`, '/');
+                    $(el).attr('src', temp);
+                }
+
                 if ($(el).text().trim() != '') {
                     $(el).text('{`' + temp + '`}');
                 }
+
             });
 
             // if YT video, use Next Video Compnent
@@ -158,6 +166,13 @@ const createPageApi = async (req, res) => {
 
             //Set body to the newly modified html
             let body = $('body').html();
+
+            scripts.each((i, el) => {
+                if($(el).attr('id') == 'twentyseventeen-skip-link-focus-fix-js-extra') {
+                    let temp = $.html(el);
+                    body = body.replaceAll(temp, '{/* ' + temp + ' */}');
+                }
+            });
 
             // remove html comments
             body = body.replaceAll(commentRegEx, '');
@@ -216,7 +231,7 @@ const createPageApi = async (req, res) => {
                     )    
                 }
                 export default ${urlPathName == '' ? 'index' : urlPathName};
-                `
+                `;
 
             // save file
             fs.writeFileSync(fileToCreate, nextPage);
@@ -237,8 +252,6 @@ const createPageApi = async (req, res) => {
 }
 
 export default createPageApi;
-
-
 
 export const extractVideoId = (url) => {
     const regExp = /\/embed\/([a-zA-Z0-9_-]+)/;
