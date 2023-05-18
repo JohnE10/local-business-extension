@@ -22,11 +22,11 @@
 	<div className="site-branding">
 	<div className="wrap">
 
-		<Link href="https://www.midcitysmiles.com/blog/" className="custom-logo-link" rel="home"><Image src="/wp-content/uploads/2022/06/cropped-Untitled-1-3.png" alt="/" width="281" height="250" priority="false" /></Link>
+		<Link href="/" className="custom-logo-link" rel="home"><Image src="/wp-content/uploads/2022/06/cropped-Untitled-1-3.png" alt="/" width="281" height="250" priority="false" /></Link>
 		<div className="site-branding-text">
-							<p className="site-title"><Link href="https://www.midcitysmiles.com/blog/" rel="home">Mid-City Smiles Family Dentistry</Link></p>
+							<p className="site-title"><Link href="/" rel="home"></Link></p>
 			
-							<p className="site-description">Welcome to Mid-City Smiles Family Dentistry! We are a dental practice located in New Orleans. Our team specializes in family dentistry and orthodontic care – Diamond Invisalign Providers..</p>
+							<p className="site-description"></p>
 					</div>
 
 		
@@ -41,13 +41,13 @@
 	<button className="menu-toggle" aria-controls="top-menu" aria-expanded="false">
 		Menu	</button>
 
-	<div className="menu-top-container"><ul id="top-menu" className="menu"><li id="menu-item-80" className="menu-item menu-item-type-post_type menu-item-object-page menu-item-home menu-item-80"><Link id="" className="" href="/">HOME</Link></li>
-<li id="menu-item-144" className="menu-item menu-item-type-post_type menu-item-object-page menu-item-144"><Link id="" className="" href="/ourTeam">OUR TEAM</Link></li>
-<li id="menu-item-148" className="menu-item menu-item-type-post_type menu-item-object-page current-menu-item page_item page-item-146 current_page_item menu-item-148"><Link id="" className="" href="/contactUs">CONTACT US</Link></li>
-<li id="menu-item-161" className="menu-item menu-item-type-post_type menu-item-object-page menu-item-161"><Link id="" className="" href="/procedures">PROCEDURES</Link></li>
-<li id="menu-item-164" className="menu-item menu-item-type-post_type menu-item-object-page menu-item-164"><Link id="" className="" href="/orthodontics">INVISALIGN</Link></li>
-<li id="menu-item-153" className="menu-item menu-item-type-post_type menu-item-object-page menu-item-153"><Link id="" className="" href="/patientForms">PATIENT FORMS</Link></li>
-<li id="menu-item-321" className="menu-item menu-item-type-post_type menu-item-object-page menu-item-321"><Link id="" className="" href="/paymentInsurance">PAYMENT/INSURANCE</Link></li>
+	<div className="menu-top-container"><ul id="top-menu" className="menu"><li id="menu-item-80" className="menu-item menu-item-type-post_type menu-item-object-page menu-item-home menu-item-80"><Link href="/">HOME</Link></li>
+<li id="menu-item-144" className="menu-item menu-item-type-post_type menu-item-object-page menu-item-144"><Link href="/our-team/">OUR TEAM</Link></li>
+<li id="menu-item-148" className="menu-item menu-item-type-post_type menu-item-object-page current-menu-item page_item page-item-146 current_page_item menu-item-148"><Link href="/contact-us/" aria-current="page">CONTACT US</Link></li>
+<li id="menu-item-161" className="menu-item menu-item-type-post_type menu-item-object-page menu-item-161"><Link href="/procedures/">PROCEDURES</Link></li>
+<li id="menu-item-164" className="menu-item menu-item-type-post_type menu-item-object-page menu-item-164"><Link href="/orthodontics/">INVISALIGN</Link></li>
+<li id="menu-item-153" className="menu-item menu-item-type-post_type menu-item-object-page menu-item-153"><Link href="/patient-forms/">PATIENT FORMS</Link></li>
+<li id="menu-item-321" className="menu-item menu-item-type-post_type menu-item-object-page menu-item-321"><Link href="/payment-insurance/">PAYMENT/INSURANCE</Link></li>
 </ul></div>
 	</nav>
 				</div>
@@ -146,13 +146,13 @@
 	
 </ul>
 
-		</section><section id="nav_menu-7" className="widget widget_nav_menu"><nav className="menu-top-container" aria-label="Menu"><ul id="menu-top" className="menu"><li className="menu-item menu-item-type-post_type menu-item-object-page menu-item-home menu-item-80"><Link id="" className="" href="/">HOME</Link></li>
-<li className="menu-item menu-item-type-post_type menu-item-object-page menu-item-144"><Link id="" className="" href="/ourTeam">OUR TEAM</Link></li>
-<li className="menu-item menu-item-type-post_type menu-item-object-page current-menu-item page_item page-item-146 current_page_item menu-item-148"><Link id="" className="" href="/contactUs">CONTACT US</Link></li>
-<li className="menu-item menu-item-type-post_type menu-item-object-page menu-item-161"><Link id="" className="" href="/procedures">PROCEDURES</Link></li>
-<li className="menu-item menu-item-type-post_type menu-item-object-page menu-item-164"><Link id="" className="" href="/orthodontics">INVISALIGN</Link></li>
-<li className="menu-item menu-item-type-post_type menu-item-object-page menu-item-153"><Link id="" className="" href="/patientForms">PATIENT FORMS</Link></li>
-<li className="menu-item menu-item-type-post_type menu-item-object-page menu-item-321"><Link id="" className="" href="/paymentInsurance">PAYMENT/INSURANCE</Link></li>
+		</section><section id="nav_menu-7" className="widget widget_nav_menu"><nav className="menu-top-container" aria-label="Menu"><ul id="menu-top" className="menu"><li className="menu-item menu-item-type-post_type menu-item-object-page menu-item-home menu-item-80"><Link href="/">HOME</Link></li>
+<li className="menu-item menu-item-type-post_type menu-item-object-page menu-item-144"><Link href="/our-team/">OUR TEAM</Link></li>
+<li className="menu-item menu-item-type-post_type menu-item-object-page current-menu-item page_item page-item-146 current_page_item menu-item-148"><Link href="/contact-us/" aria-current="page">CONTACT US</Link></li>
+<li className="menu-item menu-item-type-post_type menu-item-object-page menu-item-161"><Link href="/procedures/">PROCEDURES</Link></li>
+<li className="menu-item menu-item-type-post_type menu-item-object-page menu-item-164"><Link href="/orthodontics/">INVISALIGN</Link></li>
+<li className="menu-item menu-item-type-post_type menu-item-object-page menu-item-153"><Link href="/patient-forms/">PATIENT FORMS</Link></li>
+<li className="menu-item menu-item-type-post_type menu-item-object-page menu-item-321"><Link href="/payment-insurance/">PAYMENT/INSURANCE</Link></li>
 </ul></nav></section><section id="block-4" className="widget widget_block widget_text">
 <p></p>
 </section><section id="block-3" className="widget widget_block widget_text">
@@ -171,7 +171,7 @@
 			</aside>
 
 <div className="site-info">
-	<Link className="privacy-policy-link" href="https://www.midcitysmiles.com/blog/privacy-policy/">Privacy Policy</Link><span role="separator" aria-hidden="true"></span>	<Link href="https://wordpress.org/" className="imprint">
+	<Link className="privacy-policy-link" href="/privacy-policy/">Privacy Policy</Link><span role="separator" aria-hidden="true"></span>	<Link href="https://wordpress.org/" className="imprint">
 		Proudly powered by WordPress	</Link>
 </div>
 			</div>

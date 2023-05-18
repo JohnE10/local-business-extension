@@ -2,7 +2,6 @@ import { gridColumnsTotalWidthSelector } from '@mui/x-data-grid';
 import { capFirst, randomStr, toCamelCase } from '../../utils/helpers';
 import { fetchUrlData } from './backEndHelpers';
 import { styleAttrToNext } from '../../utils/helpers';
-import path from 'path';
 
 
 const fs = require('fs');
@@ -45,38 +44,19 @@ const createPageApi = async (req, res) => {
             let images = $('body').find('img');
             let styles = $('body').find('style');
             let scripts = $('body').find('script');
-            // let navLinks = $('body').find('nav').find('div').find('ul').find('li').find('a');
             let navLinks = $('body').find('nav').find('ul').find('li').find('a');
             let tagsWithStyle = $('[style]');
+            let aTags = $('body').find('a');
 
-            // change url host on all nav links
-            navLinks.each((i, el) => {
-
-                let href = $(el).attr('href');
-                href = href.trim();
-                let newHref = new URL(href);
-                // let anchorText = newHref.pathname.replace(replaceStr, '').replaceAll('/', '');
-                let anchorText = $(el).text();
-                anchorText = capFirst(anchorText);
-                if (anchorText.trim() == '') {
-                    anchorText = 'Home';
+            // change a tag hrefs to relative path
+            aTags.each((i, el) => {
+                if ($(el).attr('href')) {
+                    if ($(el).attr('href').includes(parsedUrl.host)) {
+                        let temp = $(el).attr('href').trim();
+                        temp = temp.replace(`${parsedUrl.protocol}//${parsedUrl.host}/${replaceStr}`, '/');
+                        $(el).attr('href', temp);
+                    }
                 }
-                newHref = newHref.pathname.replace(replaceStr, '').replaceAll('/', '');
-                newHref = '/' + toCamelCase(newHref);
-                // if (newHref == '/') {
-                //     newHref = '/' + 'index';
-                // }
-                let elementClass = '';
-                if ($(el).attr('class')) {
-                    elementClass = $(el).attr('class');
-                }
-                let elementId = '';
-                if ($(el).attr('id')) {
-                    elementId = $(el).attr('id');
-                }
-                // $('body').find('nav').find('div').find('ul').find('li').find(`a[href='${href}']`).replaceWith(`<a id= '${elementId}' class='${elementClass}' href='${newHref}'>${anchorText}</a>`);
-
-                $('body').find('nav').find('ul').find('li').find(`a[href='${href}']`).replaceWith(`<a id= '${elementId}' class='${elementClass}' href='${newHref}'>${anchorText}</a>`);
             });
 
             //replace <img> tags with img, src, width, height and priority
@@ -124,9 +104,8 @@ const createPageApi = async (req, res) => {
                     tag.attr('id', scriptId);
                 }
 
-                if($(el).attr('src')) {
+                if ($(el).attr('src')) {
                     let temp = $(el).attr('src').trim();
-                    // console.log('replace: ', `${parsedUrl.protocol}//${parsedUrl.host}/${replaceStr}`)
                     temp = temp.replace(`${parsedUrl.protocol}//${parsedUrl.host}/${replaceStr}`, '/');
                     $(el).attr('src', temp);
                 }
@@ -168,7 +147,7 @@ const createPageApi = async (req, res) => {
             let body = $('body').html();
 
             scripts.each((i, el) => {
-                if($(el).attr('id') == 'twentyseventeen-skip-link-focus-fix-js-extra') {
+                if ($(el).attr('id') == 'twentyseventeen-skip-link-focus-fix-js-extra') {
                     let temp = $.html(el);
                     body = body.replaceAll(temp, '{/* ' + temp + ' */}');
                 }
@@ -214,6 +193,10 @@ const createPageApi = async (req, res) => {
             // change a tags to Link tags
             body = body.replaceAll('<a ', '<Link ');
             body = body.replaceAll('</a>', '</Link>');
+
+            // remove some unwanted text
+            body = body.replace('Mid-City Smiles Family Dentistry', '');
+            body = body.replace('Welcome to Mid-City Smiles Family Dentistry! We are a dental practice located in New Orleans. Our team specializes in family dentistry and orthodontic care – Diamond Invisalign Providers..', '');
 
             // construct next.js page
             const nextPage = `
