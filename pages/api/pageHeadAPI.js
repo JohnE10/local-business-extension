@@ -8,13 +8,51 @@ const pageHeadAPI = async (req, res) => {
 
     const cheerio = require('cheerio');
 
-    const url = req.query.url;
-
-    const siteFileDir = 'siteFiles/';
-
-    let appHeadCode = siteFileDir + 'appHead' + '.js';
-
     try {
+
+        const url = req.query.url;
+
+        const parsedUrl = new URL(url);
+
+        const siteFileDir = 'siteFiles/';
+        const replaceStr = 'blog/';
+
+        let appHeadCode = siteFileDir + 'appHead' + '.js';
+        const stylesheetFile = siteFileDir + 'helperFiles/index.html';
+
+        const stylesheetHtml = fs.readFileSync(stylesheetFile, { encoding: 'utf8' });
+        // console.log('stylesheetHtml: ', stylesheetHtml)
+
+        // load cheerio
+        let $2 = cheerio.load(stylesheetHtml);
+
+        let TagsWithStylesheet = $2('link[rel="stylesheet"]');
+
+        let tempDocumnetHead = '';
+
+        TagsWithStylesheet.each((i, el) => {
+            let tempHref = $2(el).attr('href');
+            if(!tempHref.includes('http://') && !tempHref.includes('https://')) {
+                $2(el).attr('href', '/' + tempHref);
+            }
+            let temp = $2.html(el);
+            const linkRegEx = /<link([^>]*)>/g;
+            temp = temp.replaceAll(linkRegEx, '<link$1 />');
+            console.log('temp: ', temp);
+            tempDocumnetHead = tempDocumnetHead + temp + '\n';
+            // console.log('$.html(el): ', temp);
+        })
+
+        const documentHeadJsx = `
+        <>
+         ${tempDocumnetHead}
+        </>
+        `;
+
+        const documentHeadCode = siteFileDir + 'documentHead' + '.js';
+
+        // save file
+        fs.writeFileSync(documentHeadCode, documentHeadJsx);
 
         const html = await fetchUrlData(url);
 
@@ -24,7 +62,7 @@ const pageHeadAPI = async (req, res) => {
         let scripts = $('head').find('script');
         let styles = $('head').find('style');
         let tagsWithStyle = $('[style]');
-        let TagsWithStylesheet = $('link[rel="stylesheet"]');
+        let TagsWithStylesheet2 = $('link[rel="stylesheet"]');
         let TagsWithPreload = $('link[rel="preload"]');
 
         // make script adhere to next.js rules
@@ -74,29 +112,30 @@ const pageHeadAPI = async (req, res) => {
             }
         });
 
-        let tempDocumnetHead = '';
+        // let tempDocumnetHead = '';
 
-        // move style tags with attribute rel='stylesheet' to documentHeadCode
-        TagsWithStylesheet.each((i, el) => {
-            let temp = $.html(el);
-            const linkRegEx = /<link([^>]*)>/g;
-            temp = temp.replaceAll(linkRegEx, '<link$1 />');
-            tempDocumnetHead = tempDocumnetHead + temp + '\n';
-            // console.log('$.html(el): ', temp);
-        })
+        // // move style tags with attribute rel='stylesheet' to documentHeadCode
+        // TagsWithStylesheet.each((i, el) => {
+        //     let temp = $.html(el);
+        //     const linkRegEx = /<link([^>]*)>/g;
+        //     temp = temp.replaceAll(linkRegEx, '<link$1 />');
+        //     temp = temp.replace(`${parsedUrl.protocol}//${parsedUrl.host}/${replaceStr}`, '/');
+        //     tempDocumnetHead = tempDocumnetHead + temp + '\n';
+        //     // console.log('$.html(el): ', temp);
+        // })
 
-        const documentHeadJsx = `
-        <>
-         ${tempDocumnetHead}
-        </>
-        `;
+        // const documentHeadJsx = `
+        // <>
+        //  ${tempDocumnetHead}
+        // </>
+        // `;
 
-        const documentHeadCode = siteFileDir + 'documentHead' + '.js';
+        // const documentHeadCode = siteFileDir + 'documentHead' + '.js';
 
-        // save file
-        fs.writeFileSync(documentHeadCode, documentHeadJsx);
+        // // save file
+        // fs.writeFileSync(documentHeadCode, documentHeadJsx);
 
-        TagsWithStylesheet.remove();
+        TagsWithStylesheet2.remove();
 
         let head = $('head').html();
 

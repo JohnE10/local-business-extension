@@ -29,6 +29,8 @@ const utilities = () => {
         <div><Link href='/searchDatabase'><p>Search database</p></Link></div>
         <div><Link href='/manualDeletePage'><p>Delete from database</p></Link></div>
         <div><Link href='/downloadAllImages'><p>Download All Images</p></Link></div>
+        <div><Link href='/getFilesDirectoriesInUrl'><p>Get files and directories from URL</p></Link></div>
+        <div><Link href='/customWork'><p>Custom Work</p></Link></div>
         
       </div>
     </>
