@@ -82,6 +82,7 @@ const createPageApi = async (req, res) => {
                 let styleStr = $(el).attr('style');
                 if (styleStr.trim() != '') {
                     styleStr = styleAttrToNext(styleStr)
+                    // console.log('styleStr: ', styleStr);
                     $(el).attr('style', styleStr);
                 }
             });

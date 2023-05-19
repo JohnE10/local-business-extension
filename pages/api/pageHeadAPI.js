@@ -10,170 +10,108 @@ const pageHeadAPI = async (req, res) => {
 
     try {
 
-        const url = req.query.url;
-
-        const parsedUrl = new URL(url);
-
         const siteFileDir = 'siteFiles/';
         const replaceStr = 'blog/';
+        const metaRegEx = /<meta([^>]*)>/g;
 
-        let appHeadCode = siteFileDir + 'appHead' + '.js';
         const stylesheetFile = siteFileDir + 'helperFiles/index.html';
 
         const stylesheetHtml = fs.readFileSync(stylesheetFile, { encoding: 'utf8' });
-        // console.log('stylesheetHtml: ', stylesheetHtml)
 
         // load cheerio
-        let $2 = cheerio.load(stylesheetHtml);
+        let $ = cheerio.load(stylesheetHtml);
 
-        let TagsWithStylesheet = $2('link[rel="stylesheet"]');
+        let tempAppHead = '';
 
-        let tempDocumnetHead = '';
+        // add meta tag with name attribute equal viewport to tempAppHead
+        let tempMeta = $('meta[name="viewport"]');
+        tempMeta.each((i, el) => {
+            tempAppHead = tempAppHead + $.html($(el)) + '\n';
+        });
 
-        TagsWithStylesheet.each((i, el) => {
-            let tempHref = $2(el).attr('href');
-            if(!tempHref.includes('http://') && !tempHref.includes('https://')) {
-                $2(el).attr('href', '/' + tempHref);
-            }
-            let temp = $2.html(el);
-            const linkRegEx = /<link([^>]*)>/g;
-            temp = temp.replaceAll(linkRegEx, '<link$1 />');
-            console.log('temp: ', temp);
-            tempDocumnetHead = tempDocumnetHead + temp + '\n';
-            // console.log('$.html(el): ', temp);
-        })
+        // add title tag to tempAppHead
+        let tempTitle = $('title');
+        tempTitle.each((i, el) => {
+            tempAppHead = tempAppHead + $.html($(el)) + '\n';
+            console.log('tempHead: ', tempAppHead);
+        });
 
-        const documentHeadJsx = `
+        // make meta tag self-closing
+        tempAppHead = tempAppHead.replaceAll(metaRegEx, '<meta$1 />');
+
+        const appHeadJsx = `
+
         <>
-         ${tempDocumnetHead}
+         ${tempAppHead}
         </>
         `;
 
-        const documentHeadCode = siteFileDir + 'documentHead' + '.js';
-
         // save file
-        fs.writeFileSync(documentHeadCode, documentHeadJsx);
+        const appHeadCode = siteFileDir + 'appHead' + '.js';
+        fs.writeFileSync(appHeadCode, appHeadJsx);
 
-        const html = await fetchUrlData(url);
 
-        // load cheerio
-        let $ = cheerio.load(html.success);
+        $('meta[name="viewport"]').remove();
+        $('title').remove();
 
-        let scripts = $('head').find('script');
+
         let styles = $('head').find('style');
-        let tagsWithStyle = $('[style]');
-        let TagsWithStylesheet2 = $('link[rel="stylesheet"]');
-        let TagsWithPreload = $('link[rel="preload"]');
+        let scripts = $('head').find('script');
 
-        // make script adhere to next.js rules
-        scripts.each((i, el) => {
+        // make style tags adhere to next.js rules
+        styles.each((i, el) => {
             const temp = $(el).text();
-            const tag = $.html(el);
-            if (!tag.includes('id=')) {
-                const scriptId = randomStr(10);
-                $(el).attr('id', scriptId);
-            }
-
             if ($(el).text().trim() != '') {
                 $(el).text('{`' + temp + '`}');
             }
         });
 
-        // make style tags adhere to next.js rules
-        styles.each((i, el) => {
-            let attrId = '';
-            let attrClass = '';
-            if ($(el).attr('id')) {
-                attrId = $(el).attr('id');
-            }
-
-            if ($(el).attr('class')) {
-                attrClass = $(el).attr('class');
-            }
-
-            if (attrId != '') {
-                $('head').find(`style[id="${attrId}"]`).replaceWith(`<style id='${attrId}' class='${attrClass}'>` + '{`' + $(el).html() + '`}' + '</style>')
-            }
-            else if (attrClass != '') {
-                $('head').find(`style[class="${attrClass}"]`).replaceWith(`<style id='${attrId} class='${attrClass}''>` + '{`' + $(el).html() + '`}' + '</style>')
-            }
-            else {
-                $('head').find(`style`).replaceWith(`<style>` + '{`' + $(el).html() + '`}' + '</style>')
-            }
-
-        });
-
-        // make css style attribute adhere to next.js rules
-        tagsWithStyle.each((i, el) => {
-            let styleStr = $(el).attr('style');
-            if (styleStr.trim() != '') {
-                styleStr = styleAttrToNext(styleStr)
-                $(el).attr('style', styleStr);
+        // make script adhere to next.js rules
+        scripts.each((i, el) => {
+            const temp = $(el).text();
+            if ($(el).text().trim() != '') {
+                $(el).text('{`' + temp + '`}');
             }
         });
 
-        // let tempDocumnetHead = '';
+        // head tag
+        let head = $.html('head');
 
-        // // move style tags with attribute rel='stylesheet' to documentHeadCode
-        // TagsWithStylesheet.each((i, el) => {
-        //     let temp = $.html(el);
-        //     const linkRegEx = /<link([^>]*)>/g;
-        //     temp = temp.replaceAll(linkRegEx, '<link$1 />');
-        //     temp = temp.replace(`${parsedUrl.protocol}//${parsedUrl.host}/${replaceStr}`, '/');
-        //     tempDocumnetHead = tempDocumnetHead + temp + '\n';
-        //     // console.log('$.html(el): ', temp);
-        // })
-
-        // const documentHeadJsx = `
-        // <>
-        //  ${tempDocumnetHead}
-        // </>
-        // `;
-
-        // const documentHeadCode = siteFileDir + 'documentHead' + '.js';
-
-        // // save file
-        // fs.writeFileSync(documentHeadCode, documentHeadJsx);
-
-        TagsWithStylesheet2.remove();
-
-        let head = $('head').html();
-
-        // comment out link tags with rel="preload"
-        TagsWithPreload.each((i, el) => {
-            let temp = $.html(el);
-            head = head.replaceAll(temp, '{/* ' + temp + ' */}');
+        // // commment out comments
+        // const commentRegEx = /<!--.*?-->/gs;
+        // head = head.replaceAll(commentRegEx, '{/* $1 */}');
+        const commentRegEx = /<!--.*?-->/gs; 
+        head = head.replaceAll(commentRegEx, (match) => {
+            return '{/* ' + match + ' */}';
         });
 
-        // make all meta tags self closing
-        const metaRegEx = /<meta([^>]*)>/g;
-        head = head.replaceAll(metaRegEx, '<meta$1 />');
+        // add jsx to style tags
+        head = head.replaceAll('<style ', '<style jsx ');
 
         // make all link tags self closing
         const linkRegEx = /<link([^>]*)>/g;
         head = head.replaceAll(linkRegEx, '<link$1 />');
 
-        // remove html comments
-        const commentRegEx = /<!--.*?-->/gs;
-        head = head.replaceAll(commentRegEx, '');
+        // make all meta tags self closing
+        head = head.replaceAll(metaRegEx, '<meta$1 />');
 
-        // change <script> to next's <Script>
-        head = head.replaceAll('<script', '<Script');
-        head = head.replaceAll('</script', '</Script')
-        head = head.replaceAll('"{{', '{{');
-        head = head.replaceAll('}}"', '}}');
-        head = head.replaceAll('crossorigin', 'crossOrigin');
+        // replace ../ with /
+        head = head.replaceAll('href="../', 'href="/');
 
-        const headJsx = `
+        const documentHeadCode = siteFileDir + 'documentHead' + '.js';
+
+        const documentHeadJsx = `
         <>
-            ${head}
+         ${head}
         </>
         `;
 
         // save file
-        fs.writeFileSync(appHeadCode, headJsx);
+        fs.writeFileSync(documentHeadCode, documentHeadJsx);
+
         console.log('Done');
-        return res.json({ success: 'Page created.', results: head })
+
+        return res.json({ success: 'Page created.', results: 'head' })
 
     } catch (error) {
         console.log(error.message);
