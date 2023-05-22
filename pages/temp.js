@@ -1,48 +1,100 @@
+import { fileNameFromUrl, isValidUrl } from '/utils/helpers';
+const path = require('path');
+
 
 const temp = () => {
 
-  async function listFilesAndDirectories(url) {
-    const response = await fetch(url);
-    const html = await response.text();
-  
-    // Regular expressions to match files and directories in the directory listing
-    const fileRegex = /<a href="([^"]*\.[^"]*)"/g;
-    const directoryRegex = /<a href="([^"]*\/)"/g;
-  
-    const files = [];
-    const directories = [];
-    let match;
-  
-    while ((match = fileRegex.exec(html)) !== null) {
-      const fileName = match[1];
-      files.push(fileName);
+  const html = `
+  <html>
+  <body>
+  <nav class="menu-top-container" aria-label="Menu">
+  <ul id="menu-top" class="menu">
+    <li
+      class="menu-item menu-item-type-post_type menu-item-object-page menu-item-home menu-item-80">
+      <a href="/index.html">HOME</a></li>
+    <li
+      class="menu-item menu-item-type-post_type menu-item-object-page menu-item-144">
+      <a href="/our-team/index.html">OUR TEAM</a></li>
+    <li
+      class="menu-item menu-item-type-post_type menu-item-object-page menu-item-148">
+      <a href="/contact-us/index.html">CONTACT US</a></li>
+    <li
+      class="menu-item menu-item-type-post_type menu-item-object-page menu-item-153">
+      <a href="/patient-forms/index.html">PATIENT FORMS</a></li>
+    <li
+      class="menu-item menu-item-type-post_type menu-item-object-page menu-item-161">
+      <a href="/procedures/index.html">PROCEDURES</a></li>
+    <li
+      class="menu-item menu-item-type-post_type menu-item-object-page current-menu-item page_item page-item-163 current_page_item menu-item-164">
+      <a href="index.html" aria-current="page">INVISALIGN</a></li>
+  </ul>
+</nav>
+
+<nav id="site-navigation" class="main-navigation" aria-label="Top Menu">
+<button class="menu-toggle" aria-controls="top-menu" aria-expanded="false">
+  <svg class="icon icon-bars" aria-hidden="true" role="img">
+    <use href="#icon-bars" xlink:href="#icon-bars"></use>
+  </svg><svg class="icon icon-close" aria-hidden="true" role="img">
+    <use href="#icon-close" xlink:href="#icon-close"></use>
+  </svg>Menu </button>
+
+<div class="menu-top-container">
+  <ul id="top-menu" class="menu">
+    <li id="menu-item-80"
+      class="menu-item menu-item-type-post_type menu-item-object-page menu-item-home menu-item-80">
+      <a href="/index.html">HOME</a></li>
+    <li id="menu-item-144"
+      class="menu-item menu-item-type-post_type menu-item-object-page menu-item-144"><a
+        href="/our-team/index.html">OUR TEAM</a></li>
+    <li id="menu-item-148"
+      class="menu-item menu-item-type-post_type menu-item-object-page menu-item-148"><a
+        href="/contact-us/index.html">CONTACT US</a></li>
+    <li id="menu-item-153"
+      class="menu-item menu-item-type-post_type menu-item-object-page menu-item-153"><a
+        href="/patient-forms/index.html">PATIENT FORMS</a></li>
+    <li id="menu-item-161"
+      class="menu-item menu-item-type-post_type menu-item-object-page menu-item-161"><a
+        href="/procedures/index.html">PROCEDURES</a></li>
+    <li id="menu-item-164"
+      class="menu-item menu-item-type-post_type menu-item-object-page current-menu-item page_item page-item-163 current_page_item menu-item-164">
+      <a href="index.html" aria-current="page">INVISALIGN</a></li>
+  </ul>
+</div>
+</nav>
+</body>
+</html>
+  `
+  ;
+
+  const cheerio = require('cheerio');
+
+  let $ = cheerio.load(html);
+
+  let navLinks = $('body').find('nav').find('li').find('a');
+
+  navLinks.each((i, el) => {
+    // console.log('$.html(el): ', $.html(el));
+    if ($(el).attr('href')) {
+        let temp = $(el).attr('href').trim();
+        if (temp.includes('/')) {
+            temp = fileNameFromUrl(temp);
+            const temp1 = temp.fileName;
+            let temp2 = temp.parentDirectory;
+            temp2 = temp2.replaceAll('.','');
+            console.log({ temp1 });
+            console.log({ temp2 });
+        }
+
+
     }
-  
-    while ((match = directoryRegex.exec(html)) !== null) {
-      const directoryName = match[1];
-      directories.push(directoryName);
-    }
-  
-    return {
-      files,
-      directories
-    };
-  }
-  
-  // Example usage:
-  const url = 'https://www.midcitysmiles.com/blog/wp-includes/css/';
-  listFilesAndDirectories(url)
-    .then(({ files, directories }) => {
-      console.log('Files:');
-      console.log(files);
-  
-      console.log('Directories:');
-      console.log(directories);
-    })
-    .catch(error => {
-      console.error(error);
-    });
-  
+});
+
+  // const url = '/index.html';
+
+  // const temp = fileNameFromUrl(url);
+
+  // console.log(temp);
+
 
   return (
     <div>temp</div>

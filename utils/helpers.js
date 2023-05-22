@@ -137,6 +137,7 @@ export const styleAttrToNext = (style) => {
 
 export const fileNameFromUrl = (url) => {
   // Remove any query parameters from the URL
+  
   const cleanUrl = url.split('?')[0];
 
   // Split the URL by slashes to get individual parts
@@ -144,9 +145,10 @@ export const fileNameFromUrl = (url) => {
 
   // Get the last part of the URL, which should be the file name
   const fileName = parts[parts.length - 1];
+  const parentDirectory = parts[parts.length - 2];
 
-  return fileName;
-}
+  return {fileName, parentDirectory};
+};
 
 // export const fetchUrlData = async (url) => {
 

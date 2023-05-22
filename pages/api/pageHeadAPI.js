@@ -14,8 +14,7 @@ const pageHeadAPI = async (req, res) => {
         const replaceStr = 'blog/';
         const metaRegEx = /<meta([^>]*)>/g;
 
-        const stylesheetFile = siteFileDir + 'helperFiles/index.html';
-
+        const stylesheetFile = siteFileDir + 'pagesToBuild/orthodontics/index.html';
         const stylesheetHtml = fs.readFileSync(stylesheetFile, { encoding: 'utf8' });
 
         // load cheerio
@@ -29,6 +28,11 @@ const pageHeadAPI = async (req, res) => {
             tempAppHead = tempAppHead + $.html($(el)) + '\n';
         });
 
+        // 
+
+        // remove rel="stylesheet" tags
+        $('link[rel="stylesheet"]').remove();
+
         // add title tag to tempAppHead
         let tempTitle = $('title');
         tempTitle.each((i, el) => {
@@ -39,48 +43,62 @@ const pageHeadAPI = async (req, res) => {
         // make meta tag self-closing
         tempAppHead = tempAppHead.replaceAll(metaRegEx, '<meta$1 />');
 
-        const appHeadJsx = `
-
-        <>
-         ${tempAppHead}
-        </>
-        `;
+        const appHeadJsx =
+            `
+                <>
+                ${tempAppHead}
+                </>
+            `
+        ;
 
         // save file
         const appHeadCode = siteFileDir + 'appHead' + '.js';
         fs.writeFileSync(appHeadCode, appHeadJsx);
 
-
         $('meta[name="viewport"]').remove();
         $('title').remove();
-
 
         let styles = $('head').find('style');
         let scripts = $('head').find('script');
 
-        // make style tags adhere to next.js rules
+        // make style tags adhere to next.js rules, styles jsx needs to be moved to globals.css and inside the body selector
+        let globalsCss = '';
         styles.each((i, el) => {
             const temp = $(el).text();
             if ($(el).text().trim() != '') {
-                $(el).text('{`' + temp + '`}');
+                globalsCss = globalsCss + temp + '\n';
+                $(el).remove();
             }
+            console.log({ globalsCss });
         });
+
+        globalsCss = globalsCss.replaceAll('<style ', '<style jsx');
+
+        // create a separate file for css to be added to globals
+        const globalsCssCode = siteFileDir + 'globalsCss' + '.js';
+        fs.writeFileSync(globalsCssCode, globalsCss);
 
         // make script adhere to next.js rules
         scripts.each((i, el) => {
+
             const temp = $(el).text();
+            const tag = $.html(el);
+            if (!tag.includes('id=')) {
+                const scriptId = randomStr(10);
+                $(el).attr('id', scriptId);
+            }
+
             if ($(el).text().trim() != '') {
                 $(el).text('{`' + temp + '`}');
             }
+
         });
 
         // head tag
         let head = $.html('head');
 
-        // // commment out comments
-        // const commentRegEx = /<!--.*?-->/gs;
-        // head = head.replaceAll(commentRegEx, '{/* $1 */}');
-        const commentRegEx = /<!--.*?-->/gs; 
+        // commment out comments
+        const commentRegEx = /<!--.*?-->/gs;
         head = head.replaceAll(commentRegEx, (match) => {
             return '{/* ' + match + ' */}';
         });
@@ -96,7 +114,11 @@ const pageHeadAPI = async (req, res) => {
         head = head.replaceAll(metaRegEx, '<meta$1 />');
 
         // replace ../ with /
-        head = head.replaceAll('href="../', 'href="/');
+        head = head.replaceAll('="../', '="/');
+
+        // replace script with Script
+        head = head.replaceAll('<script', '<Script');
+        head = head.replaceAll('</script', '</Script')
 
         const documentHeadCode = siteFileDir + 'documentHead' + '.js';
 
@@ -104,7 +126,8 @@ const pageHeadAPI = async (req, res) => {
         <>
          ${head}
         </>
-        `;
+        `
+            ;
 
         // save file
         fs.writeFileSync(documentHeadCode, documentHeadJsx);
@@ -117,7 +140,6 @@ const pageHeadAPI = async (req, res) => {
         console.log(error.message);
         return res.json({ error: error.message });
     }
-
 }
 
 export default pageHeadAPI;

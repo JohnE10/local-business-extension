@@ -1,10 +1,11 @@
 import { gridColumnsTotalWidthSelector } from '@mui/x-data-grid';
-import { capFirst, randomStr, toCamelCase } from '../../utils/helpers';
-import { fetchUrlData } from './backEndHelpers';
+import { capFirst, fileNameFromUrl, isValidUrl, randomStr, toCamelCase } from '../../utils/helpers';
+import { fetchUrlData, listFilesInDirectory } from './backEndHelpers';
 import { styleAttrToNext } from '../../utils/helpers';
 
 
 const fs = require('fs');
+const path = require('path');
 
 const createPageApi = async (req, res) => {
 
@@ -12,49 +13,65 @@ const createPageApi = async (req, res) => {
 
     const commentRegEx = /<!--.*?-->/gs;
     const siteFileDir = 'siteFiles/';
+    const fileToRead = 'siteFiles/pagesToBuild/orthodontics/index.html';
 
     const url = req.query.url;
     console.log('url: ', url);
-    const replaceStr = req.query.replaceStr;
+    // const replaceStr = req.query.replaceStr;
+    const replaceStr = 'blog/';
 
     try {
 
-        const parsedUrl = new URL(url);
+        let fileToCreate = 'orthodontics';
+        // fileToCreate = '/' + siteFileDir + toCamelCase(fileToCreate) + '.js';
+        fileToCreate = siteFileDir + toCamelCase(fileToCreate) + '.js';
 
-        let urlPathName = parsedUrl.pathname.replace(replaceStr, '').replaceAll('/', '');
-        urlPathName = toCamelCase(urlPathName);
+        console.log({ fileToCreate });
 
-        console.log('urlPathName: ', urlPathName);
+        const html = fs.readFileSync(fileToRead, { encoding: 'utf8' });
 
-        let fileToCreate = siteFileDir + urlPathName + '.js';
-
-        if (parsedUrl.pathname.replace(replaceStr, '').replaceAll('/', '') == '') {
-            fileToCreate = `${siteFileDir}index.js`;
-        }
-
-        const html = await fetchUrlData(url);
-
-        if (html.success) {
+        if (html) {
 
             // load cheerio
-            let $ = cheerio.load(html.success);
+            let $ = cheerio.load(html);
             $('svg').remove();
 
             // Html element manipulation
             let images = $('body').find('img');
             let styles = $('body').find('style');
             let scripts = $('body').find('script');
-            let navLinks = $('body').find('nav').find('ul').find('li').find('a');
+            let navLinks = $('body').find('nav').find('li').find('a');
             let tagsWithStyle = $('[style]');
             let aTags = $('body').find('a');
+            const paragraphToRemove = $('body').find('p[class="site-title"]');
 
-            // change a tag hrefs to relative path
-            aTags.each((i, el) => {
+            // modify nav links to work in next.js site
+            navLinks.each((i, el) => {
                 if ($(el).attr('href')) {
-                    if ($(el).attr('href').includes(parsedUrl.host)) {
-                        let temp = $(el).attr('href').trim();
-                        temp = temp.replace(`${parsedUrl.protocol}//${parsedUrl.host}/${replaceStr}`, '/');
-                        $(el).attr('href', temp);
+                    let temp = $(el).attr('href').trim();
+                    if (temp.includes('/')) {
+                        temp = fileNameFromUrl(temp);
+                        let temp1 = temp.fileName;
+                        if (temp1.includes('.html')) {
+                            temp1 = temp1.replace('.html', '.js');
+                        }
+                        let temp2 = temp.parentDirectory;
+                        temp2 = temp2.replaceAll('.', '').trim();
+                        console.log({ temp1 });
+                        console.log({ temp2 });
+                        if (temp2 == '') {
+                            $(el).attr('href', '/');
+                        }
+                        else {
+                            temp2 = toCamelCase(temp2);
+                            $(el).attr('href', '/' + temp2 + '/');
+                        }
+                    }
+                    else {
+                        if ($(el).attr('href') == 'index.html') {
+                            $(el).attr('href', '');
+                        }
+
                     }
                 }
             });
@@ -62,18 +79,19 @@ const createPageApi = async (req, res) => {
             //replace <img> tags with img, src, width, height and priority
             images.each((i, el) => {
                 const imgSrc = $(el).attr('src');
-                const tempImgSrc = new URL(imgSrc.trim());
-                const newImgSrc = tempImgSrc.pathname.replace(replaceStr, '');
-
-                if ($(el).attr('width')) {
+                if ($(el).attr('width') && $(el).attr('height')) {
                     let imgWidth = $(el).attr('width');
                     let imgHeight = $(el).attr('height');
                     imgWidth = imgWidth.replace('px', '').replace('rem', '').replace('em', '');
                     imgHeight = imgHeight.replace('px', '').replace('rem', '').replace('em', '');
-                    $(`img[src='${imgSrc}']`).replaceWith(`<img src='${newImgSrc}' alt='/' width='${imgWidth}' height='${imgHeight}' priority='false' >`);
+                    $(el).attr('width', imgWidth);
+                    $(el).attr('height', imgHeight);
+                    $(el).attr('priority', 'false');
                 }
                 else {
-                    $(`img[src='${imgSrc}']`).replaceWith(`<img src='${imgSrc}' alt='/' width='150' height='150' >`);
+                    $(el).attr('width', '150');
+                    $(el).attr('height', '150');
+                    $(el).attr('priority', 'false');
                 }
             });
 
@@ -81,7 +99,7 @@ const createPageApi = async (req, res) => {
             tagsWithStyle.each((i, el) => {
                 let styleStr = $(el).attr('style');
                 if (styleStr.trim() != '') {
-                    styleStr = styleAttrToNext(styleStr)
+                    styleStr = styleAttrToNext(styleStr);
                     $(el).attr('style', styleStr);
                 }
             });
@@ -94,6 +112,27 @@ const createPageApi = async (req, res) => {
                 }
             });
 
+            // make script tags adhere to next.js rules
+            scripts.each((i, el) => {
+                let temp = $(el).text();
+                console.log({ temp })
+                if ($(el).attr('id') == 'twentyseventeen-skip-link-focus-fix-js-extra') {
+                    const temp2 = `
+                        var twentyseventeenScreenReaderText = {
+                        quote: '<svg className="icon icon-quote-right" aria-hidden="true" role="img"><use href="#icon-quote-right" xlink:href="#icon-quote-right"></use></svg>',
+                        expand: 'Expand child menu',
+                        collapse: 'Collapse child menu',
+                        icon: '<svg clasName="icon icon-angle-down" aria-hidden="true" role="img"><use href="#icon-angle-down" xlink:href="#icon-angle-down"></use><span class="svg-fallback icon-angle-down"></span></svg>'
+                    };
+                    `
+                    $(el).text('{`' + temp2 + '`}');
+                }
+                // else if ($(el).text().trim() != '') {
+                //     temp = temp.replaceAll('\\', '');
+                //     $(el).text('{`' + temp + '`}');
+                // }
+            });
+
             // make script adhere to next.js rules
             scripts.each((i, el) => {
                 const temp = $(el).text();
@@ -102,55 +141,44 @@ const createPageApi = async (req, res) => {
                     const scriptId = randomStr(10);
                     tag.attr('id', scriptId);
                 }
-
-                if ($(el).attr('src')) {
-                    let temp = $(el).attr('src').trim();
-                    temp = temp.replace(`${parsedUrl.protocol}//${parsedUrl.host}/${replaceStr}`, '/');
-                    $(el).attr('src', temp);
-                }
-
-                if ($(el).text().trim() != '') {
-                    $(el).text('{`' + temp + '`}');
-                }
-
             });
 
             // if YT video, use Next Video Compnent
-            if (html.success.includes('youtube.com')) {
-                const iframes = $('body').find('iframe');
-                iframes.each((i, el) => {
-                    if ($(el).attr('src')) {
-                        if ($(el).attr('src').includes('youtube.com')) {
-                            if ($('body').find('iframe').attr('src')) {
-                                const ytVideoSrc = $('body').find('iframe').attr('src');
-                                if (ytVideoSrc != '') {
-                                    const videoId = extractVideoId(ytVideoSrc);
-                                    // console.log('videoId: ', videoId);
-                                    $('body').find(`iframe[src="${ytVideoSrc}"]`).replaceWith(`
+            if (html.includes('youtube.com')) {
+                if ($('body').find('iframe')) {
+                    const iframes = $('body').find('iframe');
+                    iframes.each((i, el) => {
+                        if ($(el).attr('src')) {
+                            if ($(el).attr('src').includes('youtube.com')) {
+                                if ($('body').find('iframe').attr('src')) {
+                                    const ytVideoSrc = $('body').find('iframe').attr('src');
+                                    if (ytVideoSrc != '') {
+                                        const videoId = extractVideoId(ytVideoSrc);
+                                        // console.log('videoId: ', videoId);
+                                        $('body').find(`iframe[src="${ytVideoSrc}"]`).replaceWith(`
                                         <LiteYouTubeEmbed
                                         id=${videoId}
                                         title='YouTube video player'
                                         />
                                         `)
+                                    }
                                 }
+
+
                             }
-
-
                         }
-                    }
-                });
-
+                    });
+                }
             }
+
+            // remove the following paragraph
+            // console.log({'paragraphToRemove.html()': paragraphToRemove.html()});
+            paragraphToRemove.each((i, el) => {
+                $(el).text('');
+            });
 
             //Set body to the newly modified html
             let body = $('body').html();
-
-            scripts.each((i, el) => {
-                if ($(el).attr('id') == 'twentyseventeen-skip-link-focus-fix-js-extra') {
-                    let temp = $.html(el);
-                    body = body.replaceAll(temp, '{/* ' + temp + ' */}');
-                }
-            });
 
             // remove html comments
             body = body.replaceAll(commentRegEx, '');
@@ -193,8 +221,16 @@ const createPageApi = async (req, res) => {
             body = body.replaceAll('<a ', '<Link ');
             body = body.replaceAll('</a>', '</Link>');
 
+            // replace ../ and ../../ with /
+            body = body.replaceAll('="../../', '="/');
+            body = body.replaceAll('="../', '="/');
+
+            // replace srcset with srcSet and crossorigin with crossOrigin
+            body = body.replaceAll('srcset', 'srcSet');
+            body = body.replaceAll('crossorigin', 'crossOrigin');
+
+
             // remove some unwanted text
-            body = body.replace('Mid-City Smiles Family Dentistry', '');
             body = body.replace('Welcome to Mid-City Smiles Family Dentistry! We are a dental practice located in New Orleans. Our team specializes in family dentistry and orthodontic care – Diamond Invisalign Providers..', '');
 
             // construct next.js page
@@ -202,8 +238,9 @@ const createPageApi = async (req, res) => {
                 import Image from 'next/image';
                 import Script from 'next/script';
                 import Link from 'next/link';
-                import LiteYouTubeEmbed from "react-lite-youtube-embed"
-                import "react-lite-youtube-embed/dist/LiteYouTubeEmbed.css"
+                import LiteYouTubeEmbed from "react-lite-youtube-embed";
+                import "react-lite-youtube-embed/dist/LiteYouTubeEmbed.css";
+                import '../jQueryLoader.js';
 
                 const ${fileToCreate.replace('.js', '').replaceAll(siteFileDir, '')} = () => {
                     return (
@@ -212,12 +249,13 @@ const createPageApi = async (req, res) => {
                         </>
                     )    
                 }
-                export default ${urlPathName == '' ? 'index' : urlPathName};
-                `;
+                export default ${fileToCreate == '' ? 'index' : fileToCreate.replace('.js', '').replaceAll(siteFileDir, '')};
+            `;
 
             // save file
             fs.writeFileSync(fileToCreate, nextPage);
-            return res.json({ success: 'Page created.', reults: html.success })
+            return res.json({ success: 'Page created.', reults: html });
+
         }
         else if (html.error) {
             throw Error(html.error);
@@ -225,11 +263,11 @@ const createPageApi = async (req, res) => {
 
     } catch (err) {
         console.log(err.message);
-        return res.json({ error: err.message });
+        return res.json({ 'catch error ': err.message });
     }
-    // }, 1000);
 
-    // return res.json({ success: 'Page created.' })
+    // }, 1000);
+    // return res.json({ success: 'Page created.' });
 
 }
 

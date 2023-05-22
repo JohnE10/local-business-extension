@@ -16,6 +16,7 @@ const getNavLinks = () => {
 
         setHtml(null);
         setError(null);
+        setNavLinksState([]);
 
         try {
 
@@ -63,7 +64,8 @@ const getNavLinks = () => {
                 let cssLinks = [];
                 let styleTags = [];
 
-                $('nav > ul > li > a').map((i, ele) => {
+                // $('nav > ul > li > a').map((i, ele) => {
+                    $('nav').find('li').find('a').map((i, ele) => {
                     if ($(ele).attr('href')) {
                         const href = $(ele).attr('href');
                         if (!navLinks.includes(href.trim())) {

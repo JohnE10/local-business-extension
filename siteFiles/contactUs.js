@@ -2,8 +2,9 @@
                 import Image from 'next/image';
                 import Script from 'next/script';
                 import Link from 'next/link';
-                import LiteYouTubeEmbed from "react-lite-youtube-embed"
-                import "react-lite-youtube-embed/dist/LiteYouTubeEmbed.css"
+                import LiteYouTubeEmbed from "react-lite-youtube-embed";
+                import "react-lite-youtube-embed/dist/LiteYouTubeEmbed.css";
+                import '../jQueryLoader.js';
 
                 const contactUs = () => {
                     return (
@@ -17,14 +18,14 @@
 		<div className="custom-header">
 
 		<div className="custom-header-media">
-			<div id="wp-custom-header" className="wp-custom-header"><Image src="/wp-content/uploads/2022/06/Untitled-3-2.jpg" alt="/" width="2000" height="1200" priority="false" /></div>		</div>
+			<div id="wp-custom-header" className="wp-custom-header"><Image src="../wp-content/uploads/2022/06/Untitled-3-2.jpg" width="2000" height="1200" alt="" srcset="https://www.midcitysmiles.com/blog/wp-content/uploads/2022/06/Untitled-3-2.jpg 2000w, https://www.midcitysmiles.com/blog/wp-content/uploads/2022/06/Untitled-3-2-300x180.jpg 300w, https://www.midcitysmiles.com/blog/wp-content/uploads/2022/06/Untitled-3-2-1024x614.jpg 1024w, https://www.midcitysmiles.com/blog/wp-content/uploads/2022/06/Untitled-3-2-768x461.jpg 768w, https://www.midcitysmiles.com/blog/wp-content/uploads/2022/06/Untitled-3-2-1536x922.jpg 1536w" sizes="100vw" /></div>		</div>
 
 	<div className="site-branding">
 	<div className="wrap">
 
-		<Link href="/" className="custom-logo-link" rel="home"><Image src="/wp-content/uploads/2022/06/cropped-Untitled-1-3.png" alt="/" width="281" height="250" priority="false" /></Link>
+		<Link href="../index.html" className="custom-logo-link" rel="home"><Image width="281" height="250" src="../wp-content/uploads/2022/06/cropped-Untitled-1-3.png" className="custom-logo" alt="" decoding="async" sizes="100vw" /></Link>
 		<div className="site-branding-text">
-							<p className="site-title"><Link href="/" rel="home"></Link></p>
+							<p className="site-title"><Link href="../index.html" rel="home">Mid-City Smiles Family Dentistry</Link></p>
 			
 							<p className="site-description"></p>
 					</div>
@@ -41,13 +42,12 @@
 	<button className="menu-toggle" aria-controls="top-menu" aria-expanded="false">
 		Menu	</button>
 
-	<div className="menu-top-container"><ul id="top-menu" className="menu"><li id="menu-item-80" className="menu-item menu-item-type-post_type menu-item-object-page menu-item-home menu-item-80"><Link href="/">HOME</Link></li>
-<li id="menu-item-144" className="menu-item menu-item-type-post_type menu-item-object-page menu-item-144"><Link href="/our-team/">OUR TEAM</Link></li>
-<li id="menu-item-148" className="menu-item menu-item-type-post_type menu-item-object-page current-menu-item page_item page-item-146 current_page_item menu-item-148"><Link href="/contact-us/" aria-current="page">CONTACT US</Link></li>
-<li id="menu-item-161" className="menu-item menu-item-type-post_type menu-item-object-page menu-item-161"><Link href="/procedures/">PROCEDURES</Link></li>
-<li id="menu-item-164" className="menu-item menu-item-type-post_type menu-item-object-page menu-item-164"><Link href="/orthodontics/">INVISALIGN</Link></li>
-<li id="menu-item-153" className="menu-item menu-item-type-post_type menu-item-object-page menu-item-153"><Link href="/patient-forms/">PATIENT FORMS</Link></li>
-<li id="menu-item-321" className="menu-item menu-item-type-post_type menu-item-object-page menu-item-321"><Link href="/payment-insurance/">PAYMENT/INSURANCE</Link></li>
+	<div className="menu-top-container"><ul id="top-menu" className="menu"><li id="menu-item-80" className="menu-item menu-item-type-post_type menu-item-object-page menu-item-home menu-item-80"><Link href="../index.html">HOME</Link></li>
+<li id="menu-item-144" className="menu-item menu-item-type-post_type menu-item-object-page menu-item-144"><Link href="../our-team/index.html">OUR TEAM</Link></li>
+<li id="menu-item-148" className="menu-item menu-item-type-post_type menu-item-object-page current-menu-item page_item page-item-146 current_page_item menu-item-148"><Link href="index.html" aria-current="page">CONTACT US</Link></li>
+<li id="menu-item-153" className="menu-item menu-item-type-post_type menu-item-object-page menu-item-153"><Link href="../patient-forms/index.html">PATIENT FORMS</Link></li>
+<li id="menu-item-161" className="menu-item menu-item-type-post_type menu-item-object-page menu-item-161"><Link href="../procedures/index.html">PROCEDURES</Link></li>
+<li id="menu-item-164" className="menu-item menu-item-type-post_type menu-item-object-page menu-item-164"><Link href="../orthodontics/index.html">INVISALIGN</Link></li>
 </ul></div>
 	</nav>
 				</div>
@@ -146,13 +146,12 @@
 	
 </ul>
 
-		</section><section id="nav_menu-7" className="widget widget_nav_menu"><nav className="menu-top-container" aria-label="Menu"><ul id="menu-top" className="menu"><li className="menu-item menu-item-type-post_type menu-item-object-page menu-item-home menu-item-80"><Link href="/">HOME</Link></li>
-<li className="menu-item menu-item-type-post_type menu-item-object-page menu-item-144"><Link href="/our-team/">OUR TEAM</Link></li>
-<li className="menu-item menu-item-type-post_type menu-item-object-page current-menu-item page_item page-item-146 current_page_item menu-item-148"><Link href="/contact-us/" aria-current="page">CONTACT US</Link></li>
-<li className="menu-item menu-item-type-post_type menu-item-object-page menu-item-161"><Link href="/procedures/">PROCEDURES</Link></li>
-<li className="menu-item menu-item-type-post_type menu-item-object-page menu-item-164"><Link href="/orthodontics/">INVISALIGN</Link></li>
-<li className="menu-item menu-item-type-post_type menu-item-object-page menu-item-153"><Link href="/patient-forms/">PATIENT FORMS</Link></li>
-<li className="menu-item menu-item-type-post_type menu-item-object-page menu-item-321"><Link href="/payment-insurance/">PAYMENT/INSURANCE</Link></li>
+		</section><section id="nav_menu-7" className="widget widget_nav_menu"><nav className="menu-top-container" aria-label="Menu"><ul id="menu-top" className="menu"><li className="menu-item menu-item-type-post_type menu-item-object-page menu-item-home menu-item-80"><Link href="../index.html">HOME</Link></li>
+<li className="menu-item menu-item-type-post_type menu-item-object-page menu-item-144"><Link href="../our-team/index.html">OUR TEAM</Link></li>
+<li className="menu-item menu-item-type-post_type menu-item-object-page current-menu-item page_item page-item-146 current_page_item menu-item-148"><Link href="index.html" aria-current="page">CONTACT US</Link></li>
+<li className="menu-item menu-item-type-post_type menu-item-object-page menu-item-153"><Link href="../patient-forms/index.html">PATIENT FORMS</Link></li>
+<li className="menu-item menu-item-type-post_type menu-item-object-page menu-item-161"><Link href="../procedures/index.html">PROCEDURES</Link></li>
+<li className="menu-item menu-item-type-post_type menu-item-object-page menu-item-164"><Link href="../orthodontics/index.html">INVISALIGN</Link></li>
 </ul></nav></section><section id="block-4" className="widget widget_block widget_text">
 <p></p>
 </section><section id="block-3" className="widget widget_block widget_text">
@@ -163,7 +162,7 @@
 <div className="is-layout-flow wp-block-group"><div className="wp-block-group__inner-container">
 <div className="is-layout-flex wp-container-2 wp-block-columns">
 <div className="is-layout-flow wp-block-column" style={{flexBasis: '100%'}}>
-<figure className="wp-block-image size-full"><Image src="/wp-content/uploads/2022/06/cropped-pels.png" alt="/" width="348" height="250" priority="false" /></figure>
+<figure className="wp-block-image size-full"><Image decoding="async" loading="lazy" width="348" height="250" src="../wp-content/uploads/2022/06/cropped-pels.png" alt="" className="wp-image-206" srcset="https://www.midcitysmiles.com/blog/wp-content/uploads/2022/06/cropped-pels.png 348w, https://www.midcitysmiles.com/blog/wp-content/uploads/2022/06/cropped-pels-300x216.png 300w" sizes="(max-width: 348px) 100vw, 348px" /></figure>
 </div>
 </div>
 </div></div>
@@ -171,7 +170,7 @@
 			</aside>
 
 <div className="site-info">
-	<Link className="privacy-policy-link" href="/privacy-policy/">Privacy Policy</Link><span role="separator" aria-hidden="true"></span>	<Link href="https://wordpress.org/" className="imprint">
+	<Link className="privacy-policy-link" href="../privacy-policy/index.html">Privacy Policy</Link><span role="separator" aria-hidden="true"></span>	<Link href="https://wordpress.org/" className="imprint">
 		Proudly powered by WordPress	</Link>
 </div>
 			</div>
@@ -181,14 +180,14 @@
 <style id="core-block-supports-inline-css">{`
 .wp-block-columns.wp-container-2{flex-wrap:nowrap;}
 `}</style>
-{/* <Script id="twentyseventeen-skip-link-focus-fix-js-extra">{`
-var twentyseventeenScreenReaderText = {"quote":"<svg className=\"icon icon-quote-right\" aria-hidden=\"true\" role=\"img\"> <use href=\"#icon-quote-right\" xlink:href=\"#icon-quote-right\"><\/use> <\/svg>","expand":"Expand child menu","collapse":"Collapse child menu","icon":"<svg className=\"icon icon-angle-down\" aria-hidden=\"true\" role=\"img\"> <use href=\"#icon-angle-down\" xlink:href=\"#icon-angle-down\"><\/use> <span className=\"svg-fallback icon-angle-down\"><\/span><\/svg>"};
-`}</Script> */}
-<Script src="/wp-content/themes/twentyseventeen/assets/js/skip-link-focus-fix.js?ver=20161114" id="twentyseventeen-skip-link-focus-fix-js"></Script>
-<Script src="/wp-content/themes/twentyseventeen/assets/js/navigation.js?ver=20161203" id="twentyseventeen-navigation-js"></Script>
-<Script src="/wp-content/themes/twentyseventeen/assets/js/global.js?ver=20190121" id="twentyseventeen-global-js"></Script>
-<Script src="/wp-content/themes/twentyseventeen/assets/js/jquery.scrollTo.js?ver=2.1.2" id="jquery-scrollto-js"></Script>
-<Script src="/wp-content/plugins/social-icons-widget-by-wpzoom/assets/js/social-icons-widget-frontend.js?ver=1679942358" id="zoom-social-icons-widget-frontend-js"></Script>
+
+<Script src="../wp-content/themes/twentyseventeen/assets/js/skip-link-focus-fixb448.js?ver=20161114" id="twentyseventeen-skip-link-focus-fix-js"></Script>
+<Script src="../wp-content/themes/twentyseventeen/assets/js/navigation6877.js?ver=20161203" id="twentyseventeen-navigation-js"></Script>
+<Script src="../wp-content/themes/twentyseventeen/assets/js/global5841.js?ver=20190121" id="twentyseventeen-global-js"></Script>
+<Script src="../wp-content/themes/twentyseventeen/assets/js/jquery.scrollTo431f.js?ver=2.1.2" id="jquery-scrollto-js"></Script>
+<Script src="../wp-content/plugins/social-icons-widget-by-wpzoom/assets/js/social-icons-widget-frontendd697.js?ver=1679942358" id="zoom-social-icons-widget-frontend-js"></Script>
+
+
 
 
 
