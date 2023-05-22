@@ -4,19 +4,19 @@ import { useEffect, useState } from 'react';
 
 const createPage = () => {
 
-    const [urls, setUrls] = useState('');
-    const [urlArr, setUrlArr] = useState([]);
+    const [paths, setPaths] = useState('');
+    const [pathArr, setPathArr] = useState([]);
     const [text, setText] = useState(null);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
 
     const replaceStr = 'blog/';
 
-    const sendToCreatePageApi = async (siteUrl, str) => {
+    const sendToCreatePageApi = async (path, str) => {
 
         setTimeout(async () => {
             console.log('sendToCreatePageApi ran');
-            const response = await fetch(`/api/createPageApi?url=${siteUrl}&replaceStr=${str}`);
+            const response = await fetch(`/api/createPageApi?pagePath=${path}&replaceStr=${str}`);
             const data = await response.json();
 
             if (data.success) {
@@ -34,22 +34,22 @@ const createPage = () => {
     }
 
     useEffect(() => {
-        setUrlArr(urls.split('\n'));
-    }, [urls]);
+        setPathArr(paths.split('\n'));
+    }, [paths]);
 
     const handleSubmit = () => {
 
         setLoading(true);
 
-        console.log('urlArr: ', urlArr);
+        console.log('pathArr: ', pathArr);
 
         try {
             let i = 0;
             const runControl = () => {
-                sendToCreatePageApi(urlArr[i], replaceStr);
+                sendToCreatePageApi(pathArr[i], replaceStr);
                 console.log('i: ', i);
                 i++;
-                if (i < urlArr.length) {
+                if (i < pathArr.length) {
                     runControl();
                 }
                 else {
@@ -74,8 +74,8 @@ const createPage = () => {
                 <div>
                     <textarea
                         type='text'
-                        value={urls}
-                        onChange={(e) => setUrls(e.target.value)}
+                        value={paths}
+                        onChange={(e) => setPaths(e.target.value)}
                     />
                 </div>
                 <div>

@@ -55,7 +55,7 @@ export const listFilesAndDirectoriesInUrl = async (url) => {
 export const listFilesInDirectory = async (directoryPath) => {
 
   const fs = require('fs');
-const path = require('path');
+  const path = require('path');
 
 
   try {
@@ -82,3 +82,37 @@ const path = require('path');
     return err.message;
   }
 };
+
+// export const chooseDirectory = (directoryPath) => {
+
+//   const fs = require('fs');
+// 	const path = require('path');
+
+//   let results = '';
+
+//   // const directoryPath = './siteFiles/pagesToBuild'; // Replace with your desired directory path
+
+//   try {
+//     fs.readdir(directoryPath, (err, files) => {
+//       if (err) {
+//         console.error('Error reading directory:', err);
+//         return;
+//       }
+
+//       // console.log('Files in directory:', files);
+//       // Do something with the files in the chosen directory
+
+//       console.log('Files in directory:', files);
+
+//       return files;
+//     });
+
+//     // return results;
+
+//   } catch (error) {
+//     console.log(error.message);
+//     return error.message;
+//   }
+
+
+// };

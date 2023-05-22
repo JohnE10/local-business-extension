@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 const downloadAllImages = () => {
 
     const [url, setUrl] = useState('');
-    const [data, setData] = useState(null);
+    const [data, setData] = useState([]);
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(null);
 
@@ -38,6 +38,7 @@ const downloadAllImages = () => {
             setLoading(false);
         }
     };
+    console.log({data});
 
     return (
         <>

@@ -1,5 +1,5 @@
 import script from 'next/script';
-import { fetchUrlData } from './backEndHelpers';
+import { fetchUrlData, listFilesInDirectory } from './backEndHelpers';
 import { randomStr, styleAttrToNext } from '../../utils/helpers';
 
 const fs = require('fs');
@@ -14,7 +14,15 @@ const pageHeadAPI = async (req, res) => {
         const replaceStr = 'blog/';
         const metaRegEx = /<meta([^>]*)>/g;
 
-        const stylesheetFile = siteFileDir + 'pagesToBuild/orthodontics/index.html';
+        // const mainDir = siteFileDir + 'pagesToBuild/';
+        // const dirsToParse = await listFilesInDirectory(mainDir);
+        // const stylesheetFile = '';
+        // // const stylesheetFile = siteFileDir + 'pagesToBuild/orthodontics/index.html';
+        // dirsToParse.forEach((ele) => {
+        //     stylesheetFile = siteFileDir + '/pagesToBuild/' + ele + '/';
+        // });
+
+        const stylesheetFile = siteFileDir + 'pagesToBuild/index.html';
         const stylesheetHtml = fs.readFileSync(stylesheetFile, { encoding: 'utf8' });
 
         // load cheerio
@@ -27,8 +35,6 @@ const pageHeadAPI = async (req, res) => {
         tempMeta.each((i, el) => {
             tempAppHead = tempAppHead + $.html($(el)) + '\n';
         });
-
-        // 
 
         // remove rel="stylesheet" tags
         $('link[rel="stylesheet"]').remove();
@@ -134,7 +140,7 @@ const pageHeadAPI = async (req, res) => {
 
         console.log('Done');
 
-        return res.json({ success: 'Page created.', results: 'head' })
+        return res.json({ success: 'Page created.', results: dirsToParse })
 
     } catch (error) {
         console.log(error.message);

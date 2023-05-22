@@ -15,15 +15,16 @@ const createPageApi = async (req, res) => {
     const siteFileDir = 'siteFiles/';
     const fileToRead = 'siteFiles/pagesToBuild/orthodontics/index.html';
 
-    const url = req.query.url;
-    console.log('url: ', url);
+    // const url = req.query.url;
+    // console.log('url: ', url);
     // const replaceStr = req.query.replaceStr;
     const replaceStr = 'blog/';
+
+
 
     try {
 
         let fileToCreate = 'orthodontics';
-        // fileToCreate = '/' + siteFileDir + toCamelCase(fileToCreate) + '.js';
         fileToCreate = siteFileDir + toCamelCase(fileToCreate) + '.js';
 
         console.log({ fileToCreate });

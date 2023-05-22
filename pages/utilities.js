@@ -22,6 +22,7 @@ const utilities = () => {
         <div className='pageTitle'><h4>Functionality List</h4></div>
         <div><Link href='/wordPressChecker'><p>Check if website is wordpress</p></Link></div>
         <div><Link href='/getNavLinks'><p>Get navigation menu links</p></Link></div>
+        <div><Link href='/getMainDir'><p>Get Main Directory</p></Link></div>
         <div><Link href='/createPage'><p>Create page</p></Link></div>
         <div><Link href='/pageHead'><p> Get Page Head</p></Link></div>
         <div><Link href='/getCss'><p>Get website CSS</p></Link></div>
