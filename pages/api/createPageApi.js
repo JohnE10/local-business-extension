@@ -98,7 +98,7 @@ const createPageApi = async (req, res) => {
                                 $(el).attr('href', '/');
                             }
                             else {
-                                temp.replace('.html', '.js');
+                                temp = temp.replace('.html', '.js');
                                 $(el).attr('href', temp);
                             }
                         }
