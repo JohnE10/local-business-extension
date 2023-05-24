@@ -280,7 +280,7 @@ const createPageApi = async (req, res) => {
                 import Link from 'next/link';
                 import LiteYouTubeEmbed from "react-lite-youtube-embed";
                 import "react-lite-youtube-embed/dist/LiteYouTubeEmbed.css";
-                import '../jQueryLoader.js';
+                import '../../jQueryLoader.js';
 
                 const index = () => {
                     return (

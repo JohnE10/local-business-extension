@@ -18,7 +18,10 @@ const buildCssFile = async (req, res) => {
 
             const data = await response.text();
 
-            fs.appendFileSync(cssFileName, data);
+            const removeCharset = data.replace(/@charset[^;]+;/g, (match) => `/* ${match} */`);
+
+
+            fs.appendFileSync(cssFileName, removeCharset);
 
             console.log('Done');
         }

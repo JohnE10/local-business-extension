@@ -14,15 +14,8 @@ const pageHeadAPI = async (req, res) => {
         const replaceStr = 'blog/';
         const metaRegEx = /<meta([^>]*)>/g;
 
-        // const mainDir = siteFileDir + 'pagesToBuild/';
-        // const dirsToParse = await listFilesInDirectory(mainDir);
-        // const stylesheetFile = '';
-        // // const stylesheetFile = siteFileDir + 'pagesToBuild/orthodontics/index.html';
-        // dirsToParse.forEach((ele) => {
-        //     stylesheetFile = siteFileDir + '/pagesToBuild/' + ele + '/';
-        // });
-
-        const stylesheetFile = siteFileDir + 'pagesToBuild/index.html';
+        // const stylesheetFile = siteFileDir + 'toGetPagehead/index.html';
+        const stylesheetFile = req.query.url;
         const stylesheetHtml = fs.readFileSync(stylesheetFile, { encoding: 'utf8' });
 
         // load cheerio
@@ -81,7 +74,7 @@ const pageHeadAPI = async (req, res) => {
         globalsCss = globalsCss.replaceAll('<style ', '<style jsx');
 
         // create a separate file for css to be added to globals
-        const globalsCssCode = siteFileDir + 'globalsCss' + '.js';
+        const globalsCssCode = siteFileDir + 'globalsCss' + '.css';
         fs.writeFileSync(globalsCssCode, globalsCss);
 
         // make script adhere to next.js rules
@@ -140,7 +133,7 @@ const pageHeadAPI = async (req, res) => {
 
         console.log('Done');
 
-        return res.json({ success: 'Page created.', results: dirsToParse })
+        return res.json({ success: 'Page created.' })
 
     } catch (error) {
         console.log(error.message);
