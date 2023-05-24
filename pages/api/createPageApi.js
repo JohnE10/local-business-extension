@@ -126,6 +126,9 @@ const createPageApi = async (req, res) => {
                     $(el).attr('width', '150');
                     $(el).attr('height', '150');
                     $(el).attr('priority', 'false');
+                    if($(el).attr('loading')) {
+                        $(el).removeAttr('loading')
+                    }
                 }
             });
 
