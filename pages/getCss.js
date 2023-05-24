@@ -8,6 +8,7 @@ const cheerio = require('cheerio');
 const getCss = () => {
 
     const [url, setUrl] = useState('');
+    const [basePath, setBasePath] = useState('');
     const [html, setHtml] = useState(null);
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(null);
@@ -20,19 +21,6 @@ const getCss = () => {
 
     let cssFileName = 'temp.css';
 
-    const sendToBuildCssFile = async (url, fileName) => {
-        const response = await fetch(`/api/buildCssFile?url=${url}&cssfileName=${fileName}`);
-        const getCssData = await response.json();
-
-        if (getCssData.success) {
-            console.log('getCssData received')
-        }
-        else if (getCssData.error) {
-            setError(getCssData.err);
-            console.log(getCssData.error);
-        }
-    }
-
     const handleSubmit = () => {
 
         setHtml(null);
@@ -42,11 +30,13 @@ const getCss = () => {
 
             console.log('url: ', url);
 
-            const fetchData = async () => {
+            // const fetchData = async () => {
+            const sendToBuildCssFile = async (path, fileName) => {
 
                 setLoading(true);
 
-                const response = await fetch(`/api/fetchUrlData?url=${url}`);
+                // const response = await fetch(`/api/fetchUrlData?url=${url}`);
+                const response = await fetch(`/api/buildCssFile?cssFilePath=${path}&basePath=${basePath}&cssFileName=${fileName}`);
                 const data = await response.json();
 
                 if (data.error) {
@@ -55,8 +45,10 @@ const getCss = () => {
                 else if (data.success) {
                     setHtml(data.success);
                 }
-            }
-            fetchData()
+
+
+            };
+            sendToBuildCssFile(url, cssFileName)
                 .then(() => setLoading(false));
 
         } catch (err) {
@@ -67,77 +59,33 @@ const getCss = () => {
 
     };
 
-    useEffect(() => {
-
-        if (html) {
-
-            console.log('useEffect ran');
-
-            try {
-
-                const $ = cheerio.load(html);
-
-                $('link').map((i, ele) => {
-                    if ($(ele).attr('rel')) {
-                        if ($(ele).attr('rel') == 'stylesheet') {
-                            if ($(ele).attr('href').includes('.css')) {
-                                // console.log($(ele).attr('href'));
-                                sendToBuildCssFile(($(ele).attr('href')), cssFileName);
-                            }
-                            else {
-                                nonCssHref.push($(ele).attr('href'))
-                            }
-                        }
-                    }
-                });
-
-                body = $('body').html();
-                // body = '<div><!-- This is a comment -->Hello world!</div>';
-                body = body.replaceAll(commentRegEx, '');
-
-                const options = {
-                    method: 'POST',
-                    body: JSON.stringify(body)
-                }
-
-                const postRequest = async () => {
-                    const response = await fetch('/api/buildPageBody', options);
-                    const data = await response.json();
-                }
-                if(body) {
-                    postRequest();
-                    console.log('postRequest ran');
-                }
-
-                // $('meta').remove();
-                // // console.log($.html());
-                // console.log($('head').toString());
-
-                // setLoading(false);
-
-                setNonCssHrefToString(nonCssHref.toString());
-
-            } catch (err) {
-                console.log(`Error inside useEffect: ${err.message}`);
-                setError(err.message);
-                setLoading(false);
-            }
-        }
-
-    }, [html]);
 
     return (
         <>
             <div className='pageTitle'><h4>Get website CSS</h4></div>
-            <div className='d-flex justify-content-center align-items-center'>
-                <div><label>Enter URL:</label></div>
-                <div>
-                    <input
-                        type='text'
-                        value={url}
-                        onChange={(e) => setUrl(e.target.value)}
-                    />
+            <div className='d-flex flex-column justify-content-center align-items-center'>
+                <div className='d-flex justify-content-center align-items-center'>
+                    <div><label>Enter base path:</label></div>
+                    <div>
+                        <input
+                            type='text'
+                            value={basePath}
+                            onChange={(e) => setBasePath(e.target.value)}
+                        />
+                    </div>
                 </div>
+
+                <div className='d-flex justify-content-center align-items-center'>
+                    <div><label>Enter full path:</label></div>
+                    <div>
+                        <input
+                            type='text'
+                            value={url}
+                            onChange={(e) => setUrl(e.target.value)}
+                        />
+                    </div>
+                </div>
+
                 <div>
                     <button onClick={handleSubmit}>Submit</button>
                 </div>
@@ -146,7 +94,7 @@ const getCss = () => {
             {loading && <div>... Loading</div>}
             {error && <div className='text-danger'>{error}</div>}
             {/* {html && <div>{JSON.stringify(html)}</div>} */}
-            {setNonCssHrefToString && <div>{nonCssHrefToString}</div>}
+            {/* {setNonCssHrefToString && <div>{nonCssHrefToString}</div>} */}
             {headCode && <div className='w-75'>{headCode}</div>}
             {/* {body} */}
 
