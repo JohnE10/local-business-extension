@@ -5,15 +5,13 @@ import FileUploader from '../components/FileUploader';
 const cheerio = require('cheerio');
 
 
-const getNavLinks = () => {
+const getMainDir = () => {
 
 
     const [directoryPath, setDirectoryPath] = useState('');
     const [directories, setDirectories] = useState(null);
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(null);
-
-    const fileInputRef = useRef(null);
 
     // const pathDirectory = 'C:/Users/jetto/OneDrive/Desktop/Files/Coding-ASUS/WP Migration Campaign/http___www.midcitysmiles.com_blog/www.midcitysmiles.com/blog/';
 
@@ -145,7 +143,7 @@ const getNavLinks = () => {
             {directories &&
 
                 directories.map((ele, i) => (
-                    <div key={i}>{ele}</div>
+                    <div key={i}>{directoryPath + ele}</div>
                 ))
             }
 
@@ -157,4 +155,4 @@ const getNavLinks = () => {
     )
 }
 
-export default getNavLinks;
+export default getMainDir;

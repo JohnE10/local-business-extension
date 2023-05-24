@@ -1,6 +1,6 @@
 import { gridColumnsTotalWidthSelector } from '@mui/x-data-grid';
-import { capFirst, fileNameFromUrl, isValidUrl, randomStr, toCamelCase } from '../../utils/helpers';
-import { fetchUrlData, listFilesInDirectory } from './backEndHelpers';
+import { capFirst, fileNameFromUrl, isAbsoluteURL, isValidUrl, randomStr, toCamelCase } from '../../utils/helpers';
+import { createDirectoryAndSaveFile, fetchUrlData, fileOrDirectory, listFilesInDirectory } from './backEndHelpers';
 import { styleAttrToNext } from '../../utils/helpers';
 
 
@@ -13,19 +13,29 @@ const createPageApi = async (req, res) => {
 
     const commentRegEx = /<!--.*?-->/gs;
     const siteFileDir = 'siteFiles/';
-    const fileToRead = 'siteFiles/pagesToBuild/orthodontics/index.html';
-
-    // const url = req.query.url;
-    // console.log('url: ', url);
-    // const replaceStr = req.query.replaceStr;
-    const replaceStr = 'blog/';
 
 
 
     try {
 
-        let fileToCreate = 'orthodontics';
-        fileToCreate = siteFileDir + toCamelCase(fileToCreate) + '.js';
+        // let fileToCreate = req.query.pagePath;
+        let fileToRead = req.query.pagePath;
+
+        const tempObj = await fileOrDirectory(fileToRead);
+        if (tempObj.isDirectory()) {
+            fileToRead = fileToRead + '/index.html';
+        }
+
+        const basePath = req.query.basePath;
+        const replaceStr = req.query.replaceStr;
+        // const fileToRead = 'siteFiles/pagesToBuild/orthodontics/index.html';
+        console.log({ fileToRead });
+        // const replaceStr = req.query.replaceStr;
+
+
+        // let fileToCreate = 'orthodontics';
+        // fileToCreate = siteFileDir + toCamelCase(fileToCreate) + '.js';
+        let fileToCreate = siteFileDir + fileToRead.replace(basePath, '').replace('.html', '') + '.js';
 
         console.log({ fileToCreate });
 
@@ -46,31 +56,51 @@ const createPageApi = async (req, res) => {
             let aTags = $('body').find('a');
             const paragraphToRemove = $('body').find('p[class="site-title"]');
 
-            // modify nav links to work in next.js site
-            navLinks.each((i, el) => {
+            // // modify nav links to work in next.js site
+            // navLinks.each((i, el) => {
+            //     if ($(el).attr('href')) {
+            //         let temp = $(el).attr('href').trim();
+            //         if (temp.includes('/')) {
+            //             temp = fileNameFromUrl(temp);
+            //             let temp1 = temp.fileName;
+            //             if (temp1.includes('.html')) {
+            //                 temp1 = temp1.replace('.html', '.js');
+            //             }
+            //             let temp2 = temp.parentDirectory;
+            //             temp2 = temp2.replaceAll('.', '').trim();
+            //             console.log({ temp1 });
+            //             console.log({ temp2 });
+            //             if (temp2 == '') {
+            //                 $(el).attr('href', '/');
+            //             }
+            //             else {
+            //                 temp2 = toCamelCase(temp2);
+            //                 $(el).attr('href', '/' + temp2 + '/');
+            //             }
+            //         }
+            //         else {
+            //             if ($(el).attr('href') == 'index.html') {
+            //                 $(el).attr('href', '');
+            //             }
+
+            //         }
+            //     }
+            // });
+
+
+            // modify a tag hrefs to .js from .html
+            aTags.each((i, el) => {
                 if ($(el).attr('href')) {
                     let temp = $(el).attr('href').trim();
-                    if (temp.includes('/')) {
-                        temp = fileNameFromUrl(temp);
-                        let temp1 = temp.fileName;
-                        if (temp1.includes('.html')) {
-                            temp1 = temp1.replace('.html', '.js');
-                        }
-                        let temp2 = temp.parentDirectory;
-                        temp2 = temp2.replaceAll('.', '').trim();
-                        console.log({ temp1 });
-                        console.log({ temp2 });
-                        if (temp2 == '') {
-                            $(el).attr('href', '/');
-                        }
-                        else {
-                            temp2 = toCamelCase(temp2);
-                            $(el).attr('href', '/' + temp2 + '/');
-                        }
-                    }
-                    else {
-                        if ($(el).attr('href') == 'index.html') {
-                            $(el).attr('href', '');
+                    if (!isAbsoluteURL(temp)) {
+                        if (temp.includes('.html')) {
+                            if (fileNameFromUrl(temp).parentDirectory == '') {
+                                $(el).attr('href', '/');
+                            }
+                            else {
+                                temp.replace('.html', '.js');
+                                $(el).attr('href', temp);
+                            }
                         }
 
                     }
@@ -88,6 +118,9 @@ const createPageApi = async (req, res) => {
                     $(el).attr('width', imgWidth);
                     $(el).attr('height', imgHeight);
                     $(el).attr('priority', 'false');
+                    if($(el).attr('loading')) {
+                        $(el).removeAttr('loading')
+                    }
                 }
                 else {
                     $(el).attr('width', '150');
@@ -116,7 +149,7 @@ const createPageApi = async (req, res) => {
             // make script tags adhere to next.js rules
             scripts.each((i, el) => {
                 let temp = $(el).text();
-                console.log({ temp })
+                // console.log({ temp })
                 if ($(el).attr('id') == 'twentyseventeen-skip-link-focus-fix-js-extra') {
                     const temp2 = `
                         var twentyseventeenScreenReaderText = {
@@ -230,6 +263,8 @@ const createPageApi = async (req, res) => {
             body = body.replaceAll('srcset', 'srcSet');
             body = body.replaceAll('crossorigin', 'crossOrigin');
 
+            // replace ='wp with ='/wp
+            body = body.replaceAll('src="wp', 'src="/wp');
 
             // remove some unwanted text
             body = body.replace('Welcome to Mid-City Smiles Family Dentistry! We are a dental practice located in New Orleans. Our team specializes in family dentistry and orthodontic care – Diamond Invisalign Providers..', '');
@@ -243,19 +278,20 @@ const createPageApi = async (req, res) => {
                 import "react-lite-youtube-embed/dist/LiteYouTubeEmbed.css";
                 import '../jQueryLoader.js';
 
-                const ${fileToCreate.replace('.js', '').replaceAll(siteFileDir, '')} = () => {
+                const index = () => {
                     return (
                         <>
                             ${body}
                         </>
                     )    
                 }
-                export default ${fileToCreate == '' ? 'index' : fileToCreate.replace('.js', '').replaceAll(siteFileDir, '')};
+                export default index;
             `;
 
             // save file
-            fs.writeFileSync(fileToCreate, nextPage);
-            return res.json({ success: 'Page created.', reults: html });
+            // fs.writeFileSync(fileToCreate, nextPage);
+            const results = createDirectoryAndSaveFile(fileToCreate, nextPage);
+            return res.json({ success: results });
 
         }
         else if (html.error) {
@@ -266,9 +302,6 @@ const createPageApi = async (req, res) => {
         console.log(err.message);
         return res.json({ 'catch error ': err.message });
     }
-
-    // }, 1000);
-    // return res.json({ success: 'Page created.' });
 
 }
 

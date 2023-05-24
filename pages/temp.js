@@ -72,23 +72,6 @@ const temp = () => {
 
   let navLinks = $('body').find('nav').find('li').find('a');
 
-  navLinks.each((i, el) => {
-    // console.log('$.html(el): ', $.html(el));
-    if ($(el).attr('href')) {
-        let temp = $(el).attr('href').trim();
-        if (temp.includes('/')) {
-            temp = fileNameFromUrl(temp);
-            const temp1 = temp.fileName;
-            let temp2 = temp.parentDirectory;
-            temp2 = temp2.replaceAll('.','');
-            console.log({ temp1 });
-            console.log({ temp2 });
-        }
-
-
-    }
-});
-
   // const url = '/index.html';
 
   // const temp = fileNameFromUrl(url);

@@ -20,12 +20,12 @@ export const randomStr = (length) => {
   // declare all characters
   const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
   let randomString = ' ';
-    for (let i = 0; i < length; i++) {
-      const randomIndex = Math.floor(Math.random() * characters.length);
-      randomString += characters.charAt(randomIndex);
-    }
+  for (let i = 0; i < length; i++) {
+    const randomIndex = Math.floor(Math.random() * characters.length);
+    randomString += characters.charAt(randomIndex);
+  }
 
-    return randomString;
+  return randomString;
 
 };
 
@@ -137,7 +137,7 @@ export const styleAttrToNext = (style) => {
 
 export const fileNameFromUrl = (url) => {
   // Remove any query parameters from the URL
-  
+
   const cleanUrl = url.split('?')[0];
 
   // Split the URL by slashes to get individual parts
@@ -145,28 +145,18 @@ export const fileNameFromUrl = (url) => {
 
   // Get the last part of the URL, which should be the file name
   const fileName = parts[parts.length - 1];
-  const parentDirectory = parts[parts.length - 2];
 
-  return {fileName, parentDirectory};
+  let parentDirectory = '';
+
+  if (parts.length > 1) {
+    parentDirectory = parts[parts.length - 2];
+  }
+  return { fileName, parentDirectory };
 };
 
-// export const fetchUrlData = async (url) => {
+export const isAbsoluteURL = (url) => {
 
-//   try {
-//     const response = await fetch(url);
-//     if (!response.ok) {
-//       throw Error('Did not get a response from server.');
-//     }
-
-//     const data = await response.text();
-//     // console.log(data);
-//     console.log('Done');
-
-//     return { success: data };
-
-//   } catch (err) {
-//     console.log(err);
-//     return { error: err.message };
-//   }
-
-// }
+  const absoluteURLPattern = /^(https?:\/\/)/i;
+  return absoluteURLPattern.test(url);
+  
+};

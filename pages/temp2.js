@@ -1,14 +1,11 @@
 import React, { useEffect } from 'react'
+import { fileNameFromUrl, isAbsoluteURL } from '../utils/helpers';
 
 const temp2 = () => {
 
+const path = 'C:/Users/jetto/OneDrive/Desktop/Files/Coding-ASUS/WP Migration Campaign/HTTrack_mid-city-smiles/mid-city-smiles/www.midcitysmiles.com/blog/procedure/text.txt';
 
-      
-      
-
-    useEffect(() => {
-        selectDirectory();
-    }, []);
+console.log(fileNameFromUrl(path).parentDirectory)
 
 
 

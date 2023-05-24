@@ -10,13 +10,23 @@ const createPage = () => {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
 
+    const basePath = 'C:/Users/jetto/OneDrive/Desktop/Files/Coding-ASUS/WP Migration Campaign/HTTrack_mid-city-smiles/mid-city-smiles/www.midcitysmiles.com/blog/';
+
     const replaceStr = 'blog/';
 
-    const sendToCreatePageApi = async (path, str) => {
+    const isFile = async (dirPath) => {
+        const response = await fetch(`/api/fileOrDirectoryApi?path=${dirPath}`);
+        const data = await response.json();
+
+        console.log({data: data.success});
+        return data.success;
+    }
+
+    const sendToCreatePageApi = async (path, base, str) => {
 
         setTimeout(async () => {
             console.log('sendToCreatePageApi ran');
-            const response = await fetch(`/api/createPageApi?pagePath=${path}&replaceStr=${str}`);
+            const response = await fetch(`/api/createPageApi?pagePath=${path}&basePath=${base}&replaceStr=${str}`);
             const data = await response.json();
 
             if (data.success) {
@@ -43,10 +53,12 @@ const createPage = () => {
 
         console.log('pathArr: ', pathArr);
 
+        console.log({pathArr});
+
         try {
             let i = 0;
             const runControl = () => {
-                sendToCreatePageApi(pathArr[i], replaceStr);
+                sendToCreatePageApi(pathArr[i], basePath, replaceStr);
                 console.log('i: ', i);
                 i++;
                 if (i < pathArr.length) {

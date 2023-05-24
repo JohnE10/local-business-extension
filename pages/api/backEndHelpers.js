@@ -8,7 +8,6 @@ export const fetchUrlData = async (url) => {
     }
 
     const data = await response.text();
-    // console.log(data);
     console.log('Done');
 
     return { success: data };
@@ -83,36 +82,67 @@ export const listFilesInDirectory = async (directoryPath) => {
   }
 };
 
-// export const chooseDirectory = (directoryPath) => {
+export const fileOrDirectory = async (path) => {
+  // Import the filesystem module
+  const fs = require('fs');
 
-//   const fs = require('fs');
-// 	const path = require('path');
+  // Getting information for a file
+  try {
+    const results = await new Promise((resolve, reject) => {
+      fs.stat(path, (error, stats) => {
+        if (error) {
+          console.log(error);
+          return error.message;
+        }
+        else {
+          // // console.log("Stats object for: example_file.txt");
+          // console.log({ stats });
 
-//   let results = '';
+          // // Using methods of the Stats object
+          console.log("Path is file:", stats.isFile());
+          console.log("Path is directory:", stats.isDirectory());
+        }
+        resolve(stats);
+      });
+    });
 
-//   // const directoryPath = './siteFiles/pagesToBuild'; // Replace with your desired directory path
+    return results
 
-//   try {
-//     fs.readdir(directoryPath, (err, files) => {
-//       if (err) {
-//         console.error('Error reading directory:', err);
-//         return;
-//       }
-
-//       // console.log('Files in directory:', files);
-//       // Do something with the files in the chosen directory
-
-//       console.log('Files in directory:', files);
-
-//       return files;
-//     });
-
-//     // return results;
-
-//   } catch (error) {
-//     console.log(error.message);
-//     return error.message;
-//   }
+  } catch (error) {
+    return error.message;
+  }
 
 
-// };
+
+};
+
+export const createDirectoryAndSaveFile = (filePath, fileContent) => {
+
+  const fs = require('fs');
+  const path = require('path');
+
+  try {
+
+    const directoryPath = path.dirname(filePath);
+
+    fs.mkdir(directoryPath, { recursive: true }, (err) => {
+      if (err) {
+        console.error('Failed to create directory:', err);
+      } else {
+        fs.writeFile(filePath, fileContent, (err) => {
+          if (err) {
+            console.error('Failed to save file:', err);
+          } else {
+            console.log('File saved successfully!');
+          }
+        });
+      }
+    });
+
+    return 'created';
+
+  } catch (error) {
+    return error.message;
+  }
+
+};
