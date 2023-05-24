@@ -18,6 +18,23 @@ const createPageApi = async (req, res) => {
 
     try {
 
+        const createSVGComponent = (svg, name) => {
+            const componentContent = `
+                const ${name} = () => {
+                    return (
+                        <div>
+                            ${svg}
+                        </div>
+                    )
+                }
+                
+                export default ${name}
+            `;
+            const tempCompName = 'components/' + name + '.js';
+            fs.writeFileSync(tempCompName, componentContent);
+
+        };
+
         // let fileToCreate = req.query.pagePath;
         let fileToRead = req.query.pagePath;
 
@@ -30,11 +47,7 @@ const createPageApi = async (req, res) => {
         const replaceStr = req.query.replaceStr;
         // const fileToRead = 'siteFiles/pagesToBuild/orthodontics/index.html';
         console.log({ fileToRead });
-        // const replaceStr = req.query.replaceStr;
 
-
-        // let fileToCreate = 'orthodontics';
-        // fileToCreate = siteFileDir + toCamelCase(fileToCreate) + '.js';
         let fileToCreate = siteFileDir + fileToRead.replace(basePath, '').replace('.html', '') + '.js';
 
         console.log({ fileToCreate });
@@ -45,7 +58,7 @@ const createPageApi = async (req, res) => {
 
             // load cheerio
             let $ = cheerio.load(html);
-            $('svg').remove();
+            // $('svg').remove();
 
             // Html element manipulation
             let images = $('body').find('img');
@@ -54,7 +67,25 @@ const createPageApi = async (req, res) => {
             let navLinks = $('body').find('nav').find('li').find('a');
             let tagsWithStyle = $('[style]');
             let aTags = $('body').find('a');
+            let svgs = $('body').find('svg');
             const paragraphToRemove = $('body').find('p[class="site-title"]');
+
+            // create list of svg imports
+            let svgImports = '';
+
+            // // svgImports file
+            // fs.writeFileSync('components/svgImports.txt', '');
+
+            // handle svgs
+            svgs.each((i, el) => {
+                const svgName = `Svg${i + 1}`;
+                const svgContent = $.html(el);
+                createSVGComponent(svgContent, svgName);
+                svgImports = svgImports + `import ${svgName} from '../../components/${svgName}';\n`;
+                // fs.appendFileSync('components/svgImports.txt', `import ${svgName} from '../../components/${svgName}';\n`);
+                // // svgImports.push(`import ${svgName} from '../../components/${svgName}`);
+                $(el).replaceWith(`<${svgName}>\n`);
+            });
 
             // // modify nav links to work in next.js site
             // navLinks.each((i, el) => {
@@ -119,7 +150,7 @@ const createPageApi = async (req, res) => {
                     $(el).attr('width', imgWidth);
                     $(el).attr('height', imgHeight);
                     $(el).attr('priority', 'false');
-                    if($(el).attr('loading')) {
+                    if ($(el).attr('loading')) {
                         $(el).removeAttr('loading')
                     }
                 }
@@ -127,7 +158,7 @@ const createPageApi = async (req, res) => {
                     $(el).attr('width', '150');
                     $(el).attr('height', '150');
                     $(el).attr('priority', 'false');
-                    if($(el).attr('loading')) {
+                    if ($(el).attr('loading')) {
                         $(el).removeAttr('loading')
                     }
                 }
@@ -242,6 +273,14 @@ const createPageApi = async (req, res) => {
             const hrRegEx = /<hr([^>]*)>/g;
             body = body.replaceAll(hrRegEx, '<hr$1 />');
 
+            // remove all svg closing tags
+            const svgClosingRegex = /<\/svg[^>]*>/gi;
+            body = body.replaceAll(svgClosingRegex, '');
+
+            // make all svg tags self closing
+            const svgRegEx = /<svg([^>]*)>/g;
+            body = body.replaceAll(svgRegEx, '<svg$1 />');
+
             // make all br tags self closing
             const brRegEx = /<br([^>]*)>/g;
             body = body.replaceAll(brRegEx, '<br$1 />');
@@ -281,6 +320,7 @@ const createPageApi = async (req, res) => {
                 import LiteYouTubeEmbed from "react-lite-youtube-embed";
                 import "react-lite-youtube-embed/dist/LiteYouTubeEmbed.css";
                 import '../../jQueryLoader.js';
+                ${svgImports}
 
                 const index = () => {
                     return (
@@ -303,7 +343,7 @@ const createPageApi = async (req, res) => {
         }
 
     } catch (err) {
-        console.log(err.message);
+        console.log(err);
         return res.json({ 'catch error ': err.message });
     }
 
