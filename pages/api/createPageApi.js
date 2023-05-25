@@ -13,6 +13,7 @@ const createPageApi = async (req, res) => {
 
     const commentRegEx = /<!--.*?-->/gs;
     const siteFileDir = 'siteFiles/';
+    const svgDir = 'svgs/';
 
 
 
@@ -30,7 +31,7 @@ const createPageApi = async (req, res) => {
                 
                 export default ${name}
             `;
-            const tempCompName = 'components/' + name + '.js';
+            const tempCompName = siteFileDir + svgDir + name + '.js';
             fs.writeFileSync(tempCompName, componentContent);
 
         };
@@ -70,16 +71,23 @@ const createPageApi = async (req, res) => {
             let svgs = $('body').find('svg');
             const paragraphToRemove = $('body').find('p[class="site-title"]');
 
-            // create list of svg imports
-            let svgImports = '';
 
-            // // svgImports file
-            // fs.writeFileSync('components/svgImports.txt', '');
+
+            // make css style attribute adhere to next.js rules
+            tagsWithStyle.each((i, el) => {
+                let styleStr = $(el).attr('style');
+                if (styleStr.trim() != '') {
+                    styleStr = styleAttrToNext(styleStr);
+                    $(el).attr('style', styleStr);
+                }
+            });
 
             // handle svgs
+            let svgImports = '';
             svgs.each((i, el) => {
                 const svgName = `Svg${i + 1}`;
-                const svgContent = $.html(el);
+                let svgContent = $.html(el);
+                svgContent = svgContent.replaceAll('xlink:href="', 'href="');
                 createSVGComponent(svgContent, svgName);
                 svgImports = svgImports + `import ${svgName} from '../../components/${svgName}';\n`;
                 // fs.appendFileSync('components/svgImports.txt', `import ${svgName} from '../../components/${svgName}';\n`);
@@ -164,14 +172,14 @@ const createPageApi = async (req, res) => {
                 }
             });
 
-            // make css style attribute adhere to next.js rules
-            tagsWithStyle.each((i, el) => {
-                let styleStr = $(el).attr('style');
-                if (styleStr.trim() != '') {
-                    styleStr = styleAttrToNext(styleStr);
-                    $(el).attr('style', styleStr);
-                }
-            });
+            // // make css style attribute adhere to next.js rules
+            // tagsWithStyle.each((i, el) => {
+            //     let styleStr = $(el).attr('style');
+            //     if (styleStr.trim() != '') {
+            //         styleStr = styleAttrToNext(styleStr);
+            //         $(el).attr('style', styleStr);
+            //     }
+            // });
 
             // make style tags adhere to next.js rules
             styles.each((i, el) => {
