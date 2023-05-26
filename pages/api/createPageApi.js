@@ -72,6 +72,9 @@ const createPageApi = async (req, res) => {
             let $ = cheerio.load(html);
             // $('svg').remove();
 
+            // remove attr srcset from img tags
+            $('img').removeAttr('srcset');
+
             // Html element manipulation
             let images = $('body').find('img');
             let styles = $('body').find('style');
@@ -211,10 +214,10 @@ const createPageApi = async (req, res) => {
                     `
                     $(el).text('{`' + temp2 + '`}');
                 }
-                // else if ($(el).text().trim() != '') {
-                //     temp = temp.replaceAll('\\', '');
-                //     $(el).text('{`' + temp + '`}');
-                // }
+                else if ($(el).text().trim() != '') {
+                    // temp = temp.replaceAll('\\', '');
+                    $(el).text('{`' + temp + '`}');
+                }
             });
 
             // make script adhere to next.js rules
@@ -253,13 +256,17 @@ const createPageApi = async (req, res) => {
                                         `)
                                     }
                                 }
-
-
                             }
                         }
                     });
                 }
             }
+
+            // add section closing tags
+            const sectionTags = $('section')
+            sectionTags.each((i, el) => {
+                const temp = $.html(el);
+            });
 
             // remove the following paragraph
             // console.log({'paragraphToRemove.html()': paragraphToRemove.html()});
@@ -267,8 +274,16 @@ const createPageApi = async (req, res) => {
                 $(el).text('');
             });
 
+            // remove all link rel=stylesheet tags
+            $('link[rel="stylesheet"]').remove();
+
+
             //Set body to the newly modified html
             let body = $('body').html();
+
+            // make all link tags self closing
+            const linkRegEx = /<link([^>]*)>/g;
+            body = body.replaceAll(linkRegEx, '<link$1 />');
 
             // remove html comments
             body = body.replaceAll(commentRegEx, '');
@@ -327,6 +342,10 @@ const createPageApi = async (req, res) => {
             body = body.replaceAll('srcset', 'srcSet');
             body = body.replaceAll('crossorigin', 'crossOrigin');
             body = body.replaceAll('frameborder', 'frameBorder');
+
+            // add closing section closing tag
+            const sectionRegex = /<section\b[^>]*>([\s\S]*?)<\/section>?/g;
+            body = body.replaceAll(sectionRegex, '<section>$1</section>');
 
 
             // replace svg tags with Svg

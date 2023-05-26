@@ -1,0 +1,14 @@
+<br>: Line break
+<img>: Image
+<input>: Input field
+<link>: External resource link
+<meta>: Metadata
+<hr>: Horizontal rule
+<col>: Table column
+<area>: Image map area
+<base>: Base URL for relative links
+<command>: Command in a command bar
+<embed>: External application or interactive content
+<param>: Parameter for an object
+<source>: Media source for media elements like <video> or <audio>
+<track>: Text track for media elements
