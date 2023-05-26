@@ -3,6 +3,7 @@ import React, { useState } from 'react'
 const downloadAllImages = () => {
 
     const [url, setUrl] = useState('');
+    const [basePath, setBasePath] = useState('');
     const [data, setData] = useState([]);
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(null);
@@ -38,22 +39,38 @@ const downloadAllImages = () => {
             setLoading(false);
         }
     };
-    console.log({data});
+    console.log({ data });
 
     return (
         <>
             <div className='pageTitle'><h4>Get Page Head</h4></div>
             {error && <div className='text-danger'>{error}</div>}
             {loading && <div>... Loading</div>}
-            <div className='d-flex justify-content-center align-items-center'>
-                <div><label>Enter URL:</label></div>
-                <div>
-                    <input
-                        type='text'
-                        value={url}
-                        onChange={(e) => setUrl(e.target.value)}
-                    />
+            <div className='d-flex flex-column justify-content-center align-items-center'>
+
+                <div className='d-flex justify-content-center align-items-center'>
+                    <div><label>Enter BasePath:</label></div>
+                    <div>
+                        <input
+                            type='text'
+                            value={basePath}
+                            onChange={(e) => setBasePath(e.target.value.replaceAll('\\', '/'))}
+                        />
+                    </div>
                 </div>
+
+                <div className='d-flex justify-content-center align-items-center'>
+                    <div><label>Enter Full URL:</label></div>
+                    <div>
+                        <input
+                            type='text'
+                            value={url}
+                            onChange={(e) => setUrl(e.target.value.replaceAll('\\', '/'))}
+                        />
+                    </div>
+                </div>
+
+
                 <div>
                     <button onClick={handleSubmit}>Submit</button>
                 </div>

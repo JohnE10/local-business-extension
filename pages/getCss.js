@@ -26,6 +26,9 @@ const getCss = () => {
         setHtml(null);
         setError(null);
 
+        console.log({basePath});
+        console.log({url});
+
         try {
 
             console.log('url: ', url);
@@ -70,7 +73,7 @@ const getCss = () => {
                         <input
                             type='text'
                             value={basePath}
-                            onChange={(e) => setBasePath(e.target.value)}
+                            onChange={(e) => setBasePath(e.target.value.replaceAll('\\', "/"))}
                         />
                     </div>
                 </div>
@@ -81,7 +84,7 @@ const getCss = () => {
                         <input
                             type='text'
                             value={url}
-                            onChange={(e) => setUrl(e.target.value)}
+                            onChange={(e) => setUrl(e.target.value.replaceAll('\\', "/"))}
                         />
                     </div>
                 </div>

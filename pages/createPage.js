@@ -6,11 +6,12 @@ const createPage = () => {
 
     const [paths, setPaths] = useState('');
     const [pathArr, setPathArr] = useState([]);
+    const [basePath, setBasePath] = useState('');
     const [text, setText] = useState(null);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
 
-    const basePath = 'C:/Users/jetto/OneDrive/Desktop/Files/Coding-ASUS/WP Migration Campaign/HTTrack_mid-city-smiles/mid-city-smiles/www.midcitysmiles.com/blog/';
+    // const basePath = 'C:/Users/jetto/OneDrive/Desktop/Files/Coding-ASUS/WP Migration Campaign/HTTrack_mid-city-smiles/mid-city-smiles/www.midcitysmiles.com/blog/';
 
     const replaceStr = 'blog/';
 
@@ -18,7 +19,7 @@ const createPage = () => {
         const response = await fetch(`/api/fileOrDirectoryApi?path=${dirPath}`);
         const data = await response.json();
 
-        console.log({data: data.success});
+        console.log({ data: data.success });
         return data.success;
     }
 
@@ -53,7 +54,7 @@ const createPage = () => {
 
         console.log('pathArr: ', pathArr);
 
-        console.log({pathArr});
+        console.log({ pathArr });
 
         try {
             let i = 0;
@@ -82,12 +83,22 @@ const createPage = () => {
         <>
             <div className='pageTitle'><h4>Create Page</h4></div>
             <div className='d-flex flex-column justify-content-center align-items-center'>
+            <div className='d-flex justify-content-center align-items-center'>
+                    <div><label>Enter BasePath:</label></div>
+                    <div>
+                        <input
+                            type='text'
+                            value={basePath}
+                            onChange={(e) => setBasePath(e.target.value.replaceAll('\\', '/'))}
+                        />
+                    </div>
+                </div>
                 <div><label>Enter URLs:</label></div>
                 <div>
                     <textarea
                         type='text'
                         value={paths}
-                        onChange={(e) => setPaths(e.target.value)}
+                        onChange={(e) => setPaths(e.target.value.replaceAll('\\', '/'))}
                     />
                 </div>
                 <div>

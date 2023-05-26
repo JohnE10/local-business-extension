@@ -125,8 +125,17 @@ const buildCssFile = async (req, res) => {
                     temp = temp.replaceAll('../../', basePath);
                     temp = temp.replaceAll('../', basePath);
 
+                    if (!temp.includes(basePath)) {
+                        if (basePath.charAt(basePath.length - 1) == '/') {
+                            temp = basePath + temp;
+                        }
+                        else {
+                            temp = basePath + '/' + temp;
+                        }
+
+                    }
+
                     let tempFileName = fileNameFromUrl(temp).fileName;
-                    // console.log({ tempFileName });
 
                     if (tempFileName.includes('?ver')) {
                         let temp2 = tempFileName.split('?');

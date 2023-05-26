@@ -2,41 +2,37 @@
         <>
          <head><meta http-equiv="content-type" content="text/html;charset=UTF-8" />{/* <!-- /Added by HTTrack --> */}
 
-<meta charset="UTF-8" />
+	<meta charset="UTF-8" />
+		
+	<link rel="profile" href="https://gmpg.org/xfn/11" />
+	<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
 
-<link rel="profile" href="https://gmpg.org/xfn/11" />
-
-<Script id=" lQUJ3zJTU0">{`(function(html){html.className = html.className.replace(/\bno-js\b/,'js')})(document.documentElement);`}</Script>
-<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
-
-	{/* <!-- This site is optimized with the Yoast SEO plugin v19.0 - https://yoast.com/wordpress/plugins/seo/ --> */}
+	{/* <!-- This site is optimized with the Yoast SEO plugin v20.7 - https://yoast.com/wordpress/plugins/seo/ --> */}
 	
-	<meta name="description" content="Welcome to Mid-City Smiles family dentistry! We are a dental practice located in New Orleans. Dr. Anderson specializes in family dentistry and orthodontic care." />
+	<meta name="description" content="Dr. DuBois at Comfort Smiles Dentistry in New Orleans is a complete family dentistry, including cosmetic dentistry and more!" />
 	<link rel="canonical" href="index.html" />
 	<meta property="og:locale" content="en_US" />
 	<meta property="og:type" content="website" />
-	<meta property="og:title" content="Dentist New Orleans - Teledentistry, Telehealth New Orleans, LA" />
-	<meta property="og:description" content="Welcome to Mid-City Smiles family dentistry! We are a dental practice located in New Orleans. Dr. Anderson specializes in family dentistry and orthodontic care." />
-	<meta property="og:url" content="https://www.midcitysmiles.com/blog/" />
-	<meta property="og:site_name" content="Mid-City Smiles Family Dentistry" />
-	<meta property="article:modified_time" content="2022-06-20T19:52:27+00:00" />
-	<meta property="og:image" content="https://www.midcitysmiles.com/blog/wp-content/uploads/2022/06/horiz-1.png" />
-	<meta property="og:image:width" content="4000" />
-	<meta property="og:image:height" content="2000" />
+	<meta property="og:title" content="Comfort Smiles, Dr. DuBois | Cosmetic Dentist Family Dentist New Orleans" />
+	<meta property="og:description" content="Dr. DuBois at Comfort Smiles Dentistry in New Orleans is a complete family dentistry, including cosmetic dentistry and more!" />
+	<meta property="og:url" content="index.html" />
+	<meta property="og:site_name" content="Comfort Smiles Dentistry" />
+	<meta property="article:modified_time" content="2023-03-27T21:10:49+00:00" />
+	<meta property="og:image" content="wp-content/uploads/2021/12/Dr.-DuBois-Comfort-Smiles-Dentistry-New-Orleans-Dentist.png" />
+	<meta property="og:image:width" content="1731" />
+	<meta property="og:image:height" content="1133" />
 	<meta property="og:image:type" content="image/png" />
 	<meta name="twitter:card" content="summary_large_image" />
 	<meta name="twitter:label1" content="Est. reading time" />
-	<meta name="twitter:data1" content="1 minute" />
-	<Script type="application/ld+json" class="yoast-schema-graph" id=" tofS9OAd07">{`{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://www.midcitysmiles.com/blog/#website","url":"https://www.midcitysmiles.com/blog/","name":"Mid-City Smiles Family Dentistry","description":"Welcome to Mid-City Smiles Family Dentistry! We are a dental practice located in New Orleans. Our team specializes in family dentistry and orthodontic care - Diamond Invisalign Providers..","potentialAction":[{"@type":"SearchAction","target":{"@type":"EntryPoint","urlTemplate":"https://www.midcitysmiles.com/blog/?s={search_term_string}"},"query-input":"required name=search_term_string"}],"inLanguage":"en-US"},{"@type":"ImageObject","inLanguage":"en-US","@id":"https://www.midcitysmiles.com/blog/#primaryimage","url":"https://www.midcitysmiles.com/blog/wp-content/uploads/2022/06/horiz-1.png","contentUrl":"https://www.midcitysmiles.com/blog/wp-content/uploads/2022/06/horiz-1.png","width":4000,"height":2000},{"@type":"WebPage","@id":"https://www.midcitysmiles.com/blog/#webpage","url":"https://www.midcitysmiles.com/blog/","name":"Dentist New Orleans - Teledentistry, Telehealth New Orleans, LA","isPartOf":{"@id":"https://www.midcitysmiles.com/blog/#website"},"primaryImageOfPage":{"@id":"https://www.midcitysmiles.com/blog/#primaryimage"},"datePublished":"2020-04-30T11:36:47+00:00","dateModified":"2022-06-20T19:52:27+00:00","description":"Welcome to Mid-City Smiles family dentistry! We are a dental practice located in New Orleans. Dr. Anderson specializes in family dentistry and orthodontic care.","breadcrumb":{"@id":"https://www.midcitysmiles.com/blog/#breadcrumb"},"inLanguage":"en-US","potentialAction":[{"@type":"ReadAction","target":["https://www.midcitysmiles.com/blog/"]}]},{"@type":"BreadcrumbList","@id":"https://www.midcitysmiles.com/blog/#breadcrumb","itemListElement":[{"@type":"ListItem","position":1,"name":"Home"}]}]}`}</Script>
+	<meta name="twitter:data1" content="7 minutes" />
+	<Script type="application/ld+json" className="yoast-schema-graph" id=" vhRX8LQcLn">{`{"@context":"https://schema.org","@graph":[{"@type":"WebPage","@id":"https://comfortsmilesdentistry.com/","url":"https://comfortsmilesdentistry.com/","name":"Comfort Smiles, Dr. DuBois | Cosmetic Dentist Family Dentist New Orleans","isPartOf":{"@id":"https://comfortsmilesdentistry.com/#website"},"about":{"@id":"https://comfortsmilesdentistry.com/#organization"},"primaryImageOfPage":{"@id":"https://comfortsmilesdentistry.com/#primaryimage"},"image":{"@id":"https://comfortsmilesdentistry.com/#primaryimage"},"thumbnailUrl":"https://comfortsmilesdentistry.com/wp-content/uploads/2021/12/Dr.-DuBois-Comfort-Smiles-Dentistry-New-Orleans-Dentist.png","datePublished":"2018-07-31T04:35:24+00:00","dateModified":"2023-03-27T21:10:49+00:00","description":"Dr. DuBois at Comfort Smiles Dentistry in New Orleans is a complete family dentistry, including cosmetic dentistry and more!","breadcrumb":{"@id":"https://comfortsmilesdentistry.com/#breadcrumb"},"inLanguage":"en-US","potentialAction":[{"@type":"ReadAction","target":["https://comfortsmilesdentistry.com/"]}]},{"@type":"ImageObject","inLanguage":"en-US","@id":"https://comfortsmilesdentistry.com/#primaryimage","url":"https://comfortsmilesdentistry.com/wp-content/uploads/2021/12/Dr.-DuBois-Comfort-Smiles-Dentistry-New-Orleans-Dentist.png","contentUrl":"https://comfortsmilesdentistry.com/wp-content/uploads/2021/12/Dr.-DuBois-Comfort-Smiles-Dentistry-New-Orleans-Dentist.png","width":1731,"height":1133,"caption":"Dr. DuBois, Comfort Smiles Dentistry, New Orleans Dentist"},{"@type":"BreadcrumbList","@id":"https://comfortsmilesdentistry.com/#breadcrumb","itemListElement":[{"@type":"ListItem","position":1,"name":"Home"}]},{"@type":"WebSite","@id":"https://comfortsmilesdentistry.com/#website","url":"https://comfortsmilesdentistry.com/","name":"Comfort Smiles Dentistry","description":"New Orleans Dentist, Dr. DuBois","publisher":{"@id":"https://comfortsmilesdentistry.com/#organization"},"potentialAction":[{"@type":"SearchAction","target":{"@type":"EntryPoint","urlTemplate":"https://comfortsmilesdentistry.com/?s={search_term_string}"},"query-input":"required name=search_term_string"}],"inLanguage":"en-US"},{"@type":"Organization","@id":"https://comfortsmilesdentistry.com/#organization","name":"Comfort Smiles Dentistry","url":"https://comfortsmilesdentistry.com/","logo":{"@type":"ImageObject","inLanguage":"en-US","@id":"https://comfortsmilesdentistry.com/#/schema/logo/image/","url":"https://comfortsmilesdentistry.com/wp-content/uploads/2021/01/matthew-martin-logo-dark.png","contentUrl":"https://comfortsmilesdentistry.com/wp-content/uploads/2021/01/matthew-martin-logo-dark.png","width":1696,"height":797,"caption":"Comfort Smiles Dentistry"},"image":{"@id":"https://comfortsmilesdentistry.com/#/schema/logo/image/"}}]}`}</Script>
 	{/* <!-- / Yoast SEO plugin. --> */}
 
 
-<link rel="dns-prefetch" href="http://fonts.googleapis.com/" />
-<link href="https://fonts.gstatic.com/" crossorigin="" rel="preconnect" />
-<link rel="alternate" type="application/rss+xml" title="Mid-City Smiles Family Dentistry » Feed" href="feed/index.html" />
-<link rel="alternate" type="application/rss+xml" title="Mid-City Smiles Family Dentistry » Comments Feed" href="comments/feed/index.html" />
-<Script id=" gIxpGCXNDM">{`
-window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/14.0.0\/72x72\/","ext":".png","svgUrl":"https:\/\/s.w.org\/images\/core\/emoji\/14.0.0\/svg\/","svgExt":".svg","source":{"concatemoji":"https:\/\/www.midcitysmiles.com\/blog\/wp-includes\/js\/wp-emoji-release.min.js?ver=6.1.3"}};
+<link rel="dns-prefetch" href="http://www.googletagmanager.com/" />
+<link rel="alternate" type="application/rss+xml" title="Comfort Smiles Dentistry » Feed" href="feed/index.html" />
+<Script id=" Te1AKxIv5X">{`
+window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/14.0.0\/72x72\/","ext":".png","svgUrl":"https:\/\/s.w.org\/images\/core\/emoji\/14.0.0\/svg\/","svgExt":".svg","source":{"concatemoji":"https:\/\/comfortsmilesdentistry.com\/wp-includes\/js\/wp-emoji-release.min.js?ver=6.1.1"}};
 /*! This file is auto-generated */
 !function(e,a,t){var n,r,o,i=a.createElement("canvas"),p=i.getContext&&i.getContext("2d");function s(e,t){var a=String.fromCharCode,e=(p.clearRect(0,0,i.width,i.height),p.fillText(a.apply(this,e),0,0),i.toDataURL());return p.clearRect(0,0,i.width,i.height),p.fillText(a.apply(this,t),0,0),e===i.toDataURL()}function c(e){var t=a.createElement("script");t.src=e,t.defer=t.type="text/javascript",a.getElementsByTagName("head")[0].appendChild(t)}for(o=Array("flag","emoji"),t.supports={everything:!0,everythingExceptFlag:!0},r=0;r<o.length;r++)t.supports[o[r]]=function(e){if(p&&p.fillText)switch(p.textBaseline="top",p.font="600 32px Arial",e){case"flag":return s([127987,65039,8205,9895,65039],[127987,65039,8203,9895,65039])?!1:!s([55356,56826,55356,56819],[55356,56826,8203,55356,56819])&&!s([55356,57332,56128,56423,56128,56418,56128,56421,56128,56430,56128,56423,56128,56447],[55356,57332,8203,56128,56423,8203,56128,56418,8203,56128,56421,8203,56128,56430,8203,56128,56423,8203,56128,56447]);case"emoji":return!s([129777,127995,8205,129778,127999],[129777,127995,8203,129778,127999])}return!1}(o[r]),t.supports.everything=t.supports.everything&&t.supports[o[r]],"flag"!==o[r]&&(t.supports.everythingExceptFlag=t.supports.everythingExceptFlag&&t.supports[o[r]]);t.supports.everythingExceptFlag=t.supports.everythingExceptFlag&&!t.supports.flag,t.DOMReady=!1,t.readyCallback=function(){t.DOMReady=!0},t.supports.everything||(n=function(){t.readyCallback()},a.addEventListener?(a.addEventListener("DOMContentLoaded",n,!1),e.addEventListener("load",n,!1)):(e.attachEvent("onload",n),a.attachEvent("onreadystatechange",function(){"complete"===a.readyState&&t.readyCallback()})),(e=t.source||{}).concatemoji?c(e.concatemoji):e.wpemoji&&e.twemoji&&(c(e.twemoji),c(e.wpemoji)))}(window,document,window._wpemojiSettings);
 `}</Script>
@@ -49,67 +45,43 @@ window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/14
 
 
 
-{/* <!--[if lt IE 9]>
-<link rel='stylesheet' id='twentyseventeen-ie8-css' href='https://www.midcitysmiles.com/blog/wp-content/themes/twentyseventeen/assets/css/ie8.css?ver=20161202' media='all' / />
-<![endif]--> */}
 
 
 
 
 
 
-<link rel="preload" as="font" id="wpzoom-social-icons-font-academicons-woff2-css" href="wp-content/plugins/social-icons-widget-by-wpzoom/assets/font/academicons5849.woff2?v=1.9.2" type="font/woff2" crossorigin="" />
-<link rel="preload" as="font" id="wpzoom-social-icons-font-fontawesome-3-woff2-css" href="wp-content/plugins/social-icons-widget-by-wpzoom/assets/font/fontawesome-webfont3e6e.woff2?v=4.7.0" type="font/woff2" crossorigin="" />
-<link rel="preload" as="font" id="wpzoom-social-icons-font-genericons-woff-css" href="wp-content/plugins/social-icons-widget-by-wpzoom/assets/font/Genericons.woff" type="font/woff" crossorigin="" />
-<link rel="preload" as="font" id="wpzoom-social-icons-font-socicon-woff2-css" href="wp-content/plugins/social-icons-widget-by-wpzoom/assets/font/socicondac9.woff2?v=4.2.11" type="font/woff2" crossorigin="" />
-{/* <!--[if lt IE 9]>
-<Script src='https://www.midcitysmiles.com/blog/wp-content/themes/twentyseventeen/assets/js/html5.js?ver=20161020' id='html5-js'></Script>
-<![endif]--> */}
-<Script src="wp-includes/js/jquery/jquery.mina7a0.js?ver=3.6.1" id="jquery-core-js"></Script>
+
+
+
+
+
+
+
+
+
+<link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="" /><Script src="wp-includes/js/jquery/jquery.mina7a0.js?ver=3.6.1" id="jquery-core-js"></Script>
 <Script src="wp-includes/js/jquery/jquery-migrate.mind617.js?ver=3.3.2" id="jquery-migrate-js"></Script>
-<link rel="https://api.w.org/" href="wp-json/index.html" /><link rel="alternate" type="application/json" href="wp-json/wp/v2/pages/12.json" /><link rel="EditURI" type="application/rsd+xml" title="RSD" href="xmlrpc0db0.php?rsd" />
-<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="wp-includes/wlwmanifest.html" />
-<meta name="generator" content="WordPress 6.1.3" />
-<link rel="shortlink" href="index.html" />
-<link rel="alternate" type="application/json+oembed" href="wp-json/oembed/1.0/embed51aa.json?url=https%3A%2F%2Fwww.midcitysmiles.com%2Fblog%2F" />
-<link rel="alternate" type="text/xml+oembed" href="wp-json/oembed/1.0/embedba3c?url=https%3A%2F%2Fwww.midcitysmiles.com%2Fblog%2F&amp;format=xml" />
-		
-		<link rel="icon" href="wp-content/uploads/2022/06/cropped-icon-32x32.png" sizes="32x32" />
-<link rel="icon" href="wp-content/uploads/2022/06/cropped-icon-192x192.png" sizes="192x192" />
-<link rel="apple-touch-icon" href="wp-content/uploads/2022/06/cropped-icon-180x180.png" />
-<meta name="msapplication-TileImage" content="https://www.midcitysmiles.com/blog/wp-content/uploads/2022/06/cropped-icon-270x270.png" />
-	<Script type="application/ld+json" id=" xkKyFVTwXj">{`
-{
-"@context": "http://schema.org",
-"@type": "LocalBusiness",
-"address": {
-"@type": "PostalAddress",
-"streetAddress": "3625 Canal Street",
-"addressLocality": "New Orleans",
-"addressRegion": "Louisiana",
-"postalCode": "70119 ",
-"addressCountry": "USA"
-},
-"name": "Mid-City Smiles Family Dentistry",
-"telephone": "(504) 485-6575",
-"email": "frontoffice@midcitysmiles.com",
-"url": "https://www.midcitysmiles.com/",
-"image": "https://www.midcitysmiles.com/blog/wp-content/uploads/2022/06/cropped-Untitled-1-3.png",
-"sameAs":
-[
-"https://www.facebook.com/midcitysmiles",
-"https://www.instagram.com/midcitysmiles/",
-"https://www.yelp.com/biz/mid-city-smiles-new-orleans?utm_medium=biz_embedded_content&amp;utm_source=biz_badge",
-"https://www.snapchat.com/add/midcitysmiles"
-],
-"aggregateRating" : {
-"@type" : "AggregateRating",
-"ratingValue" : "4.9",
-"bestRating" : "5",
-"ratingCount" : "540"
-}
-}
+
+{/* <!-- Google Analytics snippet added by Site Kit --> */}
+<Script src="https://www.googletagmanager.com/gtag/js?id=UA-123795267-1" id="google_gtagjs-js" async=""></Script>
+<Script id="google_gtagjs-js-after">{`
+window.dataLayer = window.dataLayer || [];function gtag(){dataLayer.push(arguments);}
+gtag('set', 'linker', {"domains":["comfortsmilesdentistry.com"]} );
+gtag("js", new Date());
+gtag("set", "developer_id.dZTNiMT", true);
+gtag("config", "UA-123795267-1", {"anonymize_ip":true});
+gtag("config", "G-0RQGM28FSF");
 `}</Script>
+
+{/* <!-- End Google Analytics snippet added by Site Kit --> */}
+<link rel="https://api.w.org/" href="wp-json/index.html" /><link rel="alternate" type="application/json" href="wp-json/wp/v2/pages/916.json" /><link rel="EditURI" type="application/rsd+xml" title="RSD" href="xmlrpc0db0.html?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="wp-includes/wlwmanifest.xml" />
+<meta name="generator" content="WordPress 6.1.1" />
+<link rel="shortlink" href="index.html" />
+<link rel="alternate" type="application/json+oembed" href="wp-json/oembed/1.0/embed6395.json?url=https%3A%2F%2Fcomfortsmilesdentistry.com%2F" />
+<link rel="alternate" type="text/xml+oembed" href="wp-json/oembed/1.0/embed79fd?url=https%3A%2F%2Fcomfortsmilesdentistry.com%2F&amp;format=xml" />
+<meta name="generator" content="Site Kit by Google 1.99.0" /><meta name="generator" content="Elementor 3.13.2; features: a11y_improvements, additional_custom_breakpoints; settings: css_print_method-external, google_font-enabled, font_display-auto" />
 </head>
         </>
         

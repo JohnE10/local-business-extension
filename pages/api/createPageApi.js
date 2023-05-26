@@ -87,7 +87,12 @@ const createPageApi = async (req, res) => {
             svgs.each((i, el) => {
                 const svgName = `Svg${i + 1}`;
                 let svgContent = $.html(el);
-                svgContent = svgContent.replaceAll('xlink:href="', 'href="');
+                svgContent = svgContent.replaceAll('xlink:href', 'href');
+                svgContent = svgContent.replaceAll('xmlns:xlink', 'xmlns');
+                svgContent = svgContent.replaceAll('"{{', '{{');
+                svgContent = svgContent.replaceAll('}}"', '}}');
+                svgContent = svgContent.replaceAll('color-interpolation-filters', 'colorInterpolationFilters');
+                svgContent = svgContent.replaceAll('stroke-width', 'strokeWidth');
                 createSVGComponent(svgContent, svgName);
                 svgImports = svgImports + `import ${svgName} from '../../components/${svgName}';\n`;
                 // fs.appendFileSync('components/svgImports.txt', `import ${svgName} from '../../components/${svgName}';\n`);
@@ -171,15 +176,6 @@ const createPageApi = async (req, res) => {
                     }
                 }
             });
-
-            // // make css style attribute adhere to next.js rules
-            // tagsWithStyle.each((i, el) => {
-            //     let styleStr = $(el).attr('style');
-            //     if (styleStr.trim() != '') {
-            //         styleStr = styleAttrToNext(styleStr);
-            //         $(el).attr('style', styleStr);
-            //     }
-            // });
 
             // make style tags adhere to next.js rules
             styles.each((i, el) => {
@@ -310,9 +306,14 @@ const createPageApi = async (req, res) => {
             body = body.replaceAll('="../../', '="/');
             body = body.replaceAll('="../', '="/');
 
-            // replace srcset with srcSet and crossorigin with crossOrigin
+            // replace srcset with srcSet and crossorigin with crossOrigin and some others
             body = body.replaceAll('srcset', 'srcSet');
             body = body.replaceAll('crossorigin', 'crossOrigin');
+            body = body.replaceAll('frameborder', 'frameBorder');
+
+
+            // replace svg tags with Svg
+            body = body.replaceAll('<svg', '<Svg');
 
             // replace ='wp with ='/wp
             body = body.replaceAll('src="wp', 'src="/wp');

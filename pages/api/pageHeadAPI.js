@@ -41,6 +41,7 @@ const pageHeadAPI = async (req, res) => {
 
         // make meta tag self-closing
         tempAppHead = tempAppHead.replaceAll(metaRegEx, '<meta$1 />');
+        tempAppHead = tempAppHead.replaceAll('class=', 'className=');
 
         const appHeadJsx =
             `
@@ -118,6 +119,7 @@ const pageHeadAPI = async (req, res) => {
         // replace script with Script
         head = head.replaceAll('<script', '<Script');
         head = head.replaceAll('</script', '</Script')
+        head = head.replaceAll('class=', 'className=');
 
         const documentHeadCode = siteFileDir + 'documentHead' + '.js';
 
