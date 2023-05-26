@@ -9,7 +9,7 @@ const createPage = () => {
     const [basePath, setBasePath] = useState('');
     const [text, setText] = useState(null);
     const [loading, setLoading] = useState(false);
-    const [error, setError] = useState(null);
+    const [error, setError] = useState('');
 
     // const basePath = 'C:/Users/jetto/OneDrive/Desktop/Files/Coding-ASUS/WP Migration Campaign/HTTrack_mid-city-smiles/mid-city-smiles/www.midcitysmiles.com/blog/';
 
@@ -38,7 +38,7 @@ const createPage = () => {
             else if (data.error) {
                 console.log(data.error);
                 setLoading(false);
-                setError(data.error);
+                setError(error + data.error + '\n');
             }
         }, 1000)
 
@@ -51,10 +51,19 @@ const createPage = () => {
     const handleSubmit = () => {
 
         setLoading(true);
+        setError('');
 
         console.log('pathArr: ', pathArr);
-
         console.log({ pathArr });
+
+        // clear any existing files/pages before create new ones
+        const dirToClear = 'siteFiles/pages/';
+        const clearDir = async (dirToClear) => {
+            const response = await fetch(`/api/lib/helpers/deleteDirectoryContents?path=${dirToClear}`);
+            const data = await response.json();
+            console.log({data});
+        };
+        // clearDir(dirToClear);
 
         try {
             let i = 0;
@@ -76,12 +85,12 @@ const createPage = () => {
             setError(err.message);
             console.log(err.message);
         }
-
     }
 
     return (
         <>
             <div className='pageTitle'><h4>Create Page</h4></div>
+            {error && <div className='text-danger'>{error}</div>}
             <div className='d-flex flex-column justify-content-center align-items-center'>
             <div className='d-flex justify-content-center align-items-center'>
                     <div><label>Enter BasePath:</label></div>

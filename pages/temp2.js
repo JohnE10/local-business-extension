@@ -1,17 +1,28 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { fileNameFromUrl, isAbsoluteURL } from '../utils/helpers';
 
 const temp2 = () => {
 
-const path = 'C:/Users/jetto/OneDrive/Desktop/Files/Coding-ASUS/WP Migration Campaign/HTTrack_mid-city-smiles/mid-city-smiles/www.midcitysmiles.com/blog/procedure/text.txt';
+  const [temp, setTemp] = useState('');
 
-console.log(fileNameFromUrl(path).parentDirectory)
+const dirPath = 'siteFiles/pages/';
 
+const fetchFunc = async (path) => {
+  const response = await fetch(`/api/lib/helpers/deleteDirectoryContents?path=${path}`);
+  const data = await response.json();
+  console.log(data);
+  setTemp(data);  
+} 
 
+useEffect(() => {
+  fetchFunc(dirPath);
+}, []);
+
+console.log({temp});
 
     return (
-        <div>temp2</div>
+        <div>temp</div>
     )
 }
 
-export default temp2
+export default temp2;

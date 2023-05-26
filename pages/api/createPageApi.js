@@ -1,6 +1,6 @@
 import { gridColumnsTotalWidthSelector } from '@mui/x-data-grid';
 import { capFirst, fileNameFromUrl, isAbsoluteURL, isValidUrl, randomStr, toCamelCase } from '../../utils/helpers';
-import { createDirectoryAndSaveFile, fetchUrlData, fileOrDirectory, listFilesInDirectory } from './backEndHelpers';
+import { createDirectoryAndSaveFile, deleteDirectoryContents, fetchUrlData, fileOrDirectory, listFilesInDirectory } from './backEndHelpers';
 import { styleAttrToNext } from '../../utils/helpers';
 
 
@@ -12,8 +12,21 @@ const createPageApi = async (req, res) => {
     const cheerio = require('cheerio');
 
     const commentRegEx = /<!--.*?-->/gs;
-    const siteFileDir = 'siteFiles/';
-    const svgDir = 'svgs/';
+    const siteFileDir = 'siteFiles/pages/';
+    const svgDir = 'siteFiles/svgs/';
+
+    const basePath = req.query.basePath;
+    const replaceStr = req.query.replaceStr;
+    let fileToRead = req.query.pagePath;
+
+    let fileToCreate = siteFileDir + fileToRead.replace(basePath, '').replace('.html', '') + '.js';
+
+    let filesNotCreatedTxt = '';
+    const errorLogDir = siteFileDir + '1-errorLog/errorLog.txt';
+
+
+
+    // console.log({fileToRead});
 
 
 
@@ -31,27 +44,25 @@ const createPageApi = async (req, res) => {
                 
                 export default ${name}
             `;
-            const tempCompName = siteFileDir + svgDir + name + '.js';
+            const tempCompName = svgDir + name + '.js';
             fs.writeFileSync(tempCompName, componentContent);
 
         };
 
-        // let fileToCreate = req.query.pagePath;
-        let fileToRead = req.query.pagePath;
+
 
         const tempObj = await fileOrDirectory(fileToRead);
         if (tempObj.isDirectory()) {
             fileToRead = fileToRead + '/index.html';
         }
 
-        const basePath = req.query.basePath;
-        const replaceStr = req.query.replaceStr;
-        // const fileToRead = 'siteFiles/pagesToBuild/orthodontics/index.html';
-        console.log({ fileToRead });
 
-        let fileToCreate = siteFileDir + fileToRead.replace(basePath, '').replace('.html', '') + '.js';
+        // // const fileToRead = 'siteFiles/pagesToBuild/orthodontics/index.html';
+        // console.log({ fileToRead });
 
-        console.log({ fileToCreate });
+
+
+        // console.log({ fileToCreate });
 
         const html = fs.readFileSync(fileToRead, { encoding: 'utf8' });
 
@@ -210,10 +221,16 @@ const createPageApi = async (req, res) => {
             scripts.each((i, el) => {
                 const temp = $(el).text();
                 const tag = $.html(el);
-                if (!tag.includes('id=')) {
-                    const scriptId = randomStr(10);
-                    tag.attr('id', scriptId);
+                if (tag) {
+                    if (!tag.includes('id=')) {
+                        const scriptId = randomStr(10);
+                        if (tag.attr) {
+                            tag.attr('id', scriptId);
+                        }
+
+                    }
                 }
+
             });
 
             // if YT video, use Next Video Compnent
@@ -351,9 +368,11 @@ const createPageApi = async (req, res) => {
             throw Error(html.error);
         }
 
+
+
     } catch (err) {
-        console.log(err);
-        return res.json({ 'catch error ': err.message });
+        console.log('createPageApi error: ', err);
+        return res.json({ error: err.message });
     }
 
 }

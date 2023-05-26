@@ -158,6 +158,7 @@ export const fileNameFromUrl = (url) => {
 export const isAbsoluteURL = (url) => {
 
   const absoluteURLPattern = /^(https?:\/\/)/i;
+  
   return absoluteURLPattern.test(url);
   
 };

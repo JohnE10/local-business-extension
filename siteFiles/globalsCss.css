@@ -1,20 +1,72 @@
 
-img.wp-smiley,
-img.emoji {
-	display: inline !important;
-	border: none !important;
-	box-shadow: none !important;
-	height: 1em !important;
-	width: 1em !important;
-	margin: 0 0.07em !important;
-	vertical-align: -0.1em !important;
-	background: none !important;
-	padding: 0 !important;
-}
+		img.wp-smiley,
+		img.emoji {
+			display: inline !important;
+			border: none !important;
+			box-shadow: none !important;
+			height: 1em !important;
+			width: 1em !important;
+			margin: 0 0.07em !important;
+			vertical-align: -0.1em !important;
+			background: none !important;
+			padding: 0 !important;
+		}
+	
 
+		sub,
+		sup {
+			font-size: 75%;
+			line-height: 100%
+		}
 
-sub, sup{font-size: 75%;line-height: 100%}sup{vertical-align: 60%}sub{vertical-align: -10%}.amp{font-family: Baskerville, "Goudy Old Style", Palatino, "Book Antiqua", "Warnock Pro", serif;font-size: 1.1em;font-style: italic;font-weight: normal;line-height: 1em}.caps{font-size: 90%}.dquo{margin-left: -0.4em}.quo{margin-left: -0.2em}.pull-single{margin-left: -0.15em}.push-single{margin-right: 0.15em}.pull-double{margin-left: -0.38em}.push-double{margin-right: 0.38em}
+		sup {
+			vertical-align: 60%
+		}
 
+		sub {
+			vertical-align: -10%
+		}
 
-body {-webkit-font-feature-settings: "liga";font-feature-settings: "liga";-ms-font-feature-settings: normal;}
+		.amp {
+			font-family: Baskerville, "Goudy Old Style", Palatino, "Book Antiqua", "Warnock Pro", serif;
+			font-size: 1.1em;
+			font-style: italic;
+			font-weight: normal;
+			line-height: 1em
+		}
 
+		.caps {
+			font-size: 90%
+		}
+
+		.dquo {
+			margin-left: -0.4em
+		}
+
+		.quo {
+			margin-left: -0.2em
+		}
+
+		.pull-single {
+			margin-left: -0.15em
+		}
+
+		.push-single {
+			margin-right: 0.15em
+		}
+
+		.pull-double {
+			margin-left: -0.38em
+		}
+
+		.push-double {
+			margin-right: 0.38em
+		}
+	
+
+		body {
+			-webkit-font-feature-settings: "liga";
+			font-feature-settings: "liga";
+			-ms-font-feature-settings: normal;
+		}
+	
