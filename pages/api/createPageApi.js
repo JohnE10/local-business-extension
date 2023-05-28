@@ -85,7 +85,12 @@ const createPageApi = async (req, res) => {
             let svgs = $('body').find('svg');
             const paragraphToRemove = $('body').find('p[class="site-title"]');
 
-
+            aTags.each((i, el) => {
+                // console.log($(el).attr('href'));
+                if(!$(el).attr('href')) {
+                    $(el).attr('href', '#');
+                }
+            });
 
             // make css style attribute adhere to next.js rules
             tagsWithStyle.each((i, el) => {
@@ -356,6 +361,8 @@ const createPageApi = async (req, res) => {
 
             // remove some unwanted text
             body = body.replace('Welcome to Mid-City Smiles Family Dentistry! We are a dental practice located in New Orleans. Our team specializes in family dentistry and orthodontic care – Diamond Invisalign Providers..', '');
+
+
 
             // construct next.js page
             const nextPage = `

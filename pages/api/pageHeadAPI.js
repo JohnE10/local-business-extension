@@ -29,8 +29,8 @@ const pageHeadAPI = async (req, res) => {
             tempAppHead = tempAppHead + $.html($(el)) + '\n';
         });
 
-        // remove rel="stylesheet" tags
-        $('link[rel="stylesheet"]').remove();
+        // // remove rel="stylesheet" tags
+        // $('link[rel="stylesheet"]').remove();
 
         // add title tag to tempAppHead
         let tempTitle = $('title');

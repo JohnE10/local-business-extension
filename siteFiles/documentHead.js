@@ -26,41 +26,41 @@
 	<meta name="twitter:card" content="summary_large_image" />
 	<meta name="twitter:label1" content="Est. reading time" />
 	<meta name="twitter:data1" content="7 minutes" />
-	<Script type="application/ld+json" className="yoast-schema-graph" id=" eZHGvNOcWi">{`{"@context":"https://schema.org","@graph":[{"@type":"WebPage","@id":"https://comfortsmilesdentistry.com/","url":"https://comfortsmilesdentistry.com/","name":"Comfort Smiles, Dr. DuBois | Cosmetic Dentist Family Dentist New Orleans","isPartOf":{"@id":"https://comfortsmilesdentistry.com/#website"},"about":{"@id":"https://comfortsmilesdentistry.com/#organization"},"primaryImageOfPage":{"@id":"https://comfortsmilesdentistry.com/#primaryimage"},"image":{"@id":"https://comfortsmilesdentistry.com/#primaryimage"},"thumbnailUrl":"https://comfortsmilesdentistry.com/wp-content/uploads/2021/12/Dr.-DuBois-Comfort-Smiles-Dentistry-New-Orleans-Dentist.png","datePublished":"2018-07-31T04:35:24+00:00","dateModified":"2023-03-27T21:10:49+00:00","description":"Dr. DuBois at Comfort Smiles Dentistry in New Orleans is a complete family dentistry, including cosmetic dentistry and more!","breadcrumb":{"@id":"https://comfortsmilesdentistry.com/#breadcrumb"},"inLanguage":"en-US","potentialAction":[{"@type":"ReadAction","target":["https://comfortsmilesdentistry.com/"]}]},{"@type":"ImageObject","inLanguage":"en-US","@id":"https://comfortsmilesdentistry.com/#primaryimage","url":"https://comfortsmilesdentistry.com/wp-content/uploads/2021/12/Dr.-DuBois-Comfort-Smiles-Dentistry-New-Orleans-Dentist.png","contentUrl":"https://comfortsmilesdentistry.com/wp-content/uploads/2021/12/Dr.-DuBois-Comfort-Smiles-Dentistry-New-Orleans-Dentist.png","width":1731,"height":1133,"caption":"Dr. DuBois, Comfort Smiles Dentistry, New Orleans Dentist"},{"@type":"BreadcrumbList","@id":"https://comfortsmilesdentistry.com/#breadcrumb","itemListElement":[{"@type":"ListItem","position":1,"name":"Home"}]},{"@type":"WebSite","@id":"https://comfortsmilesdentistry.com/#website","url":"https://comfortsmilesdentistry.com/","name":"Comfort Smiles Dentistry","description":"New Orleans Dentist, Dr. DuBois","publisher":{"@id":"https://comfortsmilesdentistry.com/#organization"},"potentialAction":[{"@type":"SearchAction","target":{"@type":"EntryPoint","urlTemplate":"https://comfortsmilesdentistry.com/?s={search_term_string}"},"query-input":"required name=search_term_string"}],"inLanguage":"en-US"},{"@type":"Organization","@id":"https://comfortsmilesdentistry.com/#organization","name":"Comfort Smiles Dentistry","url":"https://comfortsmilesdentistry.com/","logo":{"@type":"ImageObject","inLanguage":"en-US","@id":"https://comfortsmilesdentistry.com/#/schema/logo/image/","url":"https://comfortsmilesdentistry.com/wp-content/uploads/2021/01/matthew-martin-logo-dark.png","contentUrl":"https://comfortsmilesdentistry.com/wp-content/uploads/2021/01/matthew-martin-logo-dark.png","width":1696,"height":797,"caption":"Comfort Smiles Dentistry"},"image":{"@id":"https://comfortsmilesdentistry.com/#/schema/logo/image/"}}]}`}</Script>
+	<Script type="application/ld+json" className="yoast-schema-graph" id=" 8I8ujzshNW">{`{"@context":"https://schema.org","@graph":[{"@type":"WebPage","@id":"https://comfortsmilesdentistry.com/","url":"https://comfortsmilesdentistry.com/","name":"Comfort Smiles, Dr. DuBois | Cosmetic Dentist Family Dentist New Orleans","isPartOf":{"@id":"https://comfortsmilesdentistry.com/#website"},"about":{"@id":"https://comfortsmilesdentistry.com/#organization"},"primaryImageOfPage":{"@id":"https://comfortsmilesdentistry.com/#primaryimage"},"image":{"@id":"https://comfortsmilesdentistry.com/#primaryimage"},"thumbnailUrl":"https://comfortsmilesdentistry.com/wp-content/uploads/2021/12/Dr.-DuBois-Comfort-Smiles-Dentistry-New-Orleans-Dentist.png","datePublished":"2018-07-31T04:35:24+00:00","dateModified":"2023-03-27T21:10:49+00:00","description":"Dr. DuBois at Comfort Smiles Dentistry in New Orleans is a complete family dentistry, including cosmetic dentistry and more!","breadcrumb":{"@id":"https://comfortsmilesdentistry.com/#breadcrumb"},"inLanguage":"en-US","potentialAction":[{"@type":"ReadAction","target":["https://comfortsmilesdentistry.com/"]}]},{"@type":"ImageObject","inLanguage":"en-US","@id":"https://comfortsmilesdentistry.com/#primaryimage","url":"https://comfortsmilesdentistry.com/wp-content/uploads/2021/12/Dr.-DuBois-Comfort-Smiles-Dentistry-New-Orleans-Dentist.png","contentUrl":"https://comfortsmilesdentistry.com/wp-content/uploads/2021/12/Dr.-DuBois-Comfort-Smiles-Dentistry-New-Orleans-Dentist.png","width":1731,"height":1133,"caption":"Dr. DuBois, Comfort Smiles Dentistry, New Orleans Dentist"},{"@type":"BreadcrumbList","@id":"https://comfortsmilesdentistry.com/#breadcrumb","itemListElement":[{"@type":"ListItem","position":1,"name":"Home"}]},{"@type":"WebSite","@id":"https://comfortsmilesdentistry.com/#website","url":"https://comfortsmilesdentistry.com/","name":"Comfort Smiles Dentistry","description":"New Orleans Dentist, Dr. DuBois","publisher":{"@id":"https://comfortsmilesdentistry.com/#organization"},"potentialAction":[{"@type":"SearchAction","target":{"@type":"EntryPoint","urlTemplate":"https://comfortsmilesdentistry.com/?s={search_term_string}"},"query-input":"required name=search_term_string"}],"inLanguage":"en-US"},{"@type":"Organization","@id":"https://comfortsmilesdentistry.com/#organization","name":"Comfort Smiles Dentistry","url":"https://comfortsmilesdentistry.com/","logo":{"@type":"ImageObject","inLanguage":"en-US","@id":"https://comfortsmilesdentistry.com/#/schema/logo/image/","url":"https://comfortsmilesdentistry.com/wp-content/uploads/2021/01/matthew-martin-logo-dark.png","contentUrl":"https://comfortsmilesdentistry.com/wp-content/uploads/2021/01/matthew-martin-logo-dark.png","width":1696,"height":797,"caption":"Comfort Smiles Dentistry"},"image":{"@id":"https://comfortsmilesdentistry.com/#/schema/logo/image/"}}]}`}</Script>
 	{/* <!-- / Yoast SEO plugin. --> */}
 
 
 	<link rel="dns-prefetch" href="http://www.googletagmanager.com/" />
 	<link rel="alternate" type="application/rss+xml" title="Comfort Smiles Dentistry » Feed" href="feed/index.html" />
-	<Script id=" X7amIGyvxW">{`
+	<Script id=" 8hLdrDkNYq">{`
 		window._wpemojiSettings = { "baseUrl": "https:\/\/s.w.org\/images\/core\/emoji\/14.0.0\/72x72\/", "ext": ".png", "svgUrl": "https:\/\/s.w.org\/images\/core\/emoji\/14.0.0\/svg\/", "svgExt": ".svg", "source": { "concatemoji": "https:\/\/comfortsmilesdentistry.com\/wp-includes\/js\/wp-emoji-release.min.js?ver=6.1.1" } };
 		/*! This file is auto-generated */
 		!function (e, a, t) { var n, r, o, i = a.createElement("canvas"), p = i.getContext && i.getContext("2d"); function s(e, t) { var a = String.fromCharCode, e = (p.clearRect(0, 0, i.width, i.height), p.fillText(a.apply(this, e), 0, 0), i.toDataURL()); return p.clearRect(0, 0, i.width, i.height), p.fillText(a.apply(this, t), 0, 0), e === i.toDataURL() } function c(e) { var t = a.createElement("script"); t.src = e, t.defer = t.type = "text/javascript", a.getElementsByTagName("head")[0].appendChild(t) } for (o = Array("flag", "emoji"), t.supports = { everything: !0, everythingExceptFlag: !0 }, r = 0; r < o.length; r++)t.supports[o[r]] = function (e) { if (p && p.fillText) switch (p.textBaseline = "top", p.font = "600 32px Arial", e) { case "flag": return s([127987, 65039, 8205, 9895, 65039], [127987, 65039, 8203, 9895, 65039]) ? !1 : !s([55356, 56826, 55356, 56819], [55356, 56826, 8203, 55356, 56819]) && !s([55356, 57332, 56128, 56423, 56128, 56418, 56128, 56421, 56128, 56430, 56128, 56423, 56128, 56447], [55356, 57332, 8203, 56128, 56423, 8203, 56128, 56418, 8203, 56128, 56421, 8203, 56128, 56430, 8203, 56128, 56423, 8203, 56128, 56447]); case "emoji": return !s([129777, 127995, 8205, 129778, 127999], [129777, 127995, 8203, 129778, 127999]) }return !1 }(o[r]), t.supports.everything = t.supports.everything && t.supports[o[r]], "flag" !== o[r] && (t.supports.everythingExceptFlag = t.supports.everythingExceptFlag && t.supports[o[r]]); t.supports.everythingExceptFlag = t.supports.everythingExceptFlag && !t.supports.flag, t.DOMReady = !1, t.readyCallback = function () { t.DOMReady = !0 }, t.supports.everything || (n = function () { t.readyCallback() }, a.addEventListener ? (a.addEventListener("DOMContentLoaded", n, !1), e.addEventListener("load", n, !1)) : (e.attachEvent("onload", n), a.attachEvent("onreadystatechange", function () { "complete" === a.readyState && t.readyCallback() })), (e = t.source || {}).concatemoji ? c(e.concatemoji) : e.wpemoji && e.twemoji && (c(e.twemoji), c(e.wpemoji))) }(window, document, window._wpemojiSettings);
 	`}</Script>
 	
+	<link rel="stylesheet" id="bdt-uikit-css" href="wp-content/plugins/bdthemes-element-pack/assets/css/bdt-uikit5829.css?ver=3.15.1" media="all" />
+	<link rel="stylesheet" id="ep-helper-css" href="wp-content/plugins/bdthemes-element-pack/assets/css/ep-helperc8ea.css?ver=6.11.3" media="all" />
+	<link rel="stylesheet" id="hello-elementor-css" href="wp-content/themes/hello-elementor/style.minc141.css?ver=2.6.1" media="all" />
+	<link rel="stylesheet" id="hello-elementor-theme-style-css" href="wp-content/themes/hello-elementor/theme.minc141.css?ver=2.6.1" media="all" />
+	<link rel="stylesheet" id="elementor-icons-css" href="wp-content/plugins/elementor/assets/lib/eicons/css/elementor-icons.minfc13.css?ver=5.20.0" media="all" />
+	<link rel="stylesheet" id="elementor-frontend-legacy-css" href="wp-content/plugins/elementor/assets/css/frontend-legacy.min2e9d.css?ver=3.13.2" media="all" />
+	<link rel="stylesheet" id="elementor-frontend-css" href="wp-content/plugins/elementor/assets/css/frontend.min2e9d.css?ver=3.13.2" media="all" />
+	<link rel="stylesheet" id="swiper-css" href="wp-content/plugins/elementor/assets/lib/swiper/css/swiper.min48f5.css?ver=5.3.6" media="all" />
+	<link rel="stylesheet" id="elementor-post-286-css" href="wp-content/uploads/elementor/css/post-2868a16.css?ver=1684465645" media="all" />
+	<link rel="stylesheet" id="elementor-pro-css" href="wp-content/plugins/elementor-pro/assets/css/frontend.min2916.css?ver=3.13.1" media="all" />
+	<link rel="stylesheet" id="uael-frontend-css" href="wp-content/plugins/ultimate-elementor/assets/min-css/uael-frontend.minac24.css?ver=1.36.16" media="all" />
+	<link rel="stylesheet" id="elementor-post-916-css" href="wp-content/uploads/elementor/css/post-916a780.css?ver=1684465649" media="all" />
+	<link rel="stylesheet" id="elementor-post-291-css" href="wp-content/uploads/elementor/css/post-291a780.css?ver=1684465649" media="all" />
+	<link rel="stylesheet" id="elementor-post-82-css" href="wp-content/uploads/elementor/css/post-8240d7.css?ver=1684465650" media="all" />
+	<link rel="stylesheet" id="elementor-post-313-css" href="wp-content/uploads/elementor/css/post-31340d7.css?ver=1684465650" media="all" />
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	<link rel="stylesheet" id="hello-elementor-child-style-css" href="wp-content/themes/spade-design/style8a54.css?ver=1.0.0" media="all" />
+	<link rel="stylesheet" id="google-fonts-1-css" href="https://fonts.googleapis.com/css?family=Roboto%3A100%2C100italic%2C200%2C200italic%2C300%2C300italic%2C400%2C400italic%2C500%2C500italic%2C600%2C600italic%2C700%2C700italic%2C800%2C800italic%2C900%2C900italic%7CRoboto+Slab%3A100%2C100italic%2C200%2C200italic%2C300%2C300italic%2C400%2C400italic%2C500%2C500italic%2C600%2C600italic%2C700%2C700italic%2C800%2C800italic%2C900%2C900italic%7CCormorant%3A100%2C100italic%2C200%2C200italic%2C300%2C300italic%2C400%2C400italic%2C500%2C500italic%2C600%2C600italic%2C700%2C700italic%2C800%2C800italic%2C900%2C900italic%7CMontserrat%3A100%2C100italic%2C200%2C200italic%2C300%2C300italic%2C400%2C400italic%2C500%2C500italic%2C600%2C600italic%2C700%2C700italic%2C800%2C800italic%2C900%2C900italic&amp;display=auto&amp;ver=6.1.1" media="all" />
+	<link rel="stylesheet" id="elementor-icons-shared-0-css" href="wp-content/plugins/elementor/assets/lib/font-awesome/css/fontawesome.min52d5.css?ver=5.15.3" media="all" />
+	<link rel="stylesheet" id="elementor-icons-fa-regular-css" href="wp-content/plugins/elementor/assets/lib/font-awesome/css/regular.min52d5.css?ver=5.15.3" media="all" />
+	<link rel="stylesheet" id="elementor-icons-fa-solid-css" href="wp-content/plugins/elementor/assets/lib/font-awesome/css/solid.min52d5.css?ver=5.15.3" media="all" />
+	<link rel="stylesheet" id="elementor-icons-fa-brands-css" href="wp-content/plugins/elementor/assets/lib/font-awesome/css/brands.min52d5.css?ver=5.15.3" media="all" />
 	<link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="" />
 	<Script src="wp-includes/js/jquery/jquery.mina7a0.js?ver=3.6.1" id="jquery-core-js"></Script>
 	<Script src="wp-includes/js/jquery/jquery-migrate.mind617.js?ver=3.3.2" id="jquery-migrate-js"></Script>

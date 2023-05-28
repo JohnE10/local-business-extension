@@ -1,28 +1,49 @@
 import React, { useEffect, useState } from 'react'
 import { fileNameFromUrl, isAbsoluteURL } from '../utils/helpers';
+import useFetch from './customHooks/useFetch';
 
 const temp2 = () => {
 
-  const [temp, setTemp] = useState('');
+  const [str, setStr] = useState('');
+  const [temp, setTemp] = useState([]);
 
-const dirPath = 'siteFiles/pages/';
+  // const url = 'https://jsonplaceholder.typicode.com/users';
+  // const endPoint = `/api/lib/helpers/fetchUrlData?url=${url}`
 
-const fetchFunc = async (path) => {
-  const response = await fetch(`/api/lib/helpers/deleteDirectoryContents?path=${path}`);
-  const data = await response.json();
-  console.log(data);
-  setTemp(data);  
-} 
+  const dirToEmpty = 'C:/Users/jetto/OneDrive/Desktop/Files/Coding-ASUS/WP Migration Campaign/wpCheck';
+  const endPoint = `/api/lib/helpers/deleteDirectoryContents?path=${dirToEmpty}`;
 
-useEffect(() => {
-  fetchFunc(dirPath);
-}, []);
+  const { useFetchData, useFetchError, loading, runFetch } = useFetch(endPoint);
+  const handleSubmit = () => {
+    runFetch()
+  }
 
-console.log({temp});
+  return (
+    <div>
+      <div className='d-flex flex-column justify-content-center align-items-center'>
+        {loading && <div>... Loading</div>}
+        {useFetchError && <div className='text-danger'>{useFetchError}</div>}
+        <div className='d-flex justify-content-center align-items-center '>
+        <div><label>Enter BasePath:</label></div>
+        <div>
+          <input
+            type='text'
+            value={str}
+            onChange={(e) => setStr(e.target.value.replaceAll('\\', '/'))}
+          />
+        </div>
+        <div>
+          <button onClick={handleSubmit}>Submit</button>
+        </div>
+        </div>
 
-    return (
-        <div>temp</div>
-    )
+      </div>
+
+      {temp && <div>temp: {useFetchData}</div>}
+
+
+    </div>
+  )
 }
 
 export default temp2;
