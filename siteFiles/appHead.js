@@ -1,7 +1,7 @@
 
-                <>
-                <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Comfort Smiles, Dr. DuBois | Cosmetic Dentist Family Dentist New Orleans</title>
+                
+                <meta name="viewport" content="width=device-width" />
+<title>Dumas Family Dentistry - New Orleans Dentist</title>
 
-                </>
+                
             

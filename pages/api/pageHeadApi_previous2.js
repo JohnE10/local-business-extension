@@ -19,48 +19,7 @@ const pageHeadAPI = async (req, res) => {
         const stylesheetHtml = fs.readFileSync(stylesheetFile, { encoding: 'utf8' });
 
         // load cheerio
-        let $2 = cheerio.load(stylesheetHtml);
-
-        let TagsWithStylesheet = $2('link[rel="stylesheet"]');
-
-        console.log('tagsWithStylesheet: ', TagsWithStylesheet.html());
-
-        let tempDocumentHead = '';
-
-        TagsWithStylesheet.each((i, el) => {
-
-            let tempHref = $2(el).attr('href');
-            if (!tempHref.includes('http://') && !tempHref.includes('https://')) {
-                $2(el).attr('href', '/' + tempHref);
-            }
-            let temp = $2.html(el);
-            const linkRegEx = /<link([^>]*)>/g;
-            temp = temp.replaceAll(linkRegEx, '<link$1 />');
-            // console.log('temp: ', temp);
-            tempDocumentHead = tempDocumentHead + temp + '\n';
-            // console.log('$.html(el): ', temp);
-        })
-
-        const documentHeadJsx2 = `
-                
-                 ${tempDocumentHead}
-                
-                `;
-
-        const documentHeadCode2 = siteFileDir + 'documentHeadStylesheet' + '.js';
-
-        // save file
-        fs.writeFileSync(documentHeadCode2, documentHeadJsx2);
-
-
-        // load cheerio
         let $ = cheerio.load(stylesheetHtml);
-
-        // remove rel="stylesheet" tags
-        $('link[rel="stylesheet"]').remove();
-
-        // remove script tags that contain setREVStartSize, they're being moved to the page body
-        $('script:contains("setREVStartSize")').remove();
 
         let tempAppHead = '';
 
@@ -86,11 +45,11 @@ const pageHeadAPI = async (req, res) => {
 
         const appHeadJsx =
             `
-                
+                <>
                 ${tempAppHead}
-                
+                </>
             `
-            ;
+        ;
 
         // save file
         const appHeadCode = siteFileDir + 'appHead' + '.js';
@@ -165,9 +124,9 @@ const pageHeadAPI = async (req, res) => {
         const documentHeadCode = siteFileDir + 'documentHead' + '.js';
 
         const documentHeadJsx = `
-        
+        <>
          ${head}
-        
+        </>
         `
             ;
 

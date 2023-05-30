@@ -19,6 +19,11 @@ const createPageApi = async (req, res) => {
     const replaceStr = req.query.replaceStr;
     let fileToRead = req.query.pagePath;
 
+    const tempObj = await fileOrDirectory(fileToRead);
+    if (tempObj.isDirectory()) {
+        fileToRead = fileToRead + '/index.html';
+    }
+
     let fileToCreate = siteFileDir + fileToRead.replace(basePath, '').replace('.html', '') + '.js';
 
     let filesNotCreatedTxt = '';
@@ -51,10 +56,10 @@ const createPageApi = async (req, res) => {
 
 
 
-        const tempObj = await fileOrDirectory(fileToRead);
-        if (tempObj.isDirectory()) {
-            fileToRead = fileToRead + '/index.html';
-        }
+        // const tempObj = await fileOrDirectory(fileToRead);
+        // if (tempObj.isDirectory()) {
+        //     fileToRead = fileToRead + '/index.html';
+        // }
 
 
         // // const fileToRead = 'siteFiles/pagesToBuild/orthodontics/index.html';
@@ -84,10 +89,30 @@ const createPageApi = async (req, res) => {
             let aTags = $('body').find('a');
             let svgs = $('body').find('svg');
             const paragraphToRemove = $('body').find('p[class="site-title"]');
+            let headScripts = $('head').find('script');
+
+            let setREVStartSizeTag = '';
+
+            headScripts.each((i, el) => {
+                let temp = $(el).text();
+                if (temp && temp.includes('setREVStartSize(e)')) {
+                    setREVStartSizeTag = $.html(el);
+                    return false;
+                }
+
+            });
+
+            scripts.each((i, el) => {
+                let temp = $(el).text();
+                if (temp && temp.includes('setREVStartSize')) {
+                  $(el).replaceWith(setREVStartSizeTag + '\n' + $.html(el));
+                  return false;
+                }
+              });
 
             aTags.each((i, el) => {
                 // console.log($(el).attr('href'));
-                if(!$(el).attr('href')) {
+                if (!$(el).attr('href')) {
                     $(el).attr('href', '#');
                 }
             });
@@ -111,6 +136,7 @@ const createPageApi = async (req, res) => {
                 svgContent = svgContent.replaceAll('"{{', '{{');
                 svgContent = svgContent.replaceAll('}}"', '}}');
                 svgContent = svgContent.replaceAll('color-interpolation-filters', 'colorInterpolationFilters');
+                svgContent = svgContent.replaceAll('xml:space', 'xmlSpace');
                 svgContent = svgContent.replaceAll('stroke-width', 'strokeWidth');
                 createSVGComponent(svgContent, svgName);
                 svgImports = svgImports + `import ${svgName} from '../../components/${svgName}';\n`;
@@ -290,6 +316,10 @@ const createPageApi = async (req, res) => {
             const linkRegEx = /<link([^>]*)>/g;
             body = body.replaceAll(linkRegEx, '<link$1 />');
 
+            // make all input tags self closing
+            const inputRegEx = /<input([^>]*)>/g;
+            body = body.replaceAll(inputRegEx, '<input$1 />');
+
             // remove html comments
             body = body.replaceAll(commentRegEx, '');
 
@@ -334,6 +364,14 @@ const createPageApi = async (req, res) => {
             body = body.replaceAll('</script', '</Script')
             body = body.replaceAll('"{{', '{{');
             body = body.replaceAll('}}"', '}}');
+
+            // change  charset to next's charSet
+            body = body.replaceAll('charset', 'charSet');
+
+            // change  http-equiv to next's httpEquiv
+            body = body.replaceAll('http-equiv', 'httpEquiv');
+
+
 
             // change a tags to Link tags
             body = body.replaceAll('<a ', '<Link ');

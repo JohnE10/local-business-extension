@@ -62,11 +62,6 @@ const buildCssFile = async (req, res) => {
             data = data.replaceAll(/speak[^;]+;/g, '');
             data = data.replace(/-ms-filter[^;]+;/g, '');
 
-            // add semicolon to last value in selector
-            data = data.replaceAll('}', ';}');
-            data = data.replaceAll(';;', ';');
-            data = data.replaceAll('};}', '}}');
-
             // stylesheet location file
             const relativeUrlList = cssFileName.replace('.css', '.txt');
             fs.appendFileSync(cssFileName, data);

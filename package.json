@@ -17,6 +17,8 @@
     "axios": "^1.4.0",
     "body-parser": "^1.20.1",
     "cheerio": "^1.0.0-rc.12",
+    "css-tree": "^2.3.1",
+    "cssnano": "^6.0.1",
     "deep-email-validator": "^0.1.21",
     "diff": "^5.1.0",
     "eslint": "8.30.0",
@@ -24,6 +26,8 @@
     "file-saver": "^2.0.5",
     "mongoose": "^6.8.2",
     "next": "13.1.1",
+    "postcss": "^8.4.24",
+    "postcss-value-parser": "^4.2.0",
     "react": "18.2.0",
     "react-bootstrap": "^2.7.0",
     "react-dom": "18.2.0"
