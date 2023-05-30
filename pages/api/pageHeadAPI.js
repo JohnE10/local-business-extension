@@ -50,7 +50,7 @@ const pageHeadAPI = async (req, res) => {
         const documentHeadCode2 = siteFileDir + 'documentHeadStylesheet' + '.js';
 
         // save file
-        fs.writeFileSync(documentHeadCode2, documentHeadJsx2);
+        fs.writeFileSync(documentHeadCode2, documentHeadJsx2, 'utf-8');
 
 
         // load cheerio
@@ -94,7 +94,7 @@ const pageHeadAPI = async (req, res) => {
 
         // save file
         const appHeadCode = siteFileDir + 'appHead' + '.js';
-        fs.writeFileSync(appHeadCode, appHeadJsx);
+        fs.writeFileSync(appHeadCode, appHeadJsx, 'utf-8');
 
         $('meta[name="viewport"]').remove();
         $('title').remove();
@@ -117,7 +117,7 @@ const pageHeadAPI = async (req, res) => {
 
         // create a separate file for css to be added to globals
         const globalsCssCode = siteFileDir + 'globalsCss' + '.css';
-        fs.writeFileSync(globalsCssCode, globalsCss);
+        fs.writeFileSync(globalsCssCode, globalsCss, 'utf-8');
 
         // make script adhere to next.js rules
         scripts.each((i, el) => {
@@ -172,7 +172,7 @@ const pageHeadAPI = async (req, res) => {
             ;
 
         // save file
-        fs.writeFileSync(documentHeadCode, documentHeadJsx);
+        fs.writeFileSync(documentHeadCode, documentHeadJsx, 'utf-8');
 
         console.log('Done');
 

@@ -6,7 +6,6 @@ const useFetch = (endPoint) => {
     const [useFetchError, setUseFetchError] = useState(null);
     const [loading, setLoading] = useState(false);
 
-
     const runFetch = async () => {
         try {
             setLoading(true);

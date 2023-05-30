@@ -3,7 +3,6 @@ import { capFirst, fileNameFromUrl, isAbsoluteURL, isValidUrl, randomStr, toCame
 import { createDirectoryAndSaveFile, deleteDirectoryContents, fetchUrlData, fileOrDirectory, listFilesInDirectory } from './backEndHelpers';
 import { styleAttrToNext } from '../../utils/helpers';
 
-
 const fs = require('fs');
 const path = require('path');
 
@@ -29,12 +28,6 @@ const createPageApi = async (req, res) => {
     let filesNotCreatedTxt = '';
     const errorLogDir = siteFileDir + '1-errorLog/errorLog.txt';
 
-
-
-    // console.log({fileToRead});
-
-
-
     try {
 
         const createSVGComponent = (svg, name) => {
@@ -50,26 +43,11 @@ const createPageApi = async (req, res) => {
                 export default ${name}
             `;
             const tempCompName = svgDir + name + '.js';
-            fs.writeFileSync(tempCompName, componentContent);
+            fs.writeFileSync(tempCompName, componentContent, 'utf-8');
 
         };
 
-
-
-        // const tempObj = await fileOrDirectory(fileToRead);
-        // if (tempObj.isDirectory()) {
-        //     fileToRead = fileToRead + '/index.html';
-        // }
-
-
-        // // const fileToRead = 'siteFiles/pagesToBuild/orthodontics/index.html';
-        // console.log({ fileToRead });
-
-
-
-        // console.log({ fileToCreate });
-
-        const html = fs.readFileSync(fileToRead, { encoding: 'utf8' });
+     const html = fs.readFileSync(fileToRead, { encoding: 'utf8' });
 
         if (html) {
 
@@ -90,6 +68,7 @@ const createPageApi = async (req, res) => {
             let svgs = $('body').find('svg');
             const paragraphToRemove = $('body').find('p[class="site-title"]');
             let headScripts = $('head').find('script');
+            let revSlider = $('body').find('rs-module-wrap[id="rev_slider_1_1_wrapper"]');
 
             let setREVStartSizeTag = '';
 
@@ -99,16 +78,15 @@ const createPageApi = async (req, res) => {
                     setREVStartSizeTag = $.html(el);
                     return false;
                 }
-
             });
 
             scripts.each((i, el) => {
                 let temp = $(el).text();
                 if (temp && temp.includes('setREVStartSize')) {
-                  $(el).replaceWith(setREVStartSizeTag + '\n' + $.html(el));
-                  return false;
+                    $(el).replaceWith(setREVStartSizeTag + '\n' + $.html(el));
+                    return false;
                 }
-              });
+            });
 
             aTags.each((i, el) => {
                 // console.log($(el).attr('href'));
@@ -208,9 +186,26 @@ const createPageApi = async (req, res) => {
                     $(el).attr('width', imgWidth);
                     $(el).attr('height', imgHeight);
                     $(el).attr('priority', 'false');
+                    $(el).attr('alt', '');
                     if ($(el).attr('loading')) {
                         $(el).removeAttr('loading')
                     }
+                }
+                else if($(el).attr('src') == '/wp-content/uploads/2018/02/logo-headline_lrg-5.png') {
+                    $(el).attr('width', '950');
+                    $(el).attr('height', '252');
+                }
+                else if($(el).attr('src') == '/wp-content/uploads/2022/07/facebook.png') {
+                    $(el).attr('width', '32');
+                    $(el).attr('height', '32');
+                }
+                else if($(el).attr('src') == '/wp-content/uploads/2022/07/facebook-sml.png') {
+                    $(el).attr('width', '32');
+                    $(el).attr('height', '32');
+                }
+                else if($(el).attr('src') == '/images/slide-new-hours.jpg') {
+                    $(el).attr('width', '1500');
+                    $(el).attr('height', '350');
                 }
                 else {
                     $(el).attr('width', '150');
@@ -265,6 +260,21 @@ const createPageApi = async (req, res) => {
                     }
                 }
 
+            });
+
+            // replace image plugin with next/image
+            const ImageTag = `
+            	<div style={{ textAlign: 'center' }}>
+				<Image src="/images/slide-new-hours.jpg" width="1500" height="350" priority="false" alt="" />
+			    </div>
+            `;
+
+            revSlider.each((i, el) => {
+                const temp = $(el).html();
+                if ($(el).text().trim() != '') {
+                    $(el).text('{`' + temp + '`}');
+                }
+                $(el).html() = `{/*` + temp + `*/}` + '\n' + ImageTag;
             });
 
             // if YT video, use Next Video Compnent
@@ -431,8 +441,6 @@ const createPageApi = async (req, res) => {
         else if (html.error) {
             throw Error(html.error);
         }
-
-
 
     } catch (err) {
         console.log('createPageApi error: ', err);
