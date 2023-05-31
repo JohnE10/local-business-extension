@@ -8,6 +8,8 @@ const useFetch = (endPoint) => {
 
     const runFetch = async () => {
         try {
+            setUseFetchData(null);
+            console.log('useFetch ran');
             setLoading(true);
             const response = await fetch(endPoint);
             const responseData = await response.json();

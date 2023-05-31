@@ -30,6 +30,9 @@ const pageHeadAPI = async (req, res) => {
         TagsWithStylesheet.each((i, el) => {
 
             let tempHref = $2(el).attr('href');
+            tempHref = tempHref.replaceAll('../../', '/');
+            tempHref = tempHref.replaceAll('../', '/');
+
             if (!tempHref.includes('http://') && !tempHref.includes('https://')) {
                 $2(el).attr('href', '/' + tempHref);
             }
@@ -51,7 +54,6 @@ const pageHeadAPI = async (req, res) => {
 
         // save file
         fs.writeFileSync(documentHeadCode2, documentHeadJsx2, 'utf-8');
-
 
         // load cheerio
         let $ = cheerio.load(stylesheetHtml);

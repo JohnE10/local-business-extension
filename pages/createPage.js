@@ -1,33 +1,82 @@
 
 import { useEffect, useState } from 'react';
+import useFetch from './customHooks/useFetch';
+import { isAbsoluteURL } from '../utils/helpers';
 
 
 const createPage = () => {
 
     const [paths, setPaths] = useState('');
+    const [path, setPath] = useState('');
+    const [html, setHtml] = useState('');
     const [pathArr, setPathArr] = useState([]);
     const [basePath, setBasePath] = useState('');
     const [text, setText] = useState(null);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
+    const [runGeturls, setRunGetUrls] = useState(false);
 
-    // const basePath = 'C:/Users/jetto/OneDrive/Desktop/Files/Coding-ASUS/WP Migration Campaign/HTTrack_mid-city-smiles/mid-city-smiles/www.midcitysmiles.com/blog/';
+    const cheerio = require('cheerio');
 
-    const replaceStr = 'blog/';
+    const endPoint = `/api/lib/helpers/getFileContent?path=${path}`;
+    const { useFetchData, useFetchError, runFetch } = useFetch(endPoint);
 
-    const isFile = async (dirPath) => {
-        const response = await fetch(`/api/fileOrDirectoryApi?path=${dirPath}`);
-        const data = await response.json();
+    const defaultBasePath = 'C:/Users/jetto/OneDrive/Desktop/Files/Coding-ASUS/WP Migration Campaign/HTtrack/HTTrack_dumasfamilydentistry/dumasfamilydentistry/dumasfamilydentistry/';
 
-        console.log({ data: data.success });
-        return data.success;
-    }
+    useEffect(() => {
+        setBasePath(defaultBasePath);
+    }, [defaultBasePath]);
 
-    const sendToCreatePageApi = async (path, base, str) => {
+    useEffect(() => {
+        if (useFetchData && useFetchData != '') {
+            setHtml(useFetchData);
+            console.log('setHtml(useFetchData) ran');
+        }
+    }, [useFetchData]);
+
+    useEffect(() => {
+        if (html && html != '') {
+            getUrls(html);
+            console.log('getUrls ran');
+        }
+    }, [html]);
+
+    const getUrls = (fileHtml) => {
+
+        try {
+            if (fileHtml) {
+                let $ = cheerio.load(fileHtml);
+
+                let aTags = $('body').find('a');
+
+                // get pages to create
+                let tempArr = [];
+                aTags.each((i, el) => {
+                    if ($(el).attr('href')) {
+                        let temp = $(el).attr('href').trim();
+                        if (!isAbsoluteURL(temp) && !temp.includes('tel:') && !temp.includes('mailto:')) {
+                            if (!tempArr.includes(temp)) {
+                                tempArr.push(temp);
+                                console.log({ temp });
+                                sendToCreatePageApi(temp, basePath);
+                            }
+                        }
+                    }
+                });
+            }
+            
+
+        } catch (error) {
+            console.log('getUrls Error: ', error.message);
+            setError('getUrls Error: ' + error.message);
+        }
+    };
+
+    const sendToCreatePageApi = async (pagePath, base) => {
 
         setTimeout(async () => {
             console.log('sendToCreatePageApi ran');
-            const response = await fetch(`/api/createPageApi?pagePath=${path}&basePath=${base}&replaceStr=${str}`);
+            const response = await fetch(`/api/createPageApi?pagePath=${pagePath}&basePath=${base}`);
             const data = await response.json();
 
             if (data.success) {
@@ -44,47 +93,50 @@ const createPage = () => {
 
     }
 
-    useEffect(() => {
-        setPathArr(paths.split('\n'));
-    }, [paths]);
 
     const handleSubmit = () => {
 
         setLoading(true);
         setError('');
+        setHtml('');
+        // setRunGetUrls(true);
 
-        console.log('pathArr: ', pathArr);
-        console.log({ pathArr });
-
-        // clear any existing files/pages before create new ones
-        const dirToClear = 'siteFiles/pages/';
-        const clearDir = async (dirToClear) => {
-            const response = await fetch(`/api/lib/helpers/deleteDirectoryContents?path=${dirToClear}`);
-            const data = await response.json();
-            console.log({data});
-        };
-        // clearDir(dirToClear);
-
-        try {
-            let i = 0;
-            const runControl = () => {
-                sendToCreatePageApi(pathArr[i], basePath, replaceStr);
-                console.log('i: ', i);
-                i++;
-                if (i < pathArr.length) {
-                    runControl();
-                }
-                else {
-                    setLoading(false);
-                    setText('Done!')
-                }
-            }
-            runControl();
-
-        } catch (err) {
-            setError(err.message);
-            console.log(err.message);
+        if (path) {
+            runFetch();
+            console.log('runFech() ran');
+            console.log('path: ', path);
+            console.log('basePath: ', basePath);
         }
+
+        // // clear any existing files/pages before create new ones
+        // const dirToClear = 'siteFiles/pages/';
+        // const clearDir = async (dirToClear) => {
+        //     const response = await fetch(`/api/lib/helpers/deleteDirectoryContents?path=${dirToClear}`);
+        //     const data = await response.json();
+        //     console.log({ data });
+        // };
+        // // clearDir(dirToClear);
+
+        // try {
+        //     let i = 0;
+        //     const runControl = () => {
+        //         sendToCreatePageApi(pathArr[i], basePath, replaceStr);
+        //         console.log('i: ', i);
+        //         i++;
+        //         if (i < pathArr.length) {
+        //             runControl();
+        //         }
+        //         else {
+        //             setLoading(false);
+        //             setText('Done!')
+        //         }
+        //     }
+        //     // runControl();
+
+        // } catch (err) {
+        //     setError(err.message);
+        //     console.log('runControl Error: ', err.message);
+        // }
     }
 
     return (
@@ -92,7 +144,7 @@ const createPage = () => {
             <div className='pageTitle'><h4>Create Page</h4></div>
             {error && <div className='text-danger'>{error}</div>}
             <div className='d-flex flex-column justify-content-center align-items-center'>
-            <div className='d-flex justify-content-center align-items-center'>
+                <div className='d-flex justify-content-center align-items-center'>
                     <div><label>Enter BasePath:</label></div>
                     <div>
                         <input
@@ -102,7 +154,7 @@ const createPage = () => {
                         />
                     </div>
                 </div>
-                <div><label>Enter URLs:</label></div>
+                {/* <div><label>Enter URLs:</label></div>
                 <div>
                     <textarea
                         type='text'
@@ -110,6 +162,20 @@ const createPage = () => {
                         onChange={(e) => setPaths(e.target.value.replaceAll('\\', '/'))}
                     />
                 </div>
+                <div>
+                    <button onClick={handleSubmit}>Submit</button>
+                </div> */}
+                <div className='d-flex justify-content-center align-items-center'>
+                    <div><label>Enter file path:</label></div>
+                    <div>
+                        <input
+                            type='text'
+                            value={path}
+                            onChange={(e) => setPath(e.target.value.replaceAll('\\', '/'))}
+                        />
+                    </div>
+                </div>
+
                 <div>
                     <button onClick={handleSubmit}>Submit</button>
                 </div>

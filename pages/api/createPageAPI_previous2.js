@@ -1,6 +1,6 @@
-
-import { fileNameFromUrl, isAbsoluteURL, isValidUrl, randomStr, toCamelCase } from '../../utils/helpers';
-import { createDirectoryAndSaveFile, fileOrDirectory } from './backEndHelpers';
+import { gridColumnsTotalWidthSelector } from '@mui/x-data-grid';
+import { capFirst, fileNameFromUrl, isAbsoluteURL, isValidUrl, randomStr, toCamelCase } from '../../utils/helpers';
+import { createDirectoryAndSaveFile, deleteDirectoryContents, fetchUrlData, fileOrDirectory, listFilesInDirectory } from './backEndHelpers';
 import { styleAttrToNext } from '../../utils/helpers';
 
 const fs = require('fs');
@@ -15,20 +15,17 @@ const createPageApi = async (req, res) => {
     const svgDir = 'siteFiles/svgs/';
 
     const basePath = req.query.basePath;
-    let InitialFileToRead = req.query.pagePath;
+    const replaceStr = req.query.replaceStr;
+    let fileToRead = req.query.pagePath;
 
-    // const tempObj = await fileOrDirectory(InitialFileToRead);
-    // if (tempObj.isDirectory()) {
-    //     InitialFileToRead = InitialFileToRead + '/index.html';
-    // }
+    const tempObj = await fileOrDirectory(fileToRead);
+    if (tempObj.isDirectory()) {
+        fileToRead = fileToRead + '/index.html';
+    }
 
-    let fileToRead = basePath + InitialFileToRead;
+    // let fileToCreate = siteFileDir + fileToRead.replace(basePath, '').replace('.html', '') + '.js';
 
-    // console.log('fileToRead: ', fileToRead);
-
-
-
-    let fileToCreate = siteFileDir + InitialFileToRead.replace('.html', '.js');
+    let fileToCreate = siteFileDir;
     let fileToCreateArr = [];
     let filesNotCreatedTxt = '';
 
@@ -49,7 +46,7 @@ const createPageApi = async (req, res) => {
                 export default ${name}
             `;
             const tempCompName = svgDir + name + '.js';
-            fs.writeFileSync(tempCompName, componentContent);
+            fs.writeFileSync(tempCompName, componentContent, 'utf-8');
 
         };
 
@@ -65,49 +62,16 @@ const createPageApi = async (req, res) => {
             $('img').removeAttr('srcset');
 
             // Html element manipulation
-            const images = $('body').find('img');
-            const styles = $('body').find('style');
-            const scripts = $('body').find('script');
-            const navLinks = $('body').find('nav').find('li').find('a');
-            const tagsWithStyle = $('[style]');
-            const aTags = $('body').find('a');
-            const svgs = $('body').find('svg');
+            let images = $('body').find('img');
+            let styles = $('body').find('style');
+            let scripts = $('body').find('script');
+            let navLinks = $('body').find('nav').find('li').find('a');
+            let tagsWithStyle = $('[style]');
+            let aTags = $('body').find('a');
+            let svgs = $('body').find('svg');
             const paragraphToRemove = $('body').find('p[class="site-title"]');
-            const headScripts = $('head').find('script');
-            const revSlider = $('body').find('rs-module-wrap[id="rev_slider_1_1_wrapper"]');
-            const chevron = $('body').find('i[class="fa fa-2x fa-chevron-up"]');
-            const gformForm = $('body').find('div[id*="gform"]');
-
-
-            // // escape quotes in text
-            // $('h1').each((i, el) => {
-            //     let temp = $(el).text();
-            //     temp = temp.replaceAll(/"/g, '&quot;').replaceAll(/'/g, '&#39;');
-            //     $(el).text(temp);
-            // });
-            // $('p').each((i, el) => {
-            //     let temp = $(el).text();
-            //     temp = temp.replaceAll(/"/g, '&quot;').replaceAll(/'/g, '&#39;');
-            //     $(el).text(temp);
-            //   });
-            //   $('div').each((i, el) => {
-            //     let temp = $(el).text();
-            //     temp = temp.replaceAll(/"/g, '&quot;').replaceAll(/'/g, '&#39;');
-            //     $(el).text(temp);
-            //   });
-
-            //   $('span').each((i, el) => {
-            //     let temp = $(el).text();
-            //     temp = temp.replaceAll(/"/g, '&quot;').replaceAll(/'/g, '&#39;');
-            //     $(el).text(temp);
-            //   });
-
-            // remove div tags that contain setREVStartSize,
-            gformForm.each((i, el) => {
-                let temp = $.html(el);
-                $(el).replaceWith('{/*' + temp + '*/}');
-                // console.log($.html());
-            })
+            let headScripts = $('head').find('script');
+            let revSlider = $('body').find('rs-module-wrap[id="rev_slider_1_1_wrapper"]');
 
             let setREVStartSizeTag = '';
 
@@ -115,29 +79,17 @@ const createPageApi = async (req, res) => {
                 let temp = $(el).text();
                 if (temp && temp.includes('setREVStartSize(e)')) {
                     setREVStartSizeTag = $.html(el);
-                    $(el).remove();
                     return false;
                 }
             });
 
-            // custom script fix
             scripts.each((i, el) => {
                 let temp = $(el).text();
                 if (temp && temp.includes('setREVStartSize')) {
-                    // console.log('setREVStartSizeTag: ', setREVStartSizeTag);
                     $(el).replaceWith(setREVStartSizeTag + '\n' + $.html(el));
-                    // console.log('$(el): ', $.html(el));
                     return false;
                 }
             });
-
-            // // custom icon fix
-            // chevron.each((i, el) => {
-            //     const iconImage = `
-            //     <Image src="/images/scroll-up.png" alt="instagram logo" width="39" height="40" priority="false" alt="" />
-            //     `;
-            //     $(el).replaceWith(iconImage);
-            // });
 
             aTags.each((i, el) => {
                 // console.log($(el).attr('href'));
@@ -174,7 +126,59 @@ const createPageApi = async (req, res) => {
                 $(el).replaceWith(`<${svgName}>\n`);
             });
 
-            // modify nav links to work in next.js site
+            // // modify nav links to work in next.js site
+            // navLinks.each((i, el) => {
+            //     if ($(el).attr('href')) {
+            //         let temp = $(el).attr('href').trim();
+            //         if (temp.includes('/')) {
+            //             temp = fileNameFromUrl(temp);
+            //             let temp1 = temp.fileName;
+            //             if (temp1.includes('.html')) {
+            //                 temp1 = temp1.replace('.html', '.js');
+            //             }
+            //             let temp2 = temp.parentDirectory;
+            //             temp2 = temp2.replaceAll('.', '').trim();
+            //             console.log({ temp1 });
+            //             console.log({ temp2 });
+            //             if (temp2 == '') {
+            //                 $(el).attr('href', '/');
+            //             }
+            //             else {
+            //                 temp2 = toCamelCase(temp2);
+            //                 $(el).attr('href', '/' + temp2 + '/');
+            //             }
+            //         }
+            //         else {
+            //             if ($(el).attr('href') == 'index.html') {
+            //                 $(el).attr('href', '');
+            //             }
+
+            //         }
+            //     }
+            // });
+
+
+            // // modify a tag hrefs to .js from .html
+            // aTags.each((i, el) => {
+            //     if ($(el).attr('href')) {
+            //         let temp = $(el).attr('href').trim();
+            //         if (!isAbsoluteURL(temp)) {
+            //             if (temp.includes('.html')) {
+            //                 if (fileNameFromUrl(temp).parentDirectory == '') {
+            //                     $(el).attr('href', '/');
+            //                 }
+            //                 else {
+            //                     const filename = fileNameFromUrl(temp).fileName;
+            //                     temp = temp.replace(filename, '');
+            //                     $(el).attr('href', temp);
+            //                 }
+            //             }
+
+            //         }
+            //     }
+            // });
+
+
             aTags.each((i, el) => {
                 if ($(el).attr('href')) {
                     let temp = $(el).attr('href').trim();
@@ -182,16 +186,17 @@ const createPageApi = async (req, res) => {
                         if (temp.includes('.html')) {
                             if (fileNameFromUrl(temp).parentDirectory == '') {
                                 $(el).attr('href', '/');
-                                // const temp2 = $(el).attr('href');
-                                // fileToCreate = fileToCreate + temp2 + 'index.js';
-
+                                const temp2 = $(el).attr('href');
+                                fileToCreate = fileToCreate + temp2 + 'index.js';
+                                
                             }
                             else {
                                 const filename = fileNameFromUrl(temp).fileName;
                                 if (filename) {
                                     temp = temp.replace(filename, '');
                                     $(el).attr('href', temp);
-                                    // fileToCreate = fileToCreate + temp + 'index.js';
+                                    fileToCreate = fileToCreate + temp + 'index.js';
+                                    fileToCreateArr.push(fileToCreate);
                                 }
                             }
                         }
@@ -216,63 +221,28 @@ const createPageApi = async (req, res) => {
                         $(el).removeAttr('loading')
                     }
                 }
+                else if ($(el).attr('src') == '/wp-content/uploads/2018/02/logo-headline_lrg-5.png') {
+                    $(el).attr('width', '950');
+                    $(el).attr('height', '252');
+                }
+                else if ($(el).attr('src') == '/wp-content/uploads/2022/07/facebook.png') {
+                    $(el).attr('width', '32');
+                    $(el).attr('height', '32');
+                }
+                else if ($(el).attr('src') == '/wp-content/uploads/2022/07/facebook-sml.png') {
+                    $(el).attr('width', '32');
+                    $(el).attr('height', '32');
+                }
+                else if ($(el).attr('src') == '/images/slide-new-hours.jpg') {
+                    $(el).attr('width', '1500');
+                    $(el).attr('height', '350');
+                }
                 else {
                     $(el).attr('width', '150');
                     $(el).attr('height', '150');
                     $(el).attr('priority', 'false');
-
-                    if (!$(el).attr('alt')) {
-                        $(el).attr('alt', '');
-                    }
-
                     if ($(el).attr('loading')) {
                         $(el).removeAttr('loading')
-                    }
-                }
-
-                // if ($(el).attr('src') == '/wp-content/uploads/2018/02/logo-headline_lrg-5.png') {
-                //     $(el).attr('width', '950');
-                //     $(el).attr('height', '252');
-                // }
-
-                if ($(el).attr('src').includes('logo-headline_lrg-5.png')) {
-                    $(el).attr('width', '950');
-                    $(el).attr('height', '252');
-                    if (!$(el).attr('alt')) {
-                        $(el).attr('alt', '');
-                    }
-
-                }
-
-                if ($(el).attr('src').includes('facebook.png')) {
-                    $(el).attr('width', '32');
-                    $(el).attr('height', '32');
-                    if (!$(el).attr('alt')) {
-                        $(el).attr('alt', '');
-                    }
-                }
-
-                if ($(el).attr('src').includes('facebook-sml.png')) {
-                    $(el).attr('width', '32');
-                    $(el).attr('height', '32');
-                    if (!$(el).attr('alt')) {
-                        $(el).attr('alt', '');
-                    }
-                }
-
-                if ($(el).attr('src').includes('instagram.png')) {
-                    $(el).attr('width', '32');
-                    $(el).attr('height', '32');
-                    if (!$(el).attr('alt')) {
-                        $(el).attr('alt', '');
-                    }
-                }
-
-                if ($(el).attr('src') == '/images/slide-new-hours.jpg') {
-                    $(el).attr('width', '1500');
-                    $(el).attr('height', '350');
-                    if (!$(el).attr('alt')) {
-                        $(el).attr('alt', '');
                     }
                 }
             });
@@ -308,25 +278,23 @@ const createPageApi = async (req, res) => {
 
             // make script adhere to next.js rules
             scripts.each((i, el) => {
-                if(!$(el).attr('id')) {
-                    const scriptId = randomStr(10);
-                    $(el).attr('id', scriptId)
-                }
-            });
+                const temp = $(el).text();
+                const tag = $.html(el);
+                if (tag) {
+                    if (!tag.includes('id=')) {
+                        const scriptId = randomStr(10);
+                        if (tag.attr) {
+                            tag.attr('id', scriptId);
+                        }
 
-            scripts.each((i, el) => {
-                if ($.html(el).includes('gform')) {
-                    let temp = $.html(el);
-                    $(el).remove();
+                    }
                 }
-                if ($.html(el).includes('ResponsiveSlides')) {
-                    $(el).remove();
-                }
+
             });
 
             // replace image plugin with next/image
             const ImageTag = `
-            	<div style="{{textAlign: 'center'}}">
+            	<div style={{ textAlign: 'center' }}>
 				<Image src="/images/slide-new-hours.jpg" width="1500" height="350" priority="false" alt="" />
 			    </div>
             `;
@@ -336,7 +304,7 @@ const createPageApi = async (req, res) => {
                 if ($(el).text().trim() != '') {
                     $(el).text('{`' + temp + '`}');
                 }
-                $(el).replaceWith(`{/*` + temp + `*/}` + '\n' + ImageTag);
+                $(el).html() = `{/*` + temp + `*/}` + '\n' + ImageTag;
             });
 
             // if YT video, use Next Video Compnent
@@ -437,9 +405,6 @@ const createPageApi = async (req, res) => {
             body = body.replaceAll('"{{', '{{');
             body = body.replaceAll('}}"', '}}');
 
-            // change  allowfullscreen to next's allowFullScreen
-            body = body.replaceAll('allowfullscreen', 'allowFullScreen');
-
             // change  charset to next's charSet
             body = body.replaceAll('charset', 'charSet');
 
@@ -472,11 +437,6 @@ const createPageApi = async (req, res) => {
             // replace ='wp with ='/wp
             body = body.replaceAll('src="wp', 'src="/wp');
 
-            // // // escape quotes in text
-            // // let tempBody = $.text().replace(/"/g, '&quot;');
-            // // body = body.replace($.text(), tempBody);
-            // body = body.replaceAll(/"/g, '&quot;').replaceAll(/'/g, '&#39;');
-
             // remove some unwanted text
             body = body.replace('Welcome to Mid-City Smiles Family Dentistry! We are a dental practice located in New Orleans. Our team specializes in family dentistry and orthodontic care – Diamond Invisalign Providers..', '');
 
@@ -489,7 +449,7 @@ const createPageApi = async (req, res) => {
                 import Link from 'next/link';
                 import LiteYouTubeEmbed from "react-lite-youtube-embed";
                 import "react-lite-youtube-embed/dist/LiteYouTubeEmbed.css";
-                import '@/jQueryLoader.js';
+                import '../../jQueryLoader.js';
                 ${svgImports}
 
                 const index = () => {
@@ -503,8 +463,7 @@ const createPageApi = async (req, res) => {
             `;
 
             // save file
-
-            // console.log('fileToCreate: ', fileToCreate);
+            // fs.writeFileSync(fileToCreate, nextPage);
             const results = createDirectoryAndSaveFile(fileToCreate, nextPage);
             return res.json({ success: results });
 
@@ -513,7 +472,6 @@ const createPageApi = async (req, res) => {
             throw Error(html.error);
         }
 
-        // return res.json({success: 'temp'});
     } catch (err) {
         console.log('createPageApi error: ', err);
         return res.json({ error: err.message });
