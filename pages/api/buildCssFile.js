@@ -23,55 +23,75 @@ const buildCssFile = async (req, res) => {
         fs.writeFileSync(cssFileName, additionalCss);
         fs.writeFileSync(relativeUrlList, 'List of imported stylesheets \n \n');
 
+        // const appendToCssFile = async (relativeUrl, fileName) => {
+
+        //     console.log({ relativeUrl });
+        //     console.log({ fileName });
+
+        //     // // Read the CSS file
+        //     // const css = fs.readFileSync(relativeUrl, 'utf8');
+
+        //     // // Parse the CSS using postcss
+        //     // const parsedCss = await postcss().process(css, { from: relativeUrl });
+
+        //     // // Apply cssnano to minify the CSS
+        //     // const minifiedCss = await cssnano.process(parsedCss.css);
+
+        //     // let data = minifiedCss.css;
+
+        //     // read file
+        //     let data = fs.readFileSync(relativeUrl, { encoding: 'utf-8' });
+
+        //     // remove all instances of @charset
+        //     // const removeCharset = data.replace(/@charset[^;]+;/g, (match) => `/* ${match} */`);
+        //     data = data.replace(/@charset[^;]+;/g, (match) => `/* ${match} */`);
+
+        //     // replace '../' with '/'
+        //     data = data.replaceAll('../', '/');
+
+        //     // replace all instances of -webkit-backface-visibility: hidden; with backface-visibility: hidden;
+        //     data = data.replaceAll('-webkit-backface-visibility: hidden;', 'backface-visibility: hidden;');
+
+        //     // replace all instances of  '-webkit-appearance: textfield; with appearance: textfield;
+        //     data = data.replaceAll('-webkit-appearance: textfield;', 'appearance: textfield;');
+
+        //     // more replacing
+        //     data = data.replaceAll('-webkit-appearance: button;', 'appearance: button;');
+
+        //     // data = data.replaceAll('speak: none;', '');
+        //     data = data.replaceAll(/speak[^;]+;/g, '');
+        //     data = data.replace(/-ms-filter[^;]+;/g, '');
+
+        //     // add semicolon to last value in selector
+        //     data = data.replaceAll('}', ';}');
+        //     data = data.replaceAll(';;', ';');
+        //     data = data.replaceAll('};}', '}}');
+
+        //     // stylesheet location file
+        //     const relativeUrlList = cssFileName.replace('.css', '.txt');
+        //     fs.appendFileSync(cssFileName, data);
+        //     const trimmedRelativeUrl = fileNameFromUrl(relativeUrl).fileName;
+        //     fs.appendFileSync(relativeUrlList, trimmedRelativeUrl + '\n');
+
+        // };
+
         const appendToCssFile = async (relativeUrl, fileName) => {
 
             console.log({ relativeUrl });
             console.log({ fileName });
 
-            // // Read the CSS file
-            // const css = fs.readFileSync(relativeUrl, 'utf8');
+            let importText = '';
+            let importUrl = '';
 
-            // // Parse the CSS using postcss
-            // const parsedCss = await postcss().process(css, { from: relativeUrl });
-
-            // // Apply cssnano to minify the CSS
-            // const minifiedCss = await cssnano.process(parsedCss.css);
-
-            // let data = minifiedCss.css;
-
-            // read file
-            let data = fs.readFileSync(relativeUrl, { encoding: 'utf-8' });
-
-            // remove all instances of @charset
-            // const removeCharset = data.replace(/@charset[^;]+;/g, (match) => `/* ${match} */`);
-            data = data.replace(/@charset[^;]+;/g, (match) => `/* ${match} */`);
-
-            // replace '../' with '/'
-            data = data.replaceAll('../', '/');
-
-            // replace all instances of -webkit-backface-visibility: hidden; with backface-visibility: hidden;
-            data = data.replaceAll('-webkit-backface-visibility: hidden;', 'backface-visibility: hidden;');
-
-            // replace all instances of  '-webkit-appearance: textfield; with appearance: textfield;
-            data = data.replaceAll('-webkit-appearance: textfield;', 'appearance: textfield;');
-
-            // more replacing
-            data = data.replaceAll('-webkit-appearance: button;', 'appearance: button;');
-
-            // data = data.replaceAll('speak: none;', '');
-            data = data.replaceAll(/speak[^;]+;/g, '');
-            data = data.replace(/-ms-filter[^;]+;/g, '');
-
-            // add semicolon to last value in selector
-            data = data.replaceAll('}', ';}');
-            data = data.replaceAll(';;', ';');
-            data = data.replaceAll('};}', '}}');
+            importUrl = fileNameFromUrl(relativeUrl).fileName;
+            importText = `import '@/styles/${importUrl}'`;
+            
 
             // stylesheet location file
             const relativeUrlList = cssFileName.replace('.css', '.txt');
-            fs.appendFileSync(cssFileName, data);
-            const trimmedRelativeUrl = fileNameFromUrl(relativeUrl).fileName;
-            fs.appendFileSync(relativeUrlList, trimmedRelativeUrl + '\n');
+            fs.appendFileSync(cssFileName, importText + '\n');
+            // const trimmedRelativeUrl = fileNameFromUrl(relativeUrl).fileName;
+            fs.appendFileSync(relativeUrlList, importUrl + '\n');
 
         };
 

@@ -179,3 +179,52 @@ export const deleteDirectoryContents = (directoryPath) => {
   }
 
 }
+
+
+
+
+export const copyFile = (sourcePath, destinationPath) => {
+
+  const fs = require('fs');
+  const path = require('path');
+
+  try {
+    // Resolve the absolute paths
+    const source = path.resolve(sourcePath);
+    const destination = path.resolve(destinationPath);
+
+    console.log('source: ', source);
+    console.log('destination: ', destination);
+
+    // Check if the source file exists
+    if (!fs.existsSync(source)) {
+      console.log('Source file does not exist');
+      return;
+    }
+
+    // Ensure the destination directory exists
+    const destinationDir = path.dirname(destination);
+    if (!fs.existsSync(destinationDir)) {
+      fs.mkdirSync(destination, { recursive: true });
+    }
+
+    // Copy the file
+    fs.copyFile(source, destination, (err) => {
+      if (err) {
+        console.log('Error copying file:', err);
+      } else {
+        console.log('File copied successfully');
+      }
+    });
+
+    return ('File copied')
+
+  } catch (error) {
+    console.log('copyFile error: ', error.message);
+    return ('copyFile error: ' + error.message);
+  }
+};
+
+
+
+

@@ -20,7 +20,9 @@ const getCss = () => {
     let body = '';
 
     // let cssFileName = 'siteFiles/css/stylesheets.css';
-    let cssFileName = 'C:/Users/jetto/OneDrive/Desktop/Files/Coding-ASUS/WP Migration Campaign/smilingfacesnola/pages/stylesheets.css';
+    // let cssFileName = 'C:/Users/jetto/OneDrive/Desktop/Files/Coding-ASUS/WP Migration Campaign/smilingfacesnola/pages/stylesheets.css';
+
+    let cssFileName = 'siteFiles/css/stylesheets.css';
 
 
     const handleSubmit = () => {

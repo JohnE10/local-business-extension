@@ -1,53 +1,27 @@
 import { split } from 'postcss/lib/list';
 import { fileTree, isAbsoluteURL } from '../../utils/helpers';
-import { chooseDirectory, createDirectory, createDirectoryAndSaveFile, deleteDirectoryContents, fileOrDirectory, listFilesInDirectory } from './backEndHelpers';
+import { chooseDirectory, copyFile, createDirectory, createDirectoryAndSaveFile, deleteDirectoryContents, fileOrDirectory, listFilesInDirectory } from './backEndHelpers';
+
+
+
 
 const ApiTemp2 = async (req, res) => {
 
 	const fs = require('fs');
 	const path = require('path');
-  
+
 	const filePath = 'C:/Users/jetto/OneDrive/Desktop/Files/Coding-ASUS/WP Migration Campaign/HTtrack/HTTrack_dumasfamilydentistry/dumasfamilydentistry/dumasfamilydentistry/index.html';
 
-	const fileContent = 'Temp text';
+	// const sourceFile = 'C:/Users/jetto/OneDrive/Desktop/Files/Coding-ASUS/js/react/local-business-extension/siteFiles/temp/stylesheets.css';
 
-	const html = fs.readFileSync(filePath, { encoding: 'utf8' });
+	const destinationFile = 'C:/Users/jetto/OneDrive/Desktop/Files/Coding-ASUS/js/react/local-business-extension/siteFiles/css/stylesheets.css';
 
-	if (html) {
-		// load cheerio
-		let $ = cheerio.load(html);
+	const sourceFile = 'siteFiles/css/classic-themes.minae48.css';
 
-		let aTags = $('body').find('a');
-
-		            // modify a tag hrefs to .js from .html
-					aTags.each((i, el) => {
-						if ($(el).attr('href')) {
-							let temp = $(el).attr('href').trim();
-							if (!isAbsoluteURL(temp)) {
-								if (temp.includes('.html')) {
-									if (fileNameFromUrl(temp).parentDirectory == '') {
-										$(el).attr('href', '/');
-									}
-									else {
-										const filename = fileNameFromUrl(temp).fileName;
-										temp = temp.replace(filename, '');
-										$(el).attr('href', temp);
-									}
-								}
-		
-							}
-						}
-					});
-					
-	}
-
-
-
-
-	const temp = isAbsoluteURL(filePath);
+		const temp = fs.readFileSync(sourceFile, 'utf-8');
 
 	return res.json(temp);
-
+	
 };
 
 export default ApiTemp2;
