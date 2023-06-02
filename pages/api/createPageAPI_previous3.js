@@ -102,41 +102,42 @@ const createPageApi = async (req, res) => {
             //     $(el).text(temp);
             //   });
 
-            // remove div tags that contain gform,
+            // remove div tags that contain setREVStartSize,
             gformForm.each((i, el) => {
                 let temp = $.html(el);
                 $(el).replaceWith('{/*' + temp + '*/}');
                 // console.log($.html());
             })
 
-            // let setREVStartSizeTag = '';
+            let setREVStartSizeTag = '';
 
-            // headScripts.each((i, el) => {
-            //     let temp = $(el).text();
-            //     if (temp && temp.includes('setREVStartSize(e)')) {
-            //         setREVStartSizeTag = $.html(el);
-            //         $(el).remove();
-            //         return false;
-            //     }
-            // });
+            headScripts.each((i, el) => {
+                let temp = $(el).text();
+                if (temp && temp.includes('setREVStartSize(e)')) {
+                    setREVStartSizeTag = $.html(el);
+                    $(el).remove();
+                    return false;
+                }
+            });
 
-            // // custom script fix
-            // scripts.each((i, el) => {
-            //     let temp = $(el).text();
-            //     if (temp && temp.includes('setREVStartSize')) {
-            //         // console.log('setREVStartSizeTag: ', setREVStartSizeTag);
-            //         $(el).replaceWith(setREVStartSizeTag + '\n' + $.html(el));
-            //         // console.log('$(el): ', $.html(el));
-            //         return false;
-            //     }
-            // });
-
+            // custom script fix
             scripts.each((i, el) => {
                 let temp = $(el).text();
                 if (temp && temp.includes('setREVStartSize')) {
-                    $(el).remove
+                    // console.log('setREVStartSizeTag: ', setREVStartSizeTag);
+                    $(el).replaceWith(setREVStartSizeTag + '\n' + $.html(el));
+                    // console.log('$(el): ', $.html(el));
+                    return false;
                 }
             });
+
+            // // custom icon fix
+            // chevron.each((i, el) => {
+            //     const iconImage = `
+            //     <Image src="/images/scroll-up.png" alt="instagram logo" width="39" height="40" priority="false" alt="" />
+            //     `;
+            //     $(el).replaceWith(iconImage);
+            // });
 
             aTags.each((i, el) => {
                 // console.log($(el).attr('href'));
@@ -299,20 +300,15 @@ const createPageApi = async (req, res) => {
                     `
                     $(el).text('{`' + temp2 + '`}');
                 }
-                // else if ($(el).text() != '') {
-                //     // temp = temp.replaceAll('\\', '');
-                //     $(el).text('{`' + temp + '`}');
-                // }
-                if (temp != '') {
+                else if ($(el).text().trim() != '') {
                     // temp = temp.replaceAll('\\', '');
-                    // console.log(temp);
                     $(el).text('{`' + temp + '`}');
                 }
             });
 
             // make script adhere to next.js rules
             scripts.each((i, el) => {
-                if (!$(el).attr('id')) {
+                if(!$(el).attr('id')) {
                     const scriptId = randomStr(10);
                     $(el).attr('id', scriptId)
                 }
@@ -323,9 +319,9 @@ const createPageApi = async (req, res) => {
                     let temp = $.html(el);
                     $(el).remove();
                 }
-                // if ($.html(el).includes('ResponsiveSlides')) {
-                //     $(el).remove();
-                // }
+                if ($.html(el).includes('ResponsiveSlides')) {
+                    $(el).remove();
+                }
             });
 
             // replace image plugin with next/image
@@ -335,18 +331,13 @@ const createPageApi = async (req, res) => {
 			    </div>
             `;
 
-            // revSlider.each((i, el) => {
-            //     const temp = $(el).html();
-            //     if ($(el).text().trim() != '') {
-            //         $(el).text('{`' + temp + '`}');
-            //     }
-            //     $(el).replaceWith(`{/*` + temp + `*/}` + '\n' + ImageTag);
-            // });
-
             revSlider.each((i, el) => {
-                $(el).remove();
+                const temp = $(el).html();
+                if ($(el).text().trim() != '') {
+                    $(el).text('{`' + temp + '`}');
+                }
+                $(el).replaceWith(`{/*` + temp + `*/}` + '\n' + ImageTag);
             });
-
 
             // if YT video, use Next Video Compnent
             if (html.includes('youtube.com')) {
@@ -380,11 +371,11 @@ const createPageApi = async (req, res) => {
                 const temp = $.html(el);
             });
 
-            // // remove the following paragraph
-            // // console.log({'paragraphToRemove.html()': paragraphToRemove.html()});
-            // paragraphToRemove.each((i, el) => {
-            //     $(el).text('');
-            // });
+            // remove the following paragraph
+            // console.log({'paragraphToRemove.html()': paragraphToRemove.html()});
+            paragraphToRemove.each((i, el) => {
+                $(el).text('');
+            });
 
             // remove all link rel=stylesheet tags
             $('link[rel="stylesheet"]').remove();
@@ -489,13 +480,7 @@ const createPageApi = async (req, res) => {
             // remove some unwanted text
             body = body.replace('Welcome to Mid-City Smiles Family Dentistry! We are a dental practice located in New Orleans. Our team specializes in family dentistry and orthodontic care – Diamond Invisalign Providers..', '');
 
-            // custom replace
-            body = body.replaceAll(`revslider_showDoubleJqueryError("#rev_slider_1_1");`, `// revslider_showDoubleJqueryError("#rev_slider_1_1");`);
 
-            body = body.replaceAll('<Script type="text/javascript">', '<Script type="text/javascript">{`');
-            body = body.replaceAll('};</Script>', '};`}</Script>');
-
-            body = body.replaceAll('<div className="header-social">', `<div style={{display: 'flex', justifyContent: 'flex-end'}}>`);
 
             // construct next.js page
             const nextPage = `

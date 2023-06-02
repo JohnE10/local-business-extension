@@ -30,12 +30,12 @@ const getCss = () => {
         setHtml(null);
         setError(null);
 
-        console.log({basePath});
-        console.log({url});
+        // console.log({basePath});
+        // console.log({url});
 
         try {
 
-            console.log('url: ', url);
+            // console.log('url: ', url);
 
             // const fetchData = async () => {
             const sendToBuildCssFile = async (path, fileName) => {

@@ -1,4 +1,5 @@
 import { fileNameFromUrl } from '../../utils/helpers';
+import { copyFile } from './backEndHelpers';
 
 const fs = require('fs');
 const cheerio = require('cheerio');
@@ -17,11 +18,13 @@ const buildCssFile = async (req, res) => {
         const cssFileName = req.query.cssFileName;
 
         const relativeUrlList = cssFileName.replace('.css', '.txt');
+        const fileDoesNotExist = 'siteFiles/css/fileNotExist.txt';
 
         const additionalCss = ``;
 
         fs.writeFileSync(cssFileName, additionalCss);
         fs.writeFileSync(relativeUrlList, 'List of imported stylesheets \n \n');
+        fs.writeFileSync(fileDoesNotExist, 'List of non-existant files \n \n');
 
         // const appendToCssFile = async (relativeUrl, fileName) => {
 
@@ -77,30 +80,40 @@ const buildCssFile = async (req, res) => {
 
         const appendToCssFile = async (relativeUrl, fileName) => {
 
-            console.log({ relativeUrl });
-            console.log({ fileName });
+            // console.log({ relativeUrl });
+            // console.log({ fileName });
 
             let importText = '';
             let importUrl = '';
-
-            importUrl = fileNameFromUrl(relativeUrl).fileName;
-            importText = `import '@/styles/${importUrl}'`;
             
 
-            // stylesheet location file
+            importUrl = fileNameFromUrl(relativeUrl).fileName;
+            importText = `import '@/styles/${importUrl}';`;
+            
+            // copy pertinent css files to styles directory
             const relativeUrlList = cssFileName.replace('.css', '.txt');
-            fs.appendFileSync(cssFileName, importText + '\n');
-            // const trimmedRelativeUrl = fileNameFromUrl(relativeUrl).fileName;
-            fs.appendFileSync(relativeUrlList, importUrl + '\n');
+            const destinationFile = 'siteFiles/css/moveToStyles/' + importUrl;
+           
+            
+            if (fs.existsSync(relativeUrl)) {
+                copyFile(relativeUrl, destinationFile);
+                fs.appendFileSync(cssFileName, importText + '\n');
+                fs.appendFileSync(relativeUrlList, relativeUrl + '\n');
+              }
+              else {
+                fs.appendFileSync(fileDoesNotExist, importUrl + '\n');
+              }
+
+
 
         };
 
         const fileToRead = req.query.cssFilePath;
-        console.log('fileToRead: ', fileToRead);
+        // console.log('fileToRead: ', fileToRead);
 
         if (fileToRead) {
 
-            console.log('inside fileToRead');
+            // console.log('inside fileToRead');
 
             const html = fs.readFileSync(fileToRead, { encoding: 'utf-8' });
             // console.log({html});
@@ -109,7 +122,7 @@ const buildCssFile = async (req, res) => {
 
             $('link[rel="stylesheet"]').map((i, ele) => {
                 let temp = $(ele).attr('href');
-                console.log({ temp });
+                // console.log({ temp });
 
                 if ($(ele).attr('href').includes('.css')) {
 
@@ -131,9 +144,9 @@ const buildCssFile = async (req, res) => {
                     if (tempFileName.includes('?ver')) {
                         let temp2 = tempFileName.split('?');
                         let version = temp2[temp2.length - 1];
-                        console.log({ version });
+                        // console.log({ version });
                         temp = temp.replaceAll('?' + version, '');
-                        console.log({ temp });
+                        // console.log({ temp });
                     }
 
                     appendToCssFile(temp, cssFileName);

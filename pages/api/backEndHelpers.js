@@ -180,9 +180,6 @@ export const deleteDirectoryContents = (directoryPath) => {
 
 }
 
-
-
-
 export const copyFile = (sourcePath, destinationPath) => {
 
   const fs = require('fs');
@@ -193,12 +190,12 @@ export const copyFile = (sourcePath, destinationPath) => {
     const source = path.resolve(sourcePath);
     const destination = path.resolve(destinationPath);
 
-    console.log('source: ', source);
-    console.log('destination: ', destination);
+    // console.log('source: ', source);
+    // console.log('destination: ', destination);
 
     // Check if the source file exists
     if (!fs.existsSync(source)) {
-      console.log('Source file does not exist');
+      console.log(source + ' does not exist');
       return;
     }
 
@@ -209,13 +206,16 @@ export const copyFile = (sourcePath, destinationPath) => {
     }
 
     // Copy the file
-    fs.copyFile(source, destination, (err) => {
-      if (err) {
-        console.log('Error copying file:', err);
-      } else {
-        console.log('File copied successfully');
-      }
-    });
+    const temp = fs.readFileSync(source, 'utf-8');
+    fs.writeFileSync(destination, temp);
+
+    // fs.copyFile(source, destination, (err) => {
+    //   if (err) {
+    //     console.log('Error copying file ' + source + ': ', err);
+    //   } else {
+    //     console.log('File copied successfully');
+    //   }
+    // });
 
     return ('File copied')
 
@@ -224,6 +224,26 @@ export const copyFile = (sourcePath, destinationPath) => {
     return ('copyFile error: ' + error.message);
   }
 };
+
+export const checkLink = async (link) => {
+
+  const fetch = require('isomorphic-unfetch');
+
+  try {
+    const response = await fetch(link);
+    if (response.ok) {
+      console.log(`${link} is a good link.`);
+      return `${link} is a good link.`;
+    } else {
+      console.log(`${link} is a broken link.`);
+      throw Error(`${link} is a broken link.`);
+      // return `${link} is a broken link.`
+    }
+  } catch (error) {
+    console.error(`Error checking link: ${link}`, error.message);
+    return (`Error checking link: ${link}`, error.message);
+  }
+}
 
 
 
