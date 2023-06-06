@@ -1,15 +1,13 @@
 List of imported stylesheets 
  
-C:/Users/jetto/OneDrive/Desktop/Files/Coding-ASUS/WP Migration Campaign/HTtrack/HTTrack_dumasfamilydentistry/dumasfamilydentistry/dumasfamilydentistry/wp-includes/css/dist/block-library/style.minae48.css
-C:/Users/jetto/OneDrive/Desktop/Files/Coding-ASUS/WP Migration Campaign/HTtrack/HTTrack_dumasfamilydentistry/dumasfamilydentistry/dumasfamilydentistry/wp-includes/css/classic-themes.minae48.css
-C:/Users/jetto/OneDrive/Desktop/Files/Coding-ASUS/WP Migration Campaign/HTtrack/HTTrack_dumasfamilydentistry/dumasfamilydentistry/dumasfamilydentistry/wp-content/plugins/revslider/public/assets/css/rs6f731.css
-C:/Users/jetto/OneDrive/Desktop/Files/Coding-ASUS/WP Migration Campaign/HTtrack/HTTrack_dumasfamilydentistry/dumasfamilydentistry/dumasfamilydentistry/wp-content/themes/minamaze/styleae48.css
-C:/Users/jetto/OneDrive/Desktop/Files/Coding-ASUS/WP Migration Campaign/HTtrack/HTTrack_dumasfamilydentistry/dumasfamilydentistry/dumasfamilydentistry/wp-content/themes/velocity/styleae48.css
-C:/Users/jetto/OneDrive/Desktop/Files/Coding-ASUS/WP Migration Campaign/HTtrack/HTTrack_dumasfamilydentistry/dumasfamilydentistry/dumasfamilydentistry/wp-content/themes/minamaze/lib/extentions/font-awesome/css/font-awesome.mindeae.css
-C:/Users/jetto/OneDrive/Desktop/Files/Coding-ASUS/WP Migration Campaign/HTtrack/HTTrack_dumasfamilydentistry/dumasfamilydentistry/dumasfamilydentistry/wp-content/themes/minamaze/lib/extentions/dashicons/css/dashiconsd5f7.css
-C:/Users/jetto/OneDrive/Desktop/Files/Coding-ASUS/WP Migration Campaign/HTtrack/HTTrack_dumasfamilydentistry/dumasfamilydentistry/dumasfamilydentistry/wp-content/themes/minamaze/lib/extentions/bootstrap/css/bootstrap.min95b8.css
-C:/Users/jetto/OneDrive/Desktop/Files/Coding-ASUS/WP Migration Campaign/HTtrack/HTTrack_dumasfamilydentistry/dumasfamilydentistry/dumasfamilydentistry/wp-content/themes/minamaze/lib/extentions/prettyPhoto/css/prettyPhotoc6bd.css
-C:/Users/jetto/OneDrive/Desktop/Files/Coding-ASUS/WP Migration Campaign/HTtrack/HTTrack_dumasfamilydentistry/dumasfamilydentistry/dumasfamilydentistry/wp-content/themes/velocity/style8daf.css
-C:/Users/jetto/OneDrive/Desktop/Files/Coding-ASUS/WP Migration Campaign/HTtrack/HTTrack_dumasfamilydentistry/dumasfamilydentistry/dumasfamilydentistry/wp-content/themes/minamaze/styles/style-shortcodes4963.css
-C:/Users/jetto/OneDrive/Desktop/Files/Coding-ASUS/WP Migration Campaign/HTtrack/HTTrack_dumasfamilydentistry/dumasfamilydentistry/dumasfamilydentistry/wp-content/themes/minamaze/styles/layouts/thinkup-right-sidebar4963.css
-C:/Users/jetto/OneDrive/Desktop/Files/Coding-ASUS/WP Migration Campaign/HTtrack/HTTrack_dumasfamilydentistry/dumasfamilydentistry/dumasfamilydentistry/wp-content/themes/minamaze/styles/style-responsive4963.css
+C:/Users/jetto/OneDrive/Desktop/Files/Coding-ASUS/WP Migration Campaign/HTtrack/HTTrack_mid-city-smiles/mid-city-smiles/www.midcitysmiles.com/blog/wp-includes/css/dist/block-library/style.min6fb3.css
+C:/Users/jetto/OneDrive/Desktop/Files/Coding-ASUS/WP Migration Campaign/HTtrack/HTTrack_mid-city-smiles/mid-city-smiles/www.midcitysmiles.com/blog/wp-content/plugins/social-icons-widget-by-wpzoom/block/dist/style-wpzoom-social-iconse8a4.css
+C:/Users/jetto/OneDrive/Desktop/Files/Coding-ASUS/WP Migration Campaign/HTtrack/HTTrack_mid-city-smiles/mid-city-smiles/www.midcitysmiles.com/blog/wp-includes/css/classic-themes.min68b3.css
+C:/Users/jetto/OneDrive/Desktop/Files/Coding-ASUS/WP Migration Campaign/HTtrack/HTTrack_mid-city-smiles/mid-city-smiles/www.midcitysmiles.com/blog/wp-content/themes/twentyseventeen/style3ce7.css
+C:/Users/jetto/OneDrive/Desktop/Files/Coding-ASUS/WP Migration Campaign/HTtrack/HTTrack_mid-city-smiles/mid-city-smiles/www.midcitysmiles.com/blog/wp-content/themes/twentyseventeen/assets/css/blocks0b0e.css
+C:/Users/jetto/OneDrive/Desktop/Files/Coding-ASUS/WP Migration Campaign/HTtrack/HTTrack_mid-city-smiles/mid-city-smiles/www.midcitysmiles.com/blog/wp-content/plugins/social-icons-widget-by-wpzoom/assets/css/wpzoom-socicond697.css
+C:/Users/jetto/OneDrive/Desktop/Files/Coding-ASUS/WP Migration Campaign/HTtrack/HTTrack_mid-city-smiles/mid-city-smiles/www.midcitysmiles.com/blog/wp-content/plugins/social-icons-widget-by-wpzoom/assets/css/genericonsd697.css
+C:/Users/jetto/OneDrive/Desktop/Files/Coding-ASUS/WP Migration Campaign/HTtrack/HTTrack_mid-city-smiles/mid-city-smiles/www.midcitysmiles.com/blog/wp-content/plugins/social-icons-widget-by-wpzoom/assets/css/academicons.mind697.css
+C:/Users/jetto/OneDrive/Desktop/Files/Coding-ASUS/WP Migration Campaign/HTtrack/HTTrack_mid-city-smiles/mid-city-smiles/www.midcitysmiles.com/blog/wp-content/plugins/social-icons-widget-by-wpzoom/assets/css/font-awesome-3.mind697.css
+C:/Users/jetto/OneDrive/Desktop/Files/Coding-ASUS/WP Migration Campaign/HTtrack/HTTrack_mid-city-smiles/mid-city-smiles/www.midcitysmiles.com/blog/wp-includes/css/dashicons.min6fb3.css
+C:/Users/jetto/OneDrive/Desktop/Files/Coding-ASUS/WP Migration Campaign/HTtrack/HTTrack_mid-city-smiles/mid-city-smiles/www.midcitysmiles.com/blog/wp-content/plugins/social-icons-widget-by-wpzoom/assets/css/wpzoom-social-icons-stylesd697.css

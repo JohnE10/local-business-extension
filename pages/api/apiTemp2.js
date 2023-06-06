@@ -10,13 +10,11 @@ const ApiTemp2 = async (req, res) => {
 	const fs = require('fs');
 	const path = require('path');
 
-	// const filePath = 'C:/Users/jetto/OneDrive/Desktop/Files/Coding-ASUS/WP Migration Campaign/HTtrack/HTTrack_dumasfamilydentistry/dumasfamilydentistry/dumasfamilydentistry/wp-content/themes/minamaze/lib/extentions/prettyPhoto/css/prettyPhotoc6bd.css?ver=3.1.5';
+	// const results = checkLink(link);
 
-	// const fileContent = fs.readFileSync(filePath, 'utf-8');
+	const file = 'siteFiles/temp4/temp1/temp2/temp3/index.html';
 
-	const link = 'http://googleeeeermksuprafe.com/';
-
-	const results = checkLink(link);
+	const results = createDirectoryAndSaveFile(file);
 
 	return res.json(results);
 	

@@ -1,4 +1,4 @@
-import { gridColumnsTotalWidthSelector } from '@mui/x-data-grid';
+
 import { capFirst, fileNameFromUrl, isAbsoluteURL, isValidUrl, randomStr, toCamelCase } from '../../utils/helpers';
 import { createDirectoryAndSaveFile, deleteDirectoryContents, fetchUrlData, fileOrDirectory, listFilesInDirectory } from './backEndHelpers';
 import { styleAttrToNext } from '../../utils/helpers';
@@ -22,8 +22,6 @@ const createPageApi = async (req, res) => {
     if (tempObj.isDirectory()) {
         fileToRead = fileToRead + '/index.html';
     }
-
-    // let fileToCreate = siteFileDir + fileToRead.replace(basePath, '').replace('.html', '') + '.js';
 
     let fileToCreate = siteFileDir;
     let fileToCreateArr = [];
@@ -56,7 +54,6 @@ const createPageApi = async (req, res) => {
 
             // load cheerio
             let $ = cheerio.load(html);
-            // $('svg').remove();
 
             // remove attr srcset from img tags
             $('img').removeAttr('srcset');
@@ -187,8 +184,7 @@ const createPageApi = async (req, res) => {
                             if (fileNameFromUrl(temp).parentDirectory == '') {
                                 $(el).attr('href', '/');
                                 const temp2 = $(el).attr('href');
-                                fileToCreate = fileToCreate + temp2 + 'index.js';
-                                
+                                fileToCreate = fileToCreate + temp2 + 'index.js';   
                             }
                             else {
                                 const filename = fileNameFromUrl(temp).fileName;

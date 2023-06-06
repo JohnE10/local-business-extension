@@ -155,10 +155,13 @@ const apiTemp = (req, res) => {
       <p style="padding-top: 60%">
         Some text with <b>a few <span>HTML</span></b> tags.
       </p>
-      <div id="gform_2" style="text-align: center;">
-        <img src="https://site.com/image1" width="30rem" height="150px" />
-        <img src="https://site.com/image2" >
-        <img src="https://site.com/image3" >
+
+      <div>
+      <ul>
+      <li>
+      <a href="#">Something</a>
+      </li>
+      </ul>
       </div>
       <h1>
         This is the "page" title
@@ -178,17 +181,14 @@ const apiTemp = (req, res) => {
 
 
 
-  $('h1').each((i, el) => {
-    let temp = $(el).text();
-    temp = temp.replaceAll(/"/g, '&quot;').replaceAll(/'/g, '&#39;');
-    $(el).text(temp);
+  aTags.each((i, el) => {
+    let temp = $(el).parent();
+    temp = $.html(temp);
+    if (temp.includes('<li')) {
+      console.log({ temp });
+    }
   });
 
-  $('div').each((i, el) => {
-    let temp = $(el).text();
-    temp = temp.replaceAll(/"/g, '&quot;').replaceAll(/'/g, '&#39;');
-    $(el).text(temp);
-  });
 
   let body = $('body').html();
 

@@ -4,7 +4,7 @@ import useFetch from './customHooks/useFetch';
 import { isAbsoluteURL } from '../utils/helpers';
 
 
-const createPage = () => {
+const createPageWork = () => {
 
     const [paths, setPaths] = useState('');
     const [path, setPath] = useState('');
@@ -113,37 +113,7 @@ const createPage = () => {
             console.log('path: ', path);
             console.log('basePath: ', basePath);
         }
-
-        // // clear any existing files/pages before create new ones
-        // const dirToClear = 'siteFiles/pages/';
-        // const clearDir = async (dirToClear) => {
-        //     const response = await fetch(`/api/lib/helpers/deleteDirectoryContents?path=${dirToClear}`);
-        //     const data = await response.json();
-        //     console.log({ data });
-        // };
-        // // clearDir(dirToClear);
-
-        // try {
-        //     let i = 0;
-        //     const runControl = () => {
-        //         sendToCreatePageApi(pathArr[i], basePath, replaceStr);
-        //         console.log('i: ', i);
-        //         i++;
-        //         if (i < pathArr.length) {
-        //             runControl();
-        //         }
-        //         else {
-        //             setLoading(false);
-        //             setText('Done!')
-        //         }
-        //     }
-        //     // runControl();
-
-        // } catch (err) {
-        //     setError(err.message);
-        //     console.log('runControl Error: ', err.message);
-        // }
-    }
+  }
 
     return (
         <>
@@ -193,4 +163,4 @@ const createPage = () => {
     )
 }
 
-export default createPage;
+export default createPageWork;
