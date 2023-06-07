@@ -1,19 +1,4 @@
-import React, { useEffect, useState } from 'react'
-import { fileNameFromUrl, isAbsoluteURL } from '../utils/helpers';
-import useFetch from './customHooks/useFetch';
-import { parse } from 'url';
 
-
-
-const temp2 = () => {
-
-  const cheerio = require('cheerio');
-
-  const [str, setStr] = useState('');
-  const [match, setMatch] = useState('');
-
-  const html = `
-  
 import Image from 'next/image';
 import Navbar from '@/components/Navbar';
 import Link from 'next/link';
@@ -42,7 +27,14 @@ const index = () => {
 						<HeaderImage />
 						{/* <div className="custom-header-media">
 							<div id="wp-custom-header" className="wp-custom-header" style={{}}>
-								<Image src="/wp-content/uploads/2022/06/Untitled-3-2.jpg" width="2000" height="1200" alt="" priority="false" />
+								
+                        <Image
+                        src={Untitled32}
+                        alt="Untitled32"
+                        placeholder="blur"
+                        // className=""
+                         />
+                    
 							</div>
 						</div> */}
 
@@ -50,7 +42,14 @@ const index = () => {
 							<div className="wrap">
 
 								<Link href="/" className="custom-logo-link" rel="home">
-									<Image width="281" height="250" src="/wp-content/uploads/2022/06/cropped-Untitled-1-3.png" className="custom-logo" alt="Mid-City Smiles Family Dentistry" priority="false" quality={20} />
+									
+                        <Image
+                        src={croppedUntitled13}
+                        alt="croppedUntitled13"
+                        placeholder="blur"
+                        // className="undefined"
+                         />
+                    
 								</Link>
 								<div className="site-branding-text">
 									<p className="site-title"></p>
@@ -98,7 +97,14 @@ const index = () => {
 
 											<div className="wp-block-image">
 												<figure className="aligncenter size-full">
-													<Image  width="250" height="350" src="/wp-content/uploads/2022/05/Anderson.jpg" alt="" className="wp-image-123" priority="false" />
+													
+                        <Image
+                        src={Anderson}
+                        alt="Anderson"
+                        placeholder="blur"
+                        // className="undefined"
+                         />
+                    
 													</figure></div>
 
 
@@ -146,7 +152,14 @@ const index = () => {
 
 
 											<div className="wp-block-image">
-												<figure className="aligncenter size-full"><Image  width="250" height="350" src="/wp-content/uploads/2022/05/perla-1.jpg" alt="" priority="false" /></figure></div>
+												<figure className="aligncenter size-full">
+                        <Image
+                        src={perla1}
+                        alt="perla1"
+                        placeholder="blur"
+                        // className=""
+                         />
+                    </figure></div>
 
 
 											<p>Dr. Perla Hernandez has been a proud New Orleans resident since she was 11 years old. She is originally from Guanajuato, Mexico. Dr. Hernandez graduated from LW Higgins High School in Marrero. She earned a Bachelor of Science degree in Biology with a Minor in Chemistry from Nicholls State University in Thibodaux, LA.  At Nicholls State, Dr. Hernandez won the Outstanding Achievement in Pre-Dentistry Award. She was also a member of the BBB Biological Honor Society.</p>
@@ -169,7 +182,14 @@ const index = () => {
 
 
 											<div className="wp-block-image">
-												<figure className="aligncenter size-full"><Image  width="252" height="349" src="/wp-content/uploads/2022/05/del.jpg" alt="" priority="false" /></figure></div>
+												<figure className="aligncenter size-full">
+                        <Image
+                        src={del}
+                        alt="del"
+                        placeholder="blur"
+                        // className=""
+                         />
+                    </figure></div>
 
 
 											<p>Dr. Delmy Urbina is originally from San Pedro Sula, Honduras. She moved to New Orleans in 2006,  attending and graduating from Grace King High School in Metairie. She quickly fell in love with the beauty and culture of New Orleans and considers it her second home.</p>
@@ -196,7 +216,14 @@ const index = () => {
 
 
 											<div className="wp-block-image">
-												<figure className="aligncenter size-full"><Image  width="252" height="349" src="/wp-content/uploads/2022/05/frye.jpg" alt="" priority="false" /></figure></div>
+												<figure className="aligncenter size-full">
+                        <Image
+                        src={frye}
+                        alt="frye"
+                        placeholder="blur"
+                        // className=""
+                         />
+                    </figure></div>
 
 
 											<p>Dr. Caylin Frye is originally from Jupiter, Florida and received her Bachelor of Science degree from Florida State University with a minor in Family and Child Sciences. She then traveled to our nation’s capital and received her Doctor of Dental Surgery degree from Howard University College of Dentistry in Washington D.C. Following dental school, Dr. Frye completed a one year general practice residency at the Washington D.C. Veterans Affairs hospital where she received specialized training in Implants, Oral Surgery, Endodontics, Treatment planning and Smile design cases. Dr. Frye met her husband, a native of New Orleans, Louisiana, while in D.C. and eventually moved down to the Big Easy in 2017 where she has practiced ever since.</p>
@@ -219,7 +246,14 @@ const index = () => {
 
 
 											<div className="wp-block-image">
-												<figure className="aligncenter size-full"><Image  width="250" height="350" src="/wp-content/uploads/2022/05/image-2.png" alt="" priority="false" /></figure></div>
+												<figure className="aligncenter size-full">
+                        <Image
+                        src={image2}
+                        alt="image2"
+                        placeholder="blur"
+                        // className=""
+                         />
+                    </figure></div>
 
 
 											<hr className="wp-block-separator has-alpha-channel-opacity" />
@@ -230,7 +264,14 @@ const index = () => {
 
 
 											<div className="wp-block-image">
-												<figure className="aligncenter"><Image  src="/images/shan.jpg" alt="Shannon" width="250" height="350" priority="false" /></figure></div>
+												<figure className="aligncenter">
+                        <Image
+                        src={shan}
+                        alt="shan"
+                        placeholder="blur"
+                        // className=""
+                         />
+                    </figure></div>
 
 
 											<hr className="wp-block-separator has-alpha-channel-opacity" />
@@ -241,7 +282,14 @@ const index = () => {
 
 
 											<div className="wp-block-image">
-												<figure className="aligncenter size-full"><Image  width="252" height="349" src="/wp-content/uploads/2022/05/gab.jpg" alt=""  priority="false" /></figure></div>
+												<figure className="aligncenter size-full">
+                        <Image
+                        src={gab}
+                        alt="gab"
+                        placeholder="blur"
+                        // className=""
+                         />
+                    </figure></div>
 
 
 											<hr className="wp-block-separator has-alpha-channel-opacity" />
@@ -252,7 +300,14 @@ const index = () => {
 
 
 											<div className="wp-block-image">
-												<figure className="aligncenter size-full"><Image  width="250" height="350" src="/wp-content/uploads/2022/06/haar-1.jpg" alt="" priority="false" /></figure></div>
+												<figure className="aligncenter size-full">
+                        <Image
+                        src={haar1}
+                        alt="haar1"
+                        placeholder="blur"
+                        // className=""
+                         />
+                    </figure></div>
 
 
 											<hr className="wp-block-separator has-alpha-channel-opacity" />
@@ -267,7 +322,14 @@ const index = () => {
 
 
 											<div className="wp-block-image">
-												<figure className="aligncenter size-full"><Image  width="252" height="349" src="/wp-content/uploads/2022/05/cea.jpg" alt="" priority="false" /></figure></div>
+												<figure className="aligncenter size-full">
+                        <Image
+                        src={cea}
+                        alt="cea"
+                        placeholder="blur"
+                        // className=""
+                         />
+                    </figure></div>
 
 
 											<hr className="wp-block-separator has-alpha-channel-opacity" />
@@ -278,7 +340,14 @@ const index = () => {
 
 
 											<div className="wp-block-image">
-												<figure className="aligncenter"><Image  src="/images/Xo%20-%20Copy.jpg" alt="" width="250" height="350" priority="false" /></figure></div>
+												<figure className="aligncenter">
+                        <Image
+                        src={Xo2020Copy}
+                        alt="Xo2020Copy"
+                        placeholder="blur"
+                        // className=""
+                         />
+                    </figure></div>
 
 
 											<hr className="wp-block-separator has-alpha-channel-opacity" />
@@ -289,7 +358,14 @@ const index = () => {
 
 
 											<div className="wp-block-image">
-												<figure className="aligncenter size-full"><Image  width="252" height="349" src="/wp-content/uploads/2022/05/mary.jpg" alt="" priority="false" /></figure></div>
+												<figure className="aligncenter size-full">
+                        <Image
+                        src={mary}
+                        alt="mary"
+                        placeholder="blur"
+                        // className=""
+                         />
+                    </figure></div>
 
 
 											<hr className="wp-block-separator has-alpha-channel-opacity" />
@@ -300,7 +376,14 @@ const index = () => {
 
 
 											<div className="wp-block-image">
-												<figure className="aligncenter size-full"><Image  width="250" height="350" src="/wp-content/uploads/2022/06/am.jpg" alt="" priority="false" /></figure></div>
+												<figure className="aligncenter size-full">
+                        <Image
+                        src={am}
+                        alt="am"
+                        placeholder="blur"
+                        // className=""
+                         />
+                    </figure></div>
 
 
 											<hr className="wp-block-separator has-alpha-channel-opacity" />
@@ -311,7 +394,14 @@ const index = () => {
 
 
 											<div className="wp-block-image">
-												<figure className="aligncenter size-full"><Image  width="250" height="350" src="/wp-content/uploads/2022/05/image-3.png" alt="" className="wp-image-128" priority="false" /></figure></div>
+												<figure className="aligncenter size-full">
+                        <Image
+                        src={image3}
+                        alt="image3"
+                        placeholder="blur"
+                        // className="undefined"
+                         />
+                    </figure></div>
 
 
 											<hr className="wp-block-separator has-alpha-channel-opacity" />
@@ -334,7 +424,14 @@ const index = () => {
 
 
 											<div className="wp-block-image">
-												<figure className="aligncenter size-full"><Image  width="250" height="350" priority="false" src="/wp-content/uploads/2022/06/rosi.jpg" /></figure></div>
+												<figure className="aligncenter size-full">
+                        <Image
+                        src={rosi}
+                        alt="rosi"
+                        placeholder="blur"
+                        // className=""
+                         />
+                    </figure></div>
 
 
 											<hr className="wp-block-separator has-alpha-channel-opacity" />
@@ -345,7 +442,14 @@ const index = () => {
 
 
 											<div className="wp-block-image">
-												<figure className="aligncenter size-full"><Image  width="252" height="349" src="/wp-content/uploads/2022/05/js.jpg" alt=""  priority="false" /></figure></div>
+												<figure className="aligncenter size-full">
+                        <Image
+                        src={js}
+                        alt="js"
+                        placeholder="blur"
+                        // className=""
+                         />
+                    </figure></div>
 
 
 											<hr className="wp-block-separator has-alpha-channel-opacity" />
@@ -356,7 +460,14 @@ const index = () => {
 
 
 											<div className="wp-block-image">
-												<figure className="aligncenter"><Image  src="/images/houria.jpg" alt="Houria" width="250" height="350" priority="false" /></figure></div>
+												<figure className="aligncenter">
+                        <Image
+                        src={houria}
+                        alt="houria"
+                        placeholder="blur"
+                        // className=""
+                         />
+                    </figure></div>
 
 
 											<hr className="wp-block-separator has-alpha-channel-opacity" />
@@ -367,7 +478,14 @@ const index = () => {
 
 
 											<div className="wp-block-image">
-												<figure className="aligncenter size-full"><Image  width="252" height="349" priority="false" src="/wp-content/uploads/2022/05/mona.jpg" /></figure></div>
+												<figure className="aligncenter size-full">
+                        <Image
+                        src={mona}
+                        alt="mona"
+                        placeholder="blur"
+                        // className=""
+                         />
+                    </figure></div>
 
 
 											<hr className="wp-block-separator has-alpha-channel-opacity" />
@@ -378,7 +496,14 @@ const index = () => {
 
 
 											<div className="wp-block-image">
-												<figure className="aligncenter"><Image  src="/images/kim.jpg" alt="Kim" width="250" height="350" priority="false" /></figure></div>
+												<figure className="aligncenter">
+                        <Image
+                        src={kim}
+                        alt="kim"
+                        placeholder="blur"
+                        // className=""
+                         />
+                    </figure></div>
 
 
 											<hr className="wp-block-separator has-alpha-channel-opacity" />
@@ -389,7 +514,14 @@ const index = () => {
 
 
 											<div className="wp-block-image">
-												<figure className="aligncenter"><Image src="/images/kris%20-%20Copy.jpg" alt="" width="250" height="350" priority="false" /></figure></div>
+												<figure className="aligncenter">
+                        <Image
+                        src={kris2020Copy}
+                        alt="kris2020Copy"
+                        placeholder="blur"
+                        // className=""
+                         />
+                    </figure></div>
 
 
 											<hr className="wp-block-separator has-alpha-channel-opacity" />
@@ -459,14 +591,14 @@ const index = () => {
 											<li className="zoom-social_icons-list__item">
 												<a className="zoom-social_icons-list__link" href="https://www.facebook.com/midcitysmiles" target="_blank" title="Facebook">
 
-													<Image
-														src='/images/fb1.png'
-														alt=''
-														// width={40}
-														// height={38}
-														width="40"
-														height="38"
-													/>
+													
+                        <Image
+                        src={fb1}
+                        alt="fb1"
+                        placeholder="blur"
+                        // className=""
+                         />
+                    
 
 													{/* <span className="screen-reader-text">facebook</span> */}
 
@@ -481,15 +613,14 @@ const index = () => {
 
 													<span className="screen-reader-text">instagram</span>
 
-													<Image
-														src='/images/insta1.png'
-														alt=''
-														// width={40}
-														// height={42}
-														width='40'
-														height='42'
-
-													/>
+													
+                        <Image
+                        src={insta1}
+                        alt="insta1"
+                        placeholder="blur"
+                        // className=""
+                         />
+                    
 
 													{/* <span className="zoom-social_icons-list-span social-icon socicon socicon-instagram" data-hover-rule="backgroundColor" data-hover-color="#727272" style={{backgroundColor : '#d13aab'}}></span> */}
 
@@ -502,14 +633,14 @@ const index = () => {
 
 													<span className="screen-reader-text">snapchat</span>
 
-													<Image
-														src='/images/dl1.png'
-														alt=''
-														// width={42}
-														// height={40}
-														width='42'
-														height='40'
-													/>
+													
+                        <Image
+                        src={dl1}
+                        alt="dl1"
+                        placeholder="blur"
+                        // className=""
+                         />
+                    
 
 													{/* <span className="zoom-social_icons-list-span social-icon socicon socicon-snapchat" data-hover-rule="backgroundColor" data-hover-color="#727272" style={{backgroundColor : '#eeee22'}}></span> */}
 
@@ -536,7 +667,14 @@ const index = () => {
 										<div className="is-layout-flow wp-block-group"><div className="wp-block-group__inner-container">
 											<div className="is-layout-flex wp-container-2 wp-block-columns">
 												<div className="is-layout-flow wp-block-column" style={{ flexBasis: '100%' }}>
-													<figure className="wp-block-image size-full"><Image  width="348" height="250" src="/wp-content/uploads/2022/06/cropped-pels.png" alt="" priority="false" /></figure>
+													<figure className="wp-block-image size-full">
+                        <Image
+                        src={croppedpels}
+                        alt="croppedpels"
+                        placeholder="blur"
+                        // className=""
+                         />
+                    </figure>
 												</div>
 											</div>
 										</div></div>
@@ -564,55 +702,3 @@ const index = () => {
 	)
 }
 export default index;
-  
-  `;
-
-  const extractContent = (text) => {
-    // const regex = /\(([^)]+)\)/;
-    const regex = /\(([\s\S]*)\)/;
-    const matches = text.match(regex);
-    if (matches && matches.length >= 2) {
-      return matches[1];
-    }
-    return null;
-  };
-
-const $ = cheerio.load(html);
-
-  const handleSubmit = () => {
-
-    const stripCharactersRegex = /[^a-zA-Z0-9]/g;
-    console.log(str.replaceAll(stripCharactersRegex, ''));
-    
-  };
-
-  return (
-    <div>
-      <div className='d-flex flex-column justify-content-center align-items-center'>
-        {/* {loading && <div>... Loading</div>}
-        {useFetchError && <div className='text-danger'>{useFetchError}</div>} */}
-        <div className='d-flex justify-content-center align-items-center '>
-          <div><label>Enter BasePath:</label></div>
-          <div>
-            <input
-              type='text'
-              value={str}
-              onChange={(e) => setStr(e.target.value.replaceAll('\\', '/'))}
-            />
-          </div>
-          <div>
-            <button onClick={handleSubmit}>Submit</button>
-          </div>
-        </div>
-
-      </div>
-
-
-        {html && <div style={{width: '60%', margin: 'auto'}}>{$.html()}</div>}
-
-
-    </div>
-  )
-}
-
-export default temp2;

@@ -78,7 +78,7 @@ const createPageWork = () => {
                 <div>
                     <button onClick={handleSubmit}>Submit</button>
                 </div>
-                {useFetchData && <div className='mt-5'>{useFetchData}</div>}
+                {useFetchData && <div className='m-5'>{useFetchData}</div>}
             </div>
 
         </>
