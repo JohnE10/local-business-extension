@@ -48,10 +48,8 @@ const customPageWorkAPI = async (req, res) => {
                         <Image
                         src={${scrFileNameNoExtension}}
                         alt="${scrFileNameNoExtension}"
-                        placeholder="blur"
-                        qualtiy={20}
                         priority="false"
-                        // className="${classAttr}"
+                        sizes="100vw"
                          />
                     `;
 
@@ -80,6 +78,23 @@ const customPageWorkAPI = async (req, res) => {
 
         };
         const temp = nextStaticImageSetup(pathDir);
+
+        const removeImages = (dir) => {
+
+            const saveLocation = 'siteFiles/misc/';
+            let fileContent = fs.readFileSync(dir, 'utf8');
+            // const $ = cheerio.load(fileContent);
+
+            const imageRegex = /<Image([\s\S]*?)\/>/g;
+
+            fileContent = fileContent.replaceAll(imageRegex, '');
+
+            // save modified file content
+            createDirectoryAndSaveFile(saveLocation + 'index.js', fileContent);
+
+            return fileContent;
+        }
+        // const temp = removeImages(pathDir);
 
 
         return res.json({ success: temp });
