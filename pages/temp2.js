@@ -580,23 +580,14 @@ export default index;
 
 
   const handleSubmit = () => {
-    // setMatch(extractContent(html));
-    // console.log({match});
 
-    const imageUrl = 'images/kris%20-%20Copy.jpg';
-    const decodedImageUrl = decodeURIComponent(imageUrl);
+    const stripCharactersRegex = /[^a-zA-Z0-9]/g;
+    console.log(str.replaceAll(stripCharactersRegex, ''));
     
-    console.log({decodedImageUrl});
+
 
     
   };
-
-  const $ = cheerio.load(html);
-  const imgs = $('img');
-
-// imgs.each((i, el) => {
-//   console.log($(el).attr('src'));
-// })
 
   return (
     <div>
