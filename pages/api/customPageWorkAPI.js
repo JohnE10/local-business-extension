@@ -1,4 +1,5 @@
 
+import { isAbsoluteUrl } from 'next/dist/shared/lib/utils';
 import { createDirectoryAndSaveFile } from './backEndHelpers';
 
 
@@ -28,7 +29,7 @@ const customPageWorkAPI = async (req, res) => {
 
                 // array of Image elements
                 const matches = fileContent.match(imageRegex);
-                console.log('count: ', matches.length);
+                // console.log('count: ', matches.length);
 
                 // create the list of imports and replace imageg srcs
                 const imgs = $('img');
@@ -55,13 +56,16 @@ const customPageWorkAPI = async (req, res) => {
 
 
                     // replace image tags
-                    matches.map((match, index) => {
-                        // console.log({match})
-                        if (match.includes(src)) {
-                            fileContent = fileContent.replace(match, imageReplaceStr);
-                            // console.log({imageReplaceStr})
-                        }
-                    });
+                    if (!isAbsoluteUrl(src)) {
+                        matches.map((match, index) => {
+                            // console.log({match})
+                            if (match.includes(src)) {
+                                fileContent = fileContent.replace(match, imageReplaceStr);
+                                // console.log({imageReplaceStr})
+                            }
+                        });
+                    }
+
 
                 });
 
@@ -77,9 +81,11 @@ const customPageWorkAPI = async (req, res) => {
             }
 
         };
-        const temp = nextStaticImageSetup(pathDir);
+        // const temp = nextStaticImageSetup(pathDir);
 
         const removeImages = (dir) => {
+
+            const path = require('path');
 
             const saveLocation = 'siteFiles/misc/';
             let fileContent = fs.readFileSync(dir, 'utf8');
@@ -93,8 +99,29 @@ const customPageWorkAPI = async (req, res) => {
             createDirectoryAndSaveFile(saveLocation + 'index.js', fileContent);
 
             return fileContent;
-        }
+        };
         // const temp = removeImages(pathDir);
+
+        const removeTags = (file, tag) => {
+            const saveLocation = 'siteFiles/misc/';
+            let fileContent = fs.readFileSync(file, 'utf8');
+
+            // change capital Script to small script for cheerio purposes
+            fileContent = fileContent.replaceAll('Script', 'script');
+
+            const $ = cheerio.load(fileContent);
+            $(tag).remove();
+
+            // // put capital Script back
+            // fileContent = $.html().replaceAll('script', 'Script');
+
+            // save modified file content
+            const fileName = path.basename(file);
+            console.log({fileName})
+            createDirectoryAndSaveFile(saveLocation + fileName, $.html());
+            return $.html();
+        };
+        // const temp = removeTags(pathDir, 'Script');
 
 
         return res.json({ success: temp });

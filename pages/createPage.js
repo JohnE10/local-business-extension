@@ -21,7 +21,7 @@ const createPage = () => {
     const endPoint = `/api/lib/helpers/getFileContent?path=${path}`;
     const { useFetchData, useFetchError, runFetch } = useFetch(endPoint);
 
-    let defaultBasePath = 'C:/Users/jetto/OneDrive/Desktop/Files/Coding-ASUS/WP Migration Campaign/HTtrack/HTTrack_mid-city-smiles/mid-city-smiles/www.midcitysmiles.com/blog/';
+    let defaultBasePath = 'C:/Users/jetto/OneDrive/Desktop/Files/Coding-ASUS/WP Migration Campaign/HTtrack/HTTrack_uptownsmiles/uptownsmiles/uptownsmiles.com/';
 
     if (defaultBasePath[defaultBasePath.length - 1] != '/') {
         defaultBasePath = defaultBasePath + '/';
@@ -105,7 +105,6 @@ const createPage = () => {
         setLoading(true);
         setError('');
         setHtml('');
-        // setRunGetUrls(true);
 
         if (path) {
             runFetch();
@@ -114,35 +113,6 @@ const createPage = () => {
             console.log('basePath: ', basePath);
         }
 
-        // // clear any existing files/pages before create new ones
-        // const dirToClear = 'siteFiles/pages/';
-        // const clearDir = async (dirToClear) => {
-        //     const response = await fetch(`/api/lib/helpers/deleteDirectoryContents?path=${dirToClear}`);
-        //     const data = await response.json();
-        //     console.log({ data });
-        // };
-        // // clearDir(dirToClear);
-
-        // try {
-        //     let i = 0;
-        //     const runControl = () => {
-        //         sendToCreatePageApi(pathArr[i], basePath, replaceStr);
-        //         console.log('i: ', i);
-        //         i++;
-        //         if (i < pathArr.length) {
-        //             runControl();
-        //         }
-        //         else {
-        //             setLoading(false);
-        //             setText('Done!')
-        //         }
-        //     }
-        //     // runControl();
-
-        // } catch (err) {
-        //     setError(err.message);
-        //     console.log('runControl Error: ', err.message);
-        // }
     }
 
     return (

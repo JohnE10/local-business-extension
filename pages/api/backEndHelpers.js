@@ -178,7 +178,7 @@ export const deleteDirectoryContents = (directoryPath) => {
     return error.message;
   }
 
-}
+};
 
 export const copyFile = (sourcePath, destinationPath) => {
 
@@ -189,9 +189,6 @@ export const copyFile = (sourcePath, destinationPath) => {
     // Resolve the absolute paths
     const source = path.resolve(sourcePath);
     const destination = path.resolve(destinationPath);
-
-    // console.log('source: ', source);
-    // console.log('destination: ', destination);
 
     // Check if the source file exists
     if (!fs.existsSync(source)) {
@@ -243,7 +240,31 @@ export const checkLink = async (link) => {
     console.error(`Error checking link: ${link}`, error.message);
     return (`Error checking link: ${link}`, error.message);
   }
-}
+};
+
+export const searchForFile = (directory, filename) => {
+
+  const fs = require('fs');
+  const path = require('path');
+
+  const files = fs.readdirSync(directory);
+
+  for (const file of files) {
+    const filePath = path.join(directory, file);
+    const fileStat = fs.statSync(filePath);
+
+    if (fileStat.isDirectory()) {
+      const foundFile = searchForFile(filePath, filename);
+      if (foundFile) {
+        return foundFile;
+      }
+    } else if (file === filename) {
+      return filePath;
+    }
+  }
+
+  return null;
+};
 
 
 

@@ -1,19 +1,123 @@
+
 import { fileNameFromUrl } from '../../utils/helpers';
-import { copyFile } from './backEndHelpers';
+import { copyFile, createDirectoryAndSaveFile, searchForFile } from './backEndHelpers';
 
 const fs = require('fs');
+const path = require('path');
 const cheerio = require('cheerio');
-
-const postcss = require('postcss');
-const cssnano = require('cssnano');
 
 
 const buildCssFile = async (req, res) => {
 
     try {
 
+        const cssUrlsNotFoundList = 'siteFiles/css/cssUrlsNotFoundList.txt';
+
+
+        // heler functions
+        // const appendToCssFile = async (relativeUrl, fileName) => {
+
+
+        //     let importText = '';
+        //     let importUrl = '';
+        //     let cssUrlsToMove = '';
+
+
+        //     importUrl = fileNameFromUrl(relativeUrl).fileName;
+        //     importText = `import '@/styles/${importUrl}';`;
+
+        //     // copy pertinent css files to styles directory
+        //     const relativeUrlList = cssFileName.replace('.css', '.txt');
+        //     const destinationFile = 'siteFiles/css/moveToStyles/' + importUrl;
+
+        //     const cssUrlsDestinationFile = 'siteFiles/css/moveToPublic/' + cssUrlsFileName;
+
+
+        //     if (fs.existsSync(relativeUrl)) {
+        //         copyFile(relativeUrl, destinationFile);
+        //         fs.appendFileSync(cssFileName, importText + '\n');
+        //         fs.appendFileSync(relativeUrlList, relativeUrl + '\n');
+        //     }
+        //     else {
+        //         fs.appendFileSync(fileDoesNotExist, importUrl + '\n');
+        //     }
+
+        // };
+
+        const appendToCssFile = async (relativeUrl, fileName, fileContent) => {
+
+
+            let importText = '';
+            let importUrl = '';
+            let cssUrlsToMove = '';
+
+
+            importUrl = fileNameFromUrl(relativeUrl).fileName;
+            importText = `import '@/styles/${importUrl}';`;
+
+            // copy pertinent css files to styles directory
+            const relativeUrlList = cssFileName.replace('.css', '.txt');
+            const destinationFile = 'siteFiles/css/moveToStyles/' + importUrl;
+
+            const cssUrlsDestinationFile = 'siteFiles/css/moveToPublic/' + cssUrlsFileName;
+
+
+            if (fs.existsSync(relativeUrl)) {
+                // copyFile(relativeUrl, destinationFile);
+                // fs.writeFile(destinationFile, fileContent);
+                fs.appendFileSync(cssFileName, importText + '\n');
+                fs.appendFileSync(relativeUrlList, relativeUrl + '\n');
+            }
+            else {
+                fs.appendFileSync(fileDoesNotExist, importUrl + '\n');
+            }
+
+        };
+
+
+
+        const appendToCssUrlImports = async (x, y) => {
+
+            let cssFileContent = fs.readFileSync(x, 'utf8');
+            const cssUrlRegex = /url\(['"]?([^'"\(\)]+)['"]?\)/g;
+            const matches = cssFileContent.match(cssUrlRegex);
+            
+
+            if (matches) {
+                const urls = matches.map(match => match.slice(4, -1));
+                // console.log({urls});
+
+                urls.map((ele) => {
+                    ele = ele.replaceAll('"', '').replaceAll(`'`, '');
+                    // console.log({ ele });
+                    let fileToCopyFull = path.basename(ele);
+                    let fileToCopy = path.basename(ele.split('?')[0]);
+                    fileToCopy = fileToCopy.split('#')[0]
+                    console.log({fileToCopy});
+                    let foundFilePath = searchForFile(searchPath, fileToCopy);
+                    if (foundFilePath) {
+                        foundFilePath = foundFilePath.replace(searchPath, '/').replaceAll('\\', '/').replaceAll(fileToCopy, fileToCopyFull);
+                        cssFileContent = cssFileContent.replaceAll(ele, foundFilePath);
+                        console.log(`File found at: ${foundFilePath}`);
+                    } else {
+                        
+                        fs.appendFileSync(cssUrlsNotFoundList, x + ': ' + ele + "\n");
+
+                    }
+                });
+
+            }
+            const cssFileBaseName = path.basename(x);
+            const destFile = 'siteFiles/css/modifiedCssFiles/' + cssFileBaseName;
+            createDirectoryAndSaveFile(destFile, cssFileContent);
+        };
+
+        const searchPath = 'C:\\Users\\jetto\\OneDrive\\Desktop\\Files\\Coding-ASUS\\WP Migration Campaign\\uptownsmiles\\public\\';
+
         let cssFilePath = req.query.cssFilePath;
         const basePath = req.query.basePath;
+        const cssUrlsFileName = req.query.cssUrlsFileName;
+
         console.log({ basePath });
         const cssFileName = req.query.cssFileName;
 
@@ -28,85 +132,58 @@ const buildCssFile = async (req, res) => {
 
         // const appendToCssFile = async (relativeUrl, fileName) => {
 
-        //     console.log({ relativeUrl });
-        //     console.log({ fileName });
 
-        //     // // Read the CSS file
-        //     // const css = fs.readFileSync(relativeUrl, 'utf8');
+        //     let importText = '';
+        //     let importUrl = '';
+        //     let cssUrlsToMove = '';
 
-        //     // // Parse the CSS using postcss
-        //     // const parsedCss = await postcss().process(css, { from: relativeUrl });
 
-        //     // // Apply cssnano to minify the CSS
-        //     // const minifiedCss = await cssnano.process(parsedCss.css);
+        //     importUrl = fileNameFromUrl(relativeUrl).fileName;
+        //     importText = `import '@/styles/${importUrl}';`;
 
-        //     // let data = minifiedCss.css;
-
-        //     // read file
-        //     let data = fs.readFileSync(relativeUrl, { encoding: 'utf-8' });
-
-        //     // remove all instances of @charset
-        //     // const removeCharset = data.replace(/@charset[^;]+;/g, (match) => `/* ${match} */`);
-        //     data = data.replace(/@charset[^;]+;/g, (match) => `/* ${match} */`);
-
-        //     // replace '../' with '/'
-        //     data = data.replaceAll('../', '/');
-
-        //     // replace all instances of -webkit-backface-visibility: hidden; with backface-visibility: hidden;
-        //     data = data.replaceAll('-webkit-backface-visibility: hidden;', 'backface-visibility: hidden;');
-
-        //     // replace all instances of  '-webkit-appearance: textfield; with appearance: textfield;
-        //     data = data.replaceAll('-webkit-appearance: textfield;', 'appearance: textfield;');
-
-        //     // more replacing
-        //     data = data.replaceAll('-webkit-appearance: button;', 'appearance: button;');
-
-        //     // data = data.replaceAll('speak: none;', '');
-        //     data = data.replaceAll(/speak[^;]+;/g, '');
-        //     data = data.replace(/-ms-filter[^;]+;/g, '');
-
-        //     // add semicolon to last value in selector
-        //     data = data.replaceAll('}', ';}');
-        //     data = data.replaceAll(';;', ';');
-        //     data = data.replaceAll('};}', '}}');
-
-        //     // stylesheet location file
+        //     // copy pertinent css files to styles directory
         //     const relativeUrlList = cssFileName.replace('.css', '.txt');
-        //     fs.appendFileSync(cssFileName, data);
-        //     const trimmedRelativeUrl = fileNameFromUrl(relativeUrl).fileName;
-        //     fs.appendFileSync(relativeUrlList, trimmedRelativeUrl + '\n');
+        //     const destinationFile = 'siteFiles/css/moveToStyles/' + importUrl;
+
+        //     const cssUrlsDestinationFile = 'siteFiles/css/moveToPublic/' + cssUrlsFileName;
+
+
+        //     if (fs.existsSync(relativeUrl)) {
+        //         copyFile(relativeUrl, destinationFile);
+        //         fs.appendFileSync(cssFileName, importText + '\n');
+        //         fs.appendFileSync(relativeUrlList, relativeUrl + '\n');
+        //     }
+        //     else {
+        //         fs.appendFileSync(fileDoesNotExist, importUrl + '\n');
+        //     }
 
         // };
 
-        const appendToCssFile = async (relativeUrl, fileName) => {
+        // const appendToCssUrlImports = async (x, y) => {
+        //     let cssFileContent = fs.readFileSync(x, 'utf8');
+        //     const cssUrlRegex = /url\(['"]?([^'"\(\)]+)['"]?\)/g;
+        //     const matches = cssFileContent.match(cssUrlRegex);
+        //     if (matches) {
+        //         const urls = matches.map(match => match.slice(4, -1));
+        //         // console.log({urls});
 
-            // console.log({ relativeUrl });
-            // console.log({ fileName });
+        //         urls.map((ele) => {
+        //             ele = ele.replaceAll('"', '').replaceAll(`'`, '');
+        //             console.log({ ele });
+        //             const fileToCopy = path.basename(ele);
+        //             // console.log({fileToCopy});
+        //             let foundFilePath = searchForFile(searchPath, fileToCopy);
+        //             if (foundFilePath) {
+        //                 foundFilePath = foundFilePath.replace(searchPath, '/').replaceAll('\\', '/')
+        //                 cssFileContent = cssFileContent.replaceAll(ele, foundFilePath);
+        //                 console.log(`File found at: ${foundFilePath}`);
+        //             } else {
+        //                 console.log(`File not found: ${fileToCopy}`);
+        //             }
+        //         });
 
-            let importText = '';
-            let importUrl = '';
-            
-
-            importUrl = fileNameFromUrl(relativeUrl).fileName;
-            importText = `import '@/styles/${importUrl}';`;
-            
-            // copy pertinent css files to styles directory
-            const relativeUrlList = cssFileName.replace('.css', '.txt');
-            const destinationFile = 'siteFiles/css/moveToStyles/' + importUrl;
-           
-            
-            if (fs.existsSync(relativeUrl)) {
-                copyFile(relativeUrl, destinationFile);
-                fs.appendFileSync(cssFileName, importText + '\n');
-                fs.appendFileSync(relativeUrlList, relativeUrl + '\n');
-              }
-              else {
-                fs.appendFileSync(fileDoesNotExist, importUrl + '\n');
-              }
-
-
-
-        };
+        //     }
+        // };
 
         const fileToRead = req.query.cssFilePath;
         // console.log('fileToRead: ', fileToRead);
@@ -150,6 +227,7 @@ const buildCssFile = async (req, res) => {
                     }
 
                     appendToCssFile(temp, cssFileName);
+                    appendToCssUrlImports(temp, cssUrlsFileName);
                     console.log('Done');
                 }
             });

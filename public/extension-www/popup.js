@@ -40,7 +40,7 @@ document.addEventListener('DOMContentLoaded', () => {
     })
 
     document.getElementById('button2').addEventListener('click', () => {
-        chrome.tabs.create({ url: "http://localhost:3000/show" });
+        chrome.tabs.create({ url: "http://localhost:3000/show2" });
     })
 
     for (let i=0; i<response.length; i++) {

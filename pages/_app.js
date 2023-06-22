@@ -3,6 +3,15 @@ import Layout from "../components/Layout";
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 
+import '../styles/style.min3781.css';
+import '../styles/classic-themes.min3781.css';
+import '../styles/style3781.css';
+import '../styles/style810f.css';
+import '../styles/dashicons.min3781.css';
+import '../styles/et-divi-customizer-global-1682564637993.min.css';
+import '../styles/mediaelementplayer-legacy.min1f61.css';
+import '../styles/wp-mediaelement.min3781.css';
+
 // between pages loading indicator
 function Loading() {
   const router = useRouter();

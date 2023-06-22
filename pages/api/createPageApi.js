@@ -60,11 +60,11 @@ const createPageApi = async (req, res) => {
             // remove attr srcset from img tags
             $('img').removeAttr('srcset');
 
-            // replace sidebar with Sidebar Component
-            $('#sidebar').replaceWith('<Sidebar />');
+            // // replace sidebar with Sidebar Component
+            // $('#sidebar').replaceWith('<Sidebar />');
 
-            // replace footer with Footer component
-            $('footer').replaceWith('<Footer />');
+            // // replace footer with Footer component
+            // $('footer').replaceWith('<Footer />');
 
             // remove these scripts
             $('script[id="scroll-back-to-top-js"]').remove();
@@ -95,13 +95,13 @@ const createPageApi = async (req, res) => {
             // $('#body-core').replaceWith('<Header />');
             // $('#header').remove();
 
-            // // replace header with <Header />. This is site specific, so I removed until needed
-            $('nav').replaceWith('<Navbar /');
+            // // // replace header with <Header />. This is site specific, so I removed until needed
+            // $('nav').replaceWith('<Navbar /');
 
-            // make ul tags have discs
-            ulTags.each((i, el) => {
-                $(el).attr('class', 'dcsUl');
-            });
+            // // make ul tags have discs
+            // ulTags.each((i, el) => {
+            //     $(el).attr('class', 'dcsUl');
+            // });
 
 
 
@@ -157,19 +157,19 @@ const createPageApi = async (req, res) => {
             //     }
             // });
 
-            scripts.each((i, el) => {
-                let temp = $(el).text();
-                if (temp && temp.includes('setREVStartSize')) {
-                    $(el).remove
-                }
-            });
+            // scripts.each((i, el) => {
+            //     let temp = $(el).text();
+            //     if (temp && temp.includes('setREVStartSize')) {
+            //         $(el).remove
+            //     }
+            // });
 
 
 
             // replace iframe
             const iframeReplace1 = `
             <div>
-                <a href="https://www.google.com/maps?ll=29.997125,-90.061094&z=15&t=m&hl=en-US&gl=US&mapclient=embed&q=3004+Gentilly+Blvd+New+Orleans,+LA+70122" target="_blank">
+                <a href="https://g.page/7oclockdentalnola?share" target="_blank">
                     <Image 
                     src="/images/dumasDentistry.png" alt="Dumas Family Dentistry - New Orleans Dentist" 
                     width="307" 
@@ -178,9 +178,11 @@ const createPageApi = async (req, res) => {
                     </a>
                 </div>
             `;
+            
 
             // // use this initially, after that the iframe gets moved to <Header />
             // $('.contact-footer').replaceWith(iframeReplace1);
+
 
             const iframeReplace2 = `
            
@@ -196,6 +198,7 @@ const createPageApi = async (req, res) => {
 
             // replace iframe in specific page (this time it's teh contact page)
             const iframeSrc2 = 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d13821.531378971853!2d-90.06113691628744!3d29.997161587720868!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8620a9ae9e20d987%3A0xd489431f8e9537c6!2sDumas%20Family%20Dentistry!5e0!3m2!1sen!2sus!4v1666368945858!5m2!1sen!2sus';
+
             $(`iframe[src=${iframeSrc2}]`).each((i, el) => {
                 $(el).replaceWith(iframeReplace2);
             });
@@ -206,11 +209,11 @@ const createPageApi = async (req, res) => {
                     $(el).attr('href', '#');
                 }
 
-                let temp = $(el).parent();
-                temp = $.html(temp);
-                if (temp.includes('<li')) {
-                    $(el).attr('class', 'dcsLink')
-                }
+                // let temp = $(el).parent();
+                // temp = $.html(temp);
+                // if (temp.includes('<li')) {
+                //     $(el).attr('class', 'dcsLink')
+                // }
             });
 
             // fix facebook and instagram icons lining up wrong
@@ -227,17 +230,17 @@ const createPageApi = async (req, res) => {
         </aside>
             `;
 
-            // let asideTags = $('body').find('aside');
-            // asideTags.each((i, el) => {
-            //     if ($(el).text().includes('Follow Us On…')) {
-            //         $(el).replaceWith(asideReplace);
-            //     }
-            // });
+            // // let asideTags = $('body').find('aside');
+            // // asideTags.each((i, el) => {
+            // //     if ($(el).text().includes('Follow Us On…')) {
+            // //         $(el).replaceWith(asideReplace);
+            // //     }
+            // // });
 
-            // add padding to id=main
-            idMain.each((i, el) => {
-                $(el).attr('style', 'paddingTop: 130px');
-            });
+            // // add padding to id=main
+            // idMain.each((i, el) => {
+            //     $(el).attr('style', 'paddingTop: 130px');
+            // });
 
             // // add padding to id=sidebar
             // idSidebar.each((i, el) => {
@@ -268,7 +271,8 @@ const createPageApi = async (req, res) => {
                 svgContent = svgContent.replaceAll('xml:space', 'xmlSpace');
                 svgContent = svgContent.replaceAll('stroke-width', 'strokeWidth');
                 createSVGComponent(svgContent, svgName);
-                svgImports = svgImports + `import ${svgName} from '../../components/${svgName}';\n`;
+                // svgImports = svgImports + `import ${svgName} from '../../components/${svgName}';\n`;
+                svgImports = svgImports + `import ${svgName} from '@/components/${svgName}';\n`;
                 $(el).replaceWith(`<${svgName}>\n`);
             });
 
@@ -441,9 +445,9 @@ const createPageApi = async (req, res) => {
             //     $(el).replaceWith(`{/*` + temp + `*/}` + '\n' + ImageTag);
             // });
 
-            revSlider.each((i, el) => {
-                $(el).remove();
-            });
+            // revSlider.each((i, el) => {
+            //     $(el).remove();
+            // });
 
 
             // if YT video, use Next Video Compnent
@@ -582,36 +586,36 @@ const createPageApi = async (req, res) => {
             // replace ='wp with ='/wp
             body = body.replaceAll('src="wp', 'src="/wp');
 
-            // change <sidebar>...</sidebar> to <Sidebar /> 
-            const sidebarRegEx = /<sidebar([^>]*)>/g;
-            body = body.replaceAll(sidebarRegEx, '<sidebar$1 />').replaceAll('<sidebar', '<Sidebar').replaceAll('</sidebar>', '');
+            // // change <sidebar>...</sidebar> to <Sidebar /> 
+            // const sidebarRegEx = /<sidebar([^>]*)>/g;
+            // body = body.replaceAll(sidebarRegEx, '<sidebar$1 />').replaceAll('<sidebar', '<Sidebar').replaceAll('</sidebar>', '');
 
-            // change <footer>...</footer> to <Footer /> 
-            const footerRegEx = /<footer([^>]*)>/g;
-            body = body.replaceAll(footerRegEx, '<footer$1 />').replaceAll('<footer', '<Footer').replaceAll('</footer>', '');
+            // // change <footer>...</footer> to <Footer /> 
+            // const footerRegEx = /<footer([^>]*)>/g;
+            // body = body.replaceAll(footerRegEx, '<footer$1 />').replaceAll('<footer', '<Footer').replaceAll('</footer>', '');
 
-            // change <backtotopbutton>
-            const backToTopRegEx = /<backtotopbutton([^>]*)>/g;
-            body = body.replaceAll(backToTopRegEx, '<backtotopbutton$1 />').replaceAll('<backtotopbutton', '<BackToTopButton').replaceAll('</backtotopbutton>', '');
+            // // change <backtotopbutton>
+            // const backToTopRegEx = /<backtotopbutton([^>]*)>/g;
+            // body = body.replaceAll(backToTopRegEx, '<backtotopbutton$1 />').replaceAll('<backtotopbutton', '<BackToTopButton').replaceAll('</backtotopbutton>', '');
 
 
-            // change <header>
-            const headerRegEx = /<header([^>]*)>/g;
-            body = body.replaceAll(headerRegEx, '<header$1 />').replaceAll('<header', '<Header').replaceAll('</header>', '');
+            // // change <header>
+            // const headerRegEx = /<header([^>]*)>/g;
+            // body = body.replaceAll(headerRegEx, '<header$1 />').replaceAll('<header', '<Header').replaceAll('</header>', '');
 
-            // change <nav>
-            const navRegEx = /<nav([^>]*)>/g;
-            body = body.replaceAll(navRegEx, '<nav$1 />').replaceAll('<nav', '<Navbar').replaceAll('</nav>', '');
+            // // change <nav>
+            // const navRegEx = /<nav([^>]*)>/g;
+            // body = body.replaceAll(navRegEx, '<nav$1 />').replaceAll('<nav', '<Navbar').replaceAll('</nav>', '');
 
             // remove some unwanted text
             body = body.replace('Welcome to Mid-City Smiles Family Dentistry! We are a dental practice located in New Orleans. Our team specializes in family dentistry and orthodontic care – Diamond Invisalign Providers..', '');
 
-            // misc replace
-            body = body.replaceAll(`revslider_showDoubleJqueryError("#rev_slider_1_1");`, `// revslider_showDoubleJqueryError("#rev_slider_1_1");`);
-            body = body.replaceAll('<Script type="text/javascript">', '<Script type="text/javascript">{`');
-            body = body.replaceAll('};</Script>', '};`}</Script>');
-            body = body.replaceAll('<div className="header-social">', `<div style={{display: 'flex', justifyContent: 'flex-end'}}>`);
-            body = body.replaceAll('rel=0&amp;wmode=transparent" width="100%" height="200" frameBorder="0"&gt;', '');
+            // // misc replace
+            // body = body.replaceAll(`revslider_showDoubleJqueryError("#rev_slider_1_1");`, `// revslider_showDoubleJqueryError("#rev_slider_1_1");`);
+            // body = body.replaceAll('<Script type="text/javascript">', '<Script type="text/javascript">{`');
+            // body = body.replaceAll('};</Script>', '};`}</Script>');
+            // body = body.replaceAll('<div className="header-social">', `<div style={{display: 'flex', justifyContent: 'flex-end'}}>`);
+            // body = body.replaceAll('rel=0&amp;wmode=transparent" width="100%" height="200" frameBorder="0"&gt;', '');
 
             // body = body.replaceAll('<Image src="/wp-content/uploads/2022/07/facebook.png" alt="instagram logo"', `<Image src="/wp-content/uploads/2022/07/facebook.png" alt="instagram logo" style={{ paddingRight: '5px' }}`);
             // body = body.replaceAll('<Image src="/wp-content/uploads/2022/07/facebook-sml.png" alt="instagram logo"', `<Image src="/wp-content/uploads/2022/07/facebook-sml.png" alt="instagram logo" style={{ paddingRight: '5px' }}`);
@@ -621,13 +625,13 @@ const createPageApi = async (req, res) => {
                 import Image from 'next/image';
                 import Script from 'next/script';
                 import Link from 'next/link';
-                import LiteYouTubeEmbed from "react-lite-youtube-embed";
-                import "react-lite-youtube-embed/dist/LiteYouTubeEmbed.css";
-                import '@/jQueryLoader.js';
-                import Sidebar from '@/components/Sidebar';
-                import Footer from '@/components/Footer';
-                import BackToTopButton from '@/components/BackToTopButton';
-                import Header from '@/components/Header';
+                // import LiteYouTubeEmbed from "react-lite-youtube-embed";
+                // import "react-lite-youtube-embed/dist/LiteYouTubeEmbed.css";
+                // import '@/jQueryLoader.js';
+                // import Sidebar from '@/components/Sidebar';
+                // import Footer from '@/components/Footer';
+                // import BackToTopButton from '@/components/BackToTopButton';
+                // import Header from '@/components/Header';
                 
                 ${svgImports}
 

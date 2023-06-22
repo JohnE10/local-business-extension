@@ -1,6 +1,6 @@
 import { split } from 'postcss/lib/list';
 import { fileTree, isAbsoluteURL } from '../../utils/helpers';
-import { checkLink, chooseDirectory, copyFile, createDirectory, createDirectoryAndSaveFile, deleteDirectoryContents, fileOrDirectory, listFilesInDirectory } from './backEndHelpers';
+import { checkLink, chooseDirectory, copyFile, createDirectory, createDirectoryAndSaveFile, deleteDirectoryContents, fileOrDirectory, listFilesInDirectory, searchForFile } from './backEndHelpers';
 
 
 
@@ -10,14 +10,18 @@ const ApiTemp2 = async (req, res) => {
 	const fs = require('fs');
 	const path = require('path');
 
-	// const results = checkLink(link);
+	const directory = 'C:/Users/jetto/OneDrive/Desktop/Files/Coding-ASUS/WP Migration Campaign/smilingfacesnola/public/';
 
-	const file = 'siteFiles/temp4/temp1/temp2/temp3/index.html';
+	const filename = 'Defaults21ea.eot';
 
-	const results = createDirectoryAndSaveFile(file);
-
-	return res.json(results);
+	const foundFilePath = searchForFile(directory, filename);
+	if (foundFilePath) {
+		console.log(`File found at: ${foundFilePath}`);
+	} else {
+		console.log(`File not found.`);
+	}
 	
+	return res.json({success: 'Done'})
 };
 
 export default ApiTemp2;

@@ -39,9 +39,7 @@ const pageHeadAPI = async (req, res) => {
             let temp = $2.html(el);
             const linkRegEx = /<link([^>]*)>/g;
             temp = temp.replaceAll(linkRegEx, '<link$1 />');
-            // console.log('temp: ', temp);
             tempDocumentHead = tempDocumentHead + temp + '\n';
-            // console.log('$.html(el): ', temp);
         })
 
         const documentHeadJsx2 = `

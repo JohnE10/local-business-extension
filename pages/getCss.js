@@ -19,10 +19,8 @@ const getCss = () => {
     let nonCssHref = [];
     let body = '';
 
-    // let cssFileName = 'siteFiles/css/stylesheets.css';
-    // let cssFileName = 'C:/Users/jetto/OneDrive/Desktop/Files/Coding-ASUS/WP Migration Campaign/smilingfacesnola/pages/stylesheets.css';
-
     let cssFileName = 'siteFiles/css/stylesheets.css';
+    let cssUrlsFileName = 'siteFiles/css/cssUrls.txt';
 
 
     const handleSubmit = () => {
@@ -30,20 +28,14 @@ const getCss = () => {
         setHtml(null);
         setError(null);
 
-        // console.log({basePath});
-        // console.log({url});
-
         try {
 
-            // console.log('url: ', url);
-
-            // const fetchData = async () => {
             const sendToBuildCssFile = async (path, fileName) => {
 
                 setLoading(true);
 
                 // const response = await fetch(`/api/fetchUrlData?url=${url}`);
-                const response = await fetch(`/api/buildCssFile?cssFilePath=${path}&basePath=${basePath}&cssFileName=${fileName}`);
+                const response = await fetch(`/api/buildCssFile?cssFilePath=${path}&basePath=${basePath}&cssFileName=${fileName}&cssUrlsFileName=${cssUrlsFileName}`);
                 const data = await response.json();
 
                 if (data.error) {

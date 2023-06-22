@@ -16,7 +16,7 @@ const createPageWork = () => {
     const endPoint = `/api/customPageWorkAPI?path=${path}`;
     const { useFetchData, useFetchError, loading, runFetch } = useFetch(endPoint);
 
-    let defaultBasePath = 'C:/Users/jetto/OneDrive/Desktop/Files/Coding-ASUS/WP Migration Campaign/HTtrack/HTTrack_mid-city-smiles/mid-city-smiles/www.midcitysmiles.com/blog/';
+    let defaultBasePath = 'C:/Users/jetto/OneDrive/Desktop/Files/Coding-ASUS/WP Migration Campaign/uptownsmiles/pages/';
 
     useEffect(() => {
         setBasePath(defaultBasePath);
@@ -39,7 +39,7 @@ const createPageWork = () => {
 
     return (
         <>
-            <div className='pageTitle'><h4>Create Page</h4></div>
+            <div className='pageTitle'><h4>Custom Page Work</h4></div>
             {useFetchError && <div className='text-danger'>{useFetchError}</div>}
             {loading && <div>... Loading</div>}
             <div className='d-flex flex-column justify-content-center align-items-center'>

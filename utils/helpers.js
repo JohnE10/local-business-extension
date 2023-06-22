@@ -1,4 +1,4 @@
-import temp from '../pages/temp';
+
 
 
 export const validateURL = (url) => {
@@ -162,3 +162,27 @@ export const isAbsoluteURL = (url) => {
   return absoluteURLPattern.test(url);
   
 };
+
+export const checkUrlSecure = (url) => {
+
+  const https = require('https');
+
+  return new Promise((resolve, reject) => {
+    const options = {
+      method: 'HEAD',
+      host: url,
+      port: 443,
+    };
+
+    const request = https.request(options, (response) => {
+      resolve(response.statusCode === 200);
+    });
+
+    request.on('error', (error) => {
+      reject(error);
+    });
+
+    request.end();
+  });
+};
+
