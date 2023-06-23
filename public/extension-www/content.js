@@ -7,12 +7,10 @@ const thePage = () => {
     console.log('fl is:', searchStr);
 
     // declare variables
-    let search;
-    let agencyName;
-    let agencyUrl;
     let objArr = [];
-    let index = 0;
 
+    let index = 0;
+    // let mainData = { name: '', url: '', email: '', phone: '', advertising: '', rating: '', reviews: '', industry: '', city: '', state: '', search: '' };
 
     // search query
     if (searchStr.length >= 1) {
@@ -43,41 +41,64 @@ const thePage = () => {
     // loop through block
     if (entities.length >= 1) {
         Array.from(entities).forEach((entity) => {
+            let mainData = { id: '', name: '', url: '', email: '', phone: '', advertising: '', rating: '', reviews: '', industry: '', city: '', state: '', search: '' };
+
+            mainData['search'] = search;
             const name = entity.querySelector('.rllt__details .dbg0pd .OSrXXb'); // company name
-            console.log('name is: ', name);
             // agencyName = name.innerHTML;
-            // console.log('agencyName is: ', agencyName);
+            mainData['name'] = name.innerHTML;
+            index = index + 1;
+            mainData['id'] = index;
+            // rating = entity.querySelector('.rllt__details .Y0A0hc .yi40Hd.YrbPuc'); // rating
+            if (entity.querySelector('.rllt__details .Y0A0hc .yi40Hd.YrbPuc')) {
+                const rating = entity.querySelector('.rllt__details .Y0A0hc .yi40Hd.YrbPuc'); // rating
+                if (rating.innerHTML) {
+                    mainData['rating'] = rating.innerHTML;
+                    console.log('rating: ', mainData['rating']);
+                }
+            }
+
+            if (entity.querySelector('.rllt__details .Y0A0hc .RDApEe.YrbPuc')) {
+                let reviews = entity.querySelector('.rllt__details .Y0A0hc .RDApEe.YrbPuc'); // reviews
+                if (reviews.innerHTML) {
+                    reviews = reviews.innerHTML;
+                    mainData['reviews'] = reviews.replaceAll('(', '').replaceAll(')', '');
+                    console.log('reviews: ', mainData['reviews']);
+                }
+
+            }
 
             const anchors = entity.getElementsByTagName('a');  // anchors texts in block
-            console.log('anchors: ', anchors);
+            // console.log('anchors: ', anchors);
             if (anchors.length >= 1) {
                 for (let i = 0; i < anchors.length; i++) {
                     if (anchors[i].getAttribute('class')) {
-                        // if (anchors[i].getAttribute('class') == 'yYlJEf Q7PwXb L48Cpd') {  // anchor text class
+                        // console.log('anchors.getAttribute ran');
+
                         if (anchors[i].getAttribute('class') == 'yYlJEf Q7PwXb L48Cpd brKmxb') {  // anchor text class
-    
-                        const url = anchors[i].getAttribute('href'); // company site url
+                            console.log('anchors.getAttribute ran again');
+                            const url = anchors[i].getAttribute('href'); // company site url
                             if (!url.includes('adurl')) {  // leave out the ads
-                                index = index + 1;
-                                agencyName = name.innerHTML;
-                                // console.log('agencyName is: ', agencyName);
-                                agencyUrl = url;
-                                // console.log('agencyUrl is: ', agencyUrl);
-                                objArr.push({ id: index, name: agencyName, url: agencyUrl, search: search });
-                                
+                                mainData['url'] = url;
                             }
+                            else {
+                                mainData['advertising'] = 'Yes';
+                            }
+
                         }
+
                     }
                 }
+                objArr.push(mainData);
             }
         })
     }
 
     console.log('objArr is: ', objArr);
 
-    for (let i = 0; i < objArr.length; i++) {
-        console.log(objArr[i].url);
-    }
+    // for (let i = 0; i < objArr.length; i++) {
+    //     console.log(objArr[i].url);
+    // }
 
 
     // post data to backend to be stored in database
@@ -119,7 +140,6 @@ chrome.runtime.onMessage.addListener(
         // const searchStr = document.getElementsByClassName('fl');
 
         const searchStr = document.getElementsByClassName('fl')
-
 
         for (let i = 0; i < searchStr.length; i++) {
             if (searchStr[i].getAttribute('aria-label')) {

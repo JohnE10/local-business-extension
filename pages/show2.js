@@ -1,4 +1,5 @@
-import { checkboxClasses, formControlLabelClasses } from "@mui/material";
+// in show2.js, I added more fields to be extracted
+
 import { useEffect, useState } from "react";
 import ListingsTable from '../components/ListingsTable';
 import BootstrapModal from '../components/BootstrapModal';

@@ -16,21 +16,16 @@ export default async function handler(req, res) {
     for (let i = 0; i < objArr.length; i++) {
       let { id, name, url, search } = objArr[i];
 
-      if (url != '') {
-        let domain = new URL(url);
-        url = domain.hostname;
-      }
+      let domain = new URL(url);
+      url = domain.hostname;
 
       if (url.includes('www.')) {
         url = url.replace('www.', '');
       }
 
-      if (url == '') {
+      if (!await Business.findOne({ url: url })) {
         const businessEntry = await Business.create({ name, url, search });
-      }
-      else if (!await Business.findOne({ url: url })) {
-        const businessEntry = await Business.create({ name, url, search });
-        // const businessEntry = await Business.create({ name, url, email, phone, rating, reviews, industry, advertising, city, state, search });
+        // const businessEntry = await Business.create({ name, url, email, phone, rating, industry, advertising, city, state, search });
         // nonExisting.push({ id: id, name: name, url: objArr[i].url, search: search });
       } else {
         // nonExisting.push({ id: id, name: name, url: objArr[i].url, search: search });

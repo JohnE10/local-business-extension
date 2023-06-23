@@ -15,7 +15,10 @@ export default async function handler(req, res) {
 
 
     // const searchRegEx = /^.*albany.*$/;
-    const searchRegEx = new RegExp(`^.*${queryValue}.*$`);
+    // const searchRegEx = new RegExp(`^.*${queryValue}.*$`);
+    const searchRegEx = new RegExp(`^.*${queryValue}.*$`, 'i');
+
+
 
     console.log('rsearchRegEx: ', searchRegEx);
 
@@ -36,13 +39,14 @@ export default async function handler(req, res) {
     try {
 
         if (await Business.find(obj)) {
-            results = await Business.find(obj, {_id: 0})
+            results = await Business.find(obj, { _id: 0 })
         }
 
         if (results) {
+            // console.log('results: ', results);
             if (results.length > 0) {
                 if (results[0].search) {
-                    console.log(results[0].search);
+                    // console.log('results[0].search: ', results[0].search);
                 }
             }
 
@@ -50,12 +54,12 @@ export default async function handler(req, res) {
 
         console.log('Done');
 
-        res.status(200).json({ success: results })
+        return res.status(200).json({ success: results })
 
     } catch (err) {
         console.log('api/searchDatabase error:', err.message)
         console.log('Done');
-        res.status(200).json({ error: `api/searchDatabase error: ${err.message}` });
+        return res.status(200).json({ error: `api/searchDatabase error: ${err.message}` });
     }
 
     // return res.status(200).json({ success: 'Task Completed - ' + search + ' - ' + JSON.stringify(results) });

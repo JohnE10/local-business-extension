@@ -38,6 +38,7 @@ const manualDeletePage = () => {
             <div>
                 <label>Delete by search Query:</label>
                 <input
+                className='m-3'
                     type='text'
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}

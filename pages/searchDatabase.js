@@ -1,5 +1,6 @@
 import styles from '../styles/SeachDatabase.module.css';
 import { useEffect, useState } from 'react'
+import { capFirst } from '../utils/helpers';
 
 
 
@@ -55,6 +56,7 @@ const searchDataBase = () => {
             setError(data.error);
             setLoading(false);
         }
+        
     }
 
 
@@ -62,7 +64,7 @@ const searchDataBase = () => {
     const queryJsx = Object.entries(queries).map(([key, value]) => (
         <div key={key} className={styles.search}>
             <div><label>Search by {key}:</label></div>
-            <div>
+            <div className='px-3'>
                 <input
                     id={`${key}Input`}
                     type='text'
@@ -98,7 +100,17 @@ const searchDataBase = () => {
             {loading && <div>... Loading</div>}
             {results && !loading && <div className='mb-4'>Query Name: {showName} - Query Term: {queryValue}</div>}
             {error && !loading && <div className='text-danger'>{error}</div>}
-            {results && !loading && <div>{JSON.stringify(results)}</div>}
+            {results && <div>Count: {results.length}</div>}
+
+            {results && !loading &&
+                results.map((ele, i) => (
+                    <div key={i} className='d-flex flex-column justify-content-start align-items-start m-3 '>
+                        {Object.keys(ele).map((key, index) => (
+                            <div style={{ width: '700px' }}>{capFirst(key)}: {ele[key]}</div>
+                        ))}
+                    </div>
+                ))
+            }
 
         </div>
 
