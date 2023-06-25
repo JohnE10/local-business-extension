@@ -95,25 +95,9 @@ const thePage = () => {
 
     console.log('objArr is: ', objArr);
 
-    // post data to backend to be stored in database
-    const fetchUrl = `http://localhost:3000/api/storeData`;
-    const fetchData = async () => {
-        const response = await fetch(fetchUrl, {
-            method: 'POST',
-            headers: {
-                'content-type': 'application/json'
-            },
-            body: JSON.stringify(objArr)
-        });
-
-        const data = await response.json();
-        console.log('data is: ', data);
-    }
-
     // only run the fetch if there are listings
     if (objArr.length) {
         if (objArr.length > 0) {
-            // fetchData();
             chrome.storage.sync.set({ 'listings': objArr }); // store listings in chrome storage
         }
     }
