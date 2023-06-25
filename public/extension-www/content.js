@@ -41,7 +41,7 @@ const thePage = () => {
     // loop through block
     if (entities.length >= 1) {
         Array.from(entities).forEach((entity) => {
-            let mainData = { id: '', name: '', url: '', email: '', phone: '', advertising: '', rating: '', reviews: '', industry: '', city: '', state: '', search: '' };
+            let mainData = { id: '', name: 'no name', url: 'no url', email: 'no email', phone: 'no phone', advertising: 'no advertising', rating: 'no rating', reviews: 'no reviews', industry: 'no industry', city: 'no city', state: 'no state', search: 'no search' };
 
             mainData['search'] = search;
             const name = entity.querySelector('.rllt__details .dbg0pd .OSrXXb'); // company name
@@ -84,7 +84,6 @@ const thePage = () => {
                             else {
                                 mainData['advertising'] = 'Yes';
                             }
-
                         }
 
                     }
@@ -137,7 +136,6 @@ chrome.runtime.onMessage.addListener(
     function (request, sender, sendResponse) {
         thePage();
         let nextUrls = [];
-        // const searchStr = document.getElementsByClassName('fl');
 
         const searchStr = document.getElementsByClassName('fl')
 

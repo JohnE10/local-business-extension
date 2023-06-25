@@ -1,4 +1,4 @@
-
+import { useEffect, useState } from 'react';
 
 
 export const validateURL = (url) => {
@@ -158,9 +158,9 @@ export const fileNameFromUrl = (url) => {
 export const isAbsoluteURL = (url) => {
 
   const absoluteURLPattern = /^(https?:\/\/)/i;
-  
+
   return absoluteURLPattern.test(url);
-  
+
 };
 
 export const checkUrlSecure = (url) => {
@@ -186,3 +186,38 @@ export const checkUrlSecure = (url) => {
   });
 };
 
+// export const fetchApiData = (endPoint) => {
+
+//   const [data, setData] = useState(null);
+//   const [error, setError] = useState(null);
+//   const [loading, setLoading] = useState(false);
+
+//   const runFetch = async () => {
+//     try {
+//       setData(null);
+//       console.log('useFetch ran');
+//       setLoading(true);
+//       const response = await fetch(endPoint);
+//       const responseData = await response.json();
+
+//       if (responseData.success) {
+//         setData(responseData.success);
+//         setLoading(false);
+//       }
+//       else if (responseData.error) {
+//         setError(responseData.error);
+//         setLoading(false);
+//       }
+//     } catch (error) {
+//       console.log('fetchApiData error: ', error.message);
+//     }
+//   };
+
+//   useEffect(() => {
+//     runFetch();
+//   }, [endPoint]);
+
+//   // return { useFetchData, useFetchError, loading };
+//   return { data, error, loading };
+
+// };

@@ -2,9 +2,10 @@ import { selectedGridRowsCountSelector } from "@mui/x-data-grid";
 import { set } from "mongoose";
 import { useEffect, useState } from "react";
 import EmailListTable from '../components/EmailListTable';
+import { isValidUrl } from '../utils/helpers';
 
 
-const ProcessEmails = () => {
+const ProcessEmails2 = () => {
 
     // declare variables
     const [pageContent, setPageContent] = useState([]);
@@ -19,100 +20,10 @@ const ProcessEmails = () => {
     const [urls, setUrls] = useState(null);
     const [isWorking, setIsWorking] = useState(false);
 
+    const cheerio = require('cheerio');
+
     let counter1 = 0;
     let counter2 = 0;
-
-    let leaveOut = ['email.com', 'mail.com'];
-
-    // declare helper functions
-    // strip url to host name
-
-    // validate url
-    function isValidUrl(string) {
-        try {
-            new URL(string);
-            return true;
-        } catch (err) {
-            console.log(err.message);
-            console.log(string);
-            return false;
-        }
-    }
-
-    // strip url to just domain
-    const stripDomain = (url) => {
-        if (isValidUrl(url)) {
-            let domain = new URL(url);
-            url = domain.hostname;
-
-            if (url.includes('www.')) {
-                url = url.replace('www.', '');
-            }
-            return url;
-        }
-    }
-
-    // check for dupes
-    const checkForDupes = (arr, key, value) => {
-        let found = false;
-        for (let i = 0; i < arr.length; i++) {
-            if (arr[i].key === value) {
-                return true;
-            } else {
-                return false;
-            }
-        }
-    }
-
-    // fetch data from next api
-    const runFetch = async (urls) => {
-        const pageContent = [];
-        urls.forEach((url) => {
-            const fetchData = async () => {
-                const response = await fetch('http://localhost:3000/api/handleVerifyEmails', {
-                    method: 'POST',
-                    headers: {
-                        'content-type': 'application/json',
-                    },
-                    body: JSON.stringify({ url: url })
-                });
-                const data = await response.text();
-                // setPageContent((pageContent) => [...pageContent, { url: url, data: data }]);
-                pageContent.push[{ url: url, data: data }];
-
-            }
-            if (isValidUrl(url)) {
-                fetchData();
-            }
-        });
-        return pageContent;
-    };
-
-
-
-    // urls to scrape
-    // const urls = [
-    //     //     'https://pixelcarve.com/',
-    //     //     'https://www.globalgraphicswebdesign.com/',
-    //     //     'https://eggsmedia.com/',
-    //     //     'https://simplistics.ca/',
-    //     //     'https://www.wiretree.ca/',
-    //     //     'https://www.awesomewebdesigns.ca/',
-    //     //     'https://www.maizonweb.ca/',
-    //     //     'http://mojo-agency.com/',
-    //     //     'https://canadianwebdesigns.ca/',
-    //     //     'https://www.netmatico.com/',
-    //     //     'http://www.anerdsworld.com/',
-    //     //     'https://www.inorbital.com/',
-    //     //     'http://torontowebdesign.ca/',
-    //     //     'https://www.websharx.ca/',
-    //     //     'https://parachutedesign.ca/?utm_source=GMB&utm_medium=organic',
-    //     //     'https://shift8web.ca/',
-    //     //     'https://www.intrangowebdesign.com/',
-    //     //     'http://makemycodewebdesigncompany.ca/',
-    //     //     'https://ecommercewebdesign.agency/',
-    //     //     'http://www.webluxx.com/',
-    // ];
 
     const handleClick = (e) => {
         if (textArea != '') {
@@ -125,30 +36,29 @@ const ProcessEmails = () => {
 
     // fetch page content
     useEffect(() => {
+        console.log('use effect ran');
         if (urls) {
-            urls.forEach((url) => {
+            urls.forEach(async (url) => {
+                console.log('url: ', url);
                 if (isValidUrl(url)) {
-                    const fetchData = async () => {
-                        const response = await fetch('http://localhost:3000/api/getEmails', {
-                            method: 'POST',
-                            headers: {
-                                'content-type': 'application/json',
-                            },
-                            body: JSON.stringify({ url: url })
-                        });
-                        const data = await response.text();
-                        setPageContent((pageContent) => [...pageContent, { url: url, data: data }]);
 
+                    const endPoint = `/api/lib/helpers/fetchUrlData?url=${url}`;
+                    const results = await getFetchData(endPoint);
+                    // console.log('results1: ', results);
+
+                    if (results) {
+                        setPageContent((pageContent) => [...pageContent, { url: url, data: results }]);
                     }
-                    fetchData();
                 }
-
             });
         }
-
     }, [urls]);
 
     // get a list of emails and a list of urls where no email was found
+
+    const unwantedExtensionsdArr = ['jpg', 'jpeg', 'png']; // unwanted file extensions
+    const leaveOut = ['email.com', 'mail.com']; // unwanted email TLDs
+
     if (pageContent.length > 0) {
 
         pageContent.map((ele) => {
@@ -158,30 +68,37 @@ const ProcessEmails = () => {
             if (tempArr.length == 0) {
                 if (!checkContact.map(a => a.url).includes(ele.url)) {  // no dupes
                     checkContact.push({ url: ele.url, data: ele.data });
-                    const htmlDom = new DOMParser().parseFromString(ele.data, 'text/html'); // convert string into html dom
-                    const aTags = htmlDom.getElementsByTagName('a'); // get all the a tags
+
+                    // HTML parser
+                    let $ = cheerio.load(ele.data);
+
+                    // Get all a tags;
+                    let aTags = $('body').find('a');
+
                     for (let i = 0; i < aTags.length; i++) {
-                        if (aTags[i].innerHTML) {
-                            // if the a tags is for contact of "get in touch" page then push it href attribute to an array
-                            if (aTags[i].innerHTML.toLowerCase().includes('contact') || aTags[i].innerHTML.toLowerCase().includes('get in touch')) {
-                                if (!contactUrls.map(a => a.contactUrl).includes(aTags[i].getAttribute('href'))) { // check for dupes
-                                    contactUrls.push({ url: ele.url, contactUrl: aTags[i].getAttribute('href') })
-                                    const fetchData = async (url) => {
-                                        const response = await fetch('http://localhost:3000/api/getEmails', {
-                                            method: 'POST',
-                                            headers: {
-                                                'content-type': 'application/json',
-                                            },
-                                            body: JSON.stringify({ url: url })
-                                        });
-                                        const data = await response.text();
-                                        setContactPageContent((contactPageContent) => [...contactPageContent, { url: url, data: data }]);
+                        aTags.map(async (aTag) => {
+                            if (aTag.innerHTML) {
+
+                                // if the a tags is for contact or "get in touch" page then push it href attribute to an array
+                                if (aTags[i].innerHTML.toLowerCase().includes('contact') || aTags[i].innerHTML.toLowerCase().includes('get in touch')) {
+                                    if (!contactUrls.map(a => a.contactUrl).includes(aTag.getAttribute('href'))) { // check for dupes
+                                        contactUrls.push({ url: ele.url, contactUrl: aTag.getAttribute('href') })
+
+                                        if (isValidUrl(aTag.getAttribute('href') )) {
+
+                                            const endPoint = `/api/lib/helpers/fetchUrlData?url=${aTag.getAttribute('href') }`;
+                                            const results = await getFetchData(endPoint);
+                                            console.log('results: ', results);
+
+                                            if (results) {
+                                                setContactPageContent((contactPageContent) => [...contactPageContent, { url: aTag.getAttribute('href'), data: results }]);
+                                            }
+                                        }
 
                                     }
-                                    fetchData(aTags[i].getAttribute('href'));
                                 }
                             }
-                        }
+                        });
                     }
                 }
             } else {
@@ -190,8 +107,12 @@ const ProcessEmails = () => {
 
                     if (!emailList.map(a => a.email).includes(tempArr[i][0]) && !tempArr[i][0].includes('/') && !tempArr[i][0].includes("'")) { // no dupes and no junk 
 
-                        // if (!dupesArr.includes(tempArr[i][0]) && !tempArr[i][0].includes('/')) { // no dupes and no junk 
-                        if (tempArr[i][0].substr(tempArr[i][0].length - 4) != '.png' && tempArr[i][0].substr(tempArr[i][0].length - 4) != '.jpg' && !leaveOut.includes(tempArr[i][0].split('@')[1]) != '') { // remove any .png or .jpg
+                        const fileExtension = tempArr[i][0].split('.').pop(); // 
+                        const emailTLD  = tempArr[i][0].split('@').pop();
+
+
+                        // check for unwanted file extensions and email TLDs
+                        if(!unwantedExtensionsdArr.includes(fileExtension) && !leaveOut.includes(emailTLD)) {
                             emailList.push({ url: strippedUrl, email: tempArr[i][0] }); // add to list
                         }
                     }
@@ -211,6 +132,7 @@ const ProcessEmails = () => {
             if (tempArr.length != 0) {
                 for (let i = 0; i < tempArr.length; i++) {
                     if (!contactEmailList.map(a => a.email).includes(tempArr[i][0]) && !tempArr[i][0].includes('/') && !tempArr[i][0].includes("'")) { // no dupes and no junk 
+
                         if (tempArr[i][0].substr(tempArr[i][0].length - 4) != '.png' && tempArr[i][0].substr(tempArr[i][0].length - 4) != '.png') { // remove any .png or .jpg
                             contactEmailList.push({ url: strippedUrl, email: tempArr[i][0] }); // add to list
                             counter2 = counter2 + 1;
@@ -270,8 +192,6 @@ const ProcessEmails = () => {
 
             {comboArr.length > 0 && <h4 className='text-center m-3'>Email List</h4>}
 
-            {/* {isWorking && <div className='text-center m-3'>...Working</div>} */}
-
             {comboArr.length > 0 &&
                 <div className='text-center'>
                     <h5 className='text-center mb-3'>Count: {comboArr.length}</h5>
@@ -284,4 +204,65 @@ const ProcessEmails = () => {
     );
 }
 
-export default ProcessEmails;
+export default ProcessEmails2;
+
+// export const fetchApiData = (endPoint) => {
+
+//     const [data, setData] = useState(null);
+//     const [error, setError] = useState(null);
+//     const [loading, setLoading] = useState(false);
+
+//     const runFetch = async () => {
+//         try {
+//             setData(null);
+//             console.log('useFetch ran');
+//             setLoading(true);
+//             const response = await fetch(endPoint);
+//             const responseData = await response.json();
+
+//             if (responseData.success) {
+//                 setData(responseData.success);
+//                 setLoading(false);
+//             }
+//             else if (responseData.error) {
+//                 setError(responseData.error);
+//                 setLoading(false);
+//             }
+//         } catch (error) {
+//             console.log('fetchApiData error: ', error.message);
+//         }
+//     };
+
+//     useEffect(() => {
+//         runFetch();
+//     }, [endPoint]);
+
+//     // return { useFetchData, useFetchError, loading };
+//     return { data, error, loading };
+
+// };
+
+export const getFetchData = async (endPoint) => {
+
+    const response = await fetch(endPoint);
+    const results = await response.json();
+
+    if (results.success) {
+        const data = results.success;
+        return data;
+    }
+    else {
+        return '';
+    }
+};
+
+// strip url to just domain
+export const stripDomain = (url) => {
+    if (isValidUrl(url)) {
+        let domain = new URL(url);
+        url = domain.hostname;
+        url = url.replace('www.', '');
+
+        return url;
+    }
+};

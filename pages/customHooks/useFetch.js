@@ -27,6 +27,7 @@ const useFetch = (endPoint) => {
         }
     };
 
+    // return { useFetchData, useFetchError, loading, runFetch };
     return { useFetchData, useFetchError, loading, runFetch };
 
 }

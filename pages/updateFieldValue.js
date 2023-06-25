@@ -44,7 +44,7 @@ const searchDataBase = () => {
         setError(null);
         setResults(null);
 
-        const response = await fetch(`/api/searchDatabaseApi?queryValue=${queryValue}&queryName=${queryName}`);
+        const response = await fetch(`/api/updateFieldValueApi?queryValue=${queryValue}&queryName=${queryName}`);
         const data = await response.json();
 
         if (data.success) {
@@ -55,15 +55,12 @@ const searchDataBase = () => {
             console.log('data.error: ', data.error);
             setError(data.error);
             setLoading(false);
-        }
-        
+        } 
     }
-
-
 
     const queryJsx = Object.entries(queries).map(([key, value]) => (
         <div key={key} className={styles.search}>
-            <div><label>Search by {key}:</label></div>
+            <div><label>Update {key} field if empty:</label></div>
             <div className='px-3'>
                 <input
                     id={`${key}Input`}
@@ -73,7 +70,7 @@ const searchDataBase = () => {
                 />
             </div>
             <div>
-                {/* <button id={`${key}Button`} className={active ? '' : 'disabled'} onClick={handleSearch} disabled={!active}>Submit</button> */}
+
                 <button id={`${key}Button`} onClick={handleSearch} disabled={!active}>Submit</button>
 
             </div>
@@ -91,7 +88,7 @@ const searchDataBase = () => {
     return (
         <div className='main'>
             <div className='pageTitle'>
-                <h4>Search Database</h4>
+                <h4>Update Fields in Database</h4>
             </div>
             <div className={styles.searschBlock}>
                 {queryJsx}

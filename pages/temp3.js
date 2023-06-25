@@ -2,21 +2,29 @@ import React, { useEffect, useState } from 'react'
 
 const temp3 = () => {
 
-  const [queries, setQueries] = useState({ search: '', name: '', url: '' });
+const file = 'someFile.jpfffeg';
+const fileExtension = file.split('.').pop();
 
-  useEffect(() => {
-    setQueries({ ...queries, ['search']: 'tempSearch', ['name']: 'tempName' });
-  }, []);
+const unwanteExtensionsdArr = ['jpg', 'jpeg', 'png'];
+
+if(!unwanteExtensionsdArr.includes(fileExtension)) {
+  console.log(file + ' is good');
+}
+else {
+  console.log(file + ' is not good');
+}
 
 
-  console.log('queries: ', queries);
 
 
 
+  console.log('Done');
 
   return (
     <div>
-      nothing
+      Results
+
+
     </div>
   )
 }

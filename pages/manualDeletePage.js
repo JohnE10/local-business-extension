@@ -15,7 +15,7 @@ const manualDeletePage = () => {
         setError(null);
         setResults(null);
 
-        const response = await fetch(`/api/manualDelete?searchQuery=${searchQuery}`)
+        const response = await fetch(`/api/manualDelete?searchQuery=${searchQuery.trim()}`)
         const data = await response.json();
 
         if (data.success) {
