@@ -41,7 +41,7 @@ const thePage = () => {
     // loop through block
     if (entities.length >= 1) {
         Array.from(entities).forEach((entity) => {
-            let mainData = { id: '', name: 'no name', url: 'no url', email: 'no email', phone: 'no phone', advertising: 'no advertising', rating: 'no rating', reviews: 'no reviews', industry: 'no industry', city: 'no city', state: 'no state', search: 'no search' };
+            let mainData = { id: '', name: 'no name', url: 'no url', page: 'no page', email: 'no email', phone: 'no phone', advertising: 'no advertising', rating: 'no rating', reviews: 'no reviews', industry: 'no industry', city: 'no city', state: 'no state', search: 'no search' };
 
             mainData['search'] = search;
             const name = entity.querySelector('.rllt__details .dbg0pd .OSrXXb'); // company name
@@ -94,11 +94,6 @@ const thePage = () => {
     }
 
     console.log('objArr is: ', objArr);
-
-    // for (let i = 0; i < objArr.length; i++) {
-    //     console.log(objArr[i].url);
-    // }
-
 
     // post data to backend to be stored in database
     const fetchUrl = `http://localhost:3000/api/storeData`;

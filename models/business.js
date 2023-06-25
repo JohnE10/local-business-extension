@@ -39,6 +39,12 @@ const business = new Schema({
         type: String,
         required: false,
     },
+
+    page: {
+        type: String,
+        required: false,
+    },
+
     email: {
         type: String,
         required: false,

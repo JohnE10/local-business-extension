@@ -133,9 +133,12 @@ const ProcessEmails2 = () => {
                 for (let i = 0; i < tempArr.length; i++) {
                     if (!contactEmailList.map(a => a.email).includes(tempArr[i][0]) && !tempArr[i][0].includes('/') && !tempArr[i][0].includes("'")) { // no dupes and no junk 
 
-                        if (tempArr[i][0].substr(tempArr[i][0].length - 4) != '.png' && tempArr[i][0].substr(tempArr[i][0].length - 4) != '.png') { // remove any .png or .jpg
-                            contactEmailList.push({ url: strippedUrl, email: tempArr[i][0] }); // add to list
-                            counter2 = counter2 + 1;
+                        const fileExtension = tempArr[i][0].split('.').pop(); // 
+                        const emailTLD  = tempArr[i][0].split('@').pop();
+
+                        // check for unwanted file extensions and email TLDs
+                        if(!unwantedExtensionsdArr.includes(fileExtension) && !leaveOut.includes(emailTLD)) {
+                            contactEmailList.push({ url: strippedUrl, email: tempArr[i][0] }); // add to list // add to list
                         }
 
                     }
@@ -160,16 +163,16 @@ const ProcessEmails2 = () => {
         }
     }, [comboArr]);
 
-    console.log('contactPageContent: ', contactPageContent);
+    // console.log('contactPageContent: ', contactPageContent);
 
-    console.log('emailList is: ', emailList);
-    console.log('checkContact is: ', checkContact);
-    console.log('contactUrls is: ', contactUrls);
-    console.log('contactEmailList', contactEmailList);
+    // console.log('emailList is: ', emailList);
+    // console.log('checkContact is: ', checkContact);
+    // console.log('contactUrls is: ', contactUrls);
+    // console.log('contactEmailList', contactEmailList);
 
-    console.log('comboArr.length is: ', comboArr.length);
-    console.log('emailList.length is: ', emailList.length);
-    console.log('contactEmailList.length is: ', contactEmailList.length);
+    // console.log('comboArr.length is: ', comboArr.length);
+    // console.log('emailList.length is: ', emailList.length);
+    // console.log('contactEmailList.length is: ', contactEmailList.length);
 
     return (
 
@@ -196,7 +199,7 @@ const ProcessEmails2 = () => {
                 <div className='text-center'>
                     <h5 className='text-center mb-3'>Count: {comboArr.length}</h5>
                     {comboArr.map((email, i) => (
-                        <div key={i}>{email.email}</div>
+                        <div key={i}>{email.url} - {email.email}</div>
                     ))}
                 </div>
             }
@@ -254,6 +257,7 @@ export const getFetchData = async (endPoint) => {
     else {
         return '';
     }
+    
 };
 
 // strip url to just domain
