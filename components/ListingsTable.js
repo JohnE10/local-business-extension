@@ -26,19 +26,31 @@ const ListingsTable = (props) => {
       align: 'center',
       headerAlign: 'center'
     },
+    // {
+    //   field: 'url',
+    //   headerName: 'URL',
+    //   flex: 3,
+    //   align: 'center',
+    //   headerAlign: 'center',
+    //   renderCell: (params) => (
+    //     <div className="container text-center text-truncate">
+    //       <Link href={`${params.row.url}`} target="_blank">{params.row.url}</Link>
+    //     </div>
+
+    //   )
+    // },
     {
-      field: 'url',
+      field: 'page',
       headerName: 'URL',
       flex: 3,
       align: 'center',
       headerAlign: 'center',
       renderCell: (params) => (
         <div className="container text-center text-truncate">
-          <Link href={`${params.row.url}`} target="_blank">{params.row.url}</Link>
+          <Link href={`${params.row.page}`} target="_blank">{params.row.page}</Link>
         </div>
 
       )
-
     },
 
   ];

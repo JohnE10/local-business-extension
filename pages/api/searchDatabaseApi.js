@@ -45,6 +45,7 @@ export default async function handler(req, res) {
         if (results) {
             // console.log('results: ', results);
             if (results.length > 0) {
+                console.log('results[0]: ', results[0])
                 if (results[0].search) {
                     // console.log('results[0].search: ', results[0].search);
                 }

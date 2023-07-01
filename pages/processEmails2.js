@@ -157,22 +157,26 @@ const ProcessEmails2 = () => {
 
     let comboArr = [...emailList, ...contactEmailList];
 
+    // send email data to be stored in database
+    const sendData = async (dataObj) => {
+        const fetchUrl = `http://localhost:3000/api/storeData`;
+        const response = await fetch(fetchUrl, {
+            method: 'POST',
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify(dataObj)
+        });
+        // setData(await response.json());
+        // console.log('response is: ', response);
+    }
+
     useEffect(() => {
         if (urls) {
+            sendData(comboArr);
             setIsWorking(false);
         }
     }, [comboArr]);
-
-    // console.log('contactPageContent: ', contactPageContent);
-
-    // console.log('emailList is: ', emailList);
-    // console.log('checkContact is: ', checkContact);
-    // console.log('contactUrls is: ', contactUrls);
-    // console.log('contactEmailList', contactEmailList);
-
-    // console.log('comboArr.length is: ', comboArr.length);
-    // console.log('emailList.length is: ', emailList.length);
-    // console.log('contactEmailList.length is: ', contactEmailList.length);
 
     return (
 
@@ -199,7 +203,8 @@ const ProcessEmails2 = () => {
                 <div className='text-center'>
                     <h5 className='text-center mb-3'>Count: {comboArr.length}</h5>
                     {comboArr.map((email, i) => (
-                        <div key={i}>{email.url} - {email.email}</div>
+                        // <div key={i}>{email.url} - {email.email}</div>
+                        <div key={i}>{email.email}</div>
                     ))}
                 </div>
             }
@@ -208,42 +213,6 @@ const ProcessEmails2 = () => {
 }
 
 export default ProcessEmails2;
-
-// export const fetchApiData = (endPoint) => {
-
-//     const [data, setData] = useState(null);
-//     const [error, setError] = useState(null);
-//     const [loading, setLoading] = useState(false);
-
-//     const runFetch = async () => {
-//         try {
-//             setData(null);
-//             console.log('useFetch ran');
-//             setLoading(true);
-//             const response = await fetch(endPoint);
-//             const responseData = await response.json();
-
-//             if (responseData.success) {
-//                 setData(responseData.success);
-//                 setLoading(false);
-//             }
-//             else if (responseData.error) {
-//                 setError(responseData.error);
-//                 setLoading(false);
-//             }
-//         } catch (error) {
-//             console.log('fetchApiData error: ', error.message);
-//         }
-//     };
-
-//     useEffect(() => {
-//         runFetch();
-//     }, [endPoint]);
-
-//     // return { useFetchData, useFetchError, loading };
-//     return { data, error, loading };
-
-// };
 
 export const getFetchData = async (endPoint) => {
 

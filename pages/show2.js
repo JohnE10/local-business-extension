@@ -5,6 +5,7 @@ import ListingsTable from '../components/ListingsTable';
 import BootstrapModal from '../components/BootstrapModal';
 import Button from 'react-bootstrap/Button';
 import styles from '../styles/Show.module.css';
+import { isValidUrl } from '../utils/helpers';
 
 export default function Show() {
 
@@ -53,7 +54,6 @@ export default function Show() {
                     body: JSON.stringify(listings)
                 });
 
-                // tempData = await response.json();
                 setData(await response.json());
                 console.log('response is: ', response);
             }
@@ -95,14 +95,14 @@ export default function Show() {
                 }
 
                 {!hide && listings && !error && <ListingsTable listings={listings} />}
-                {hide && data && !error &&
+                {/* {hide && data && !error &&
                     <div className='text-center m-3'>
                         <BootstrapModal nonExisting={data} />
                     </div>
-                }
+                } */}
 
-                {hide && data && !error && <ListingsTable nonExisting={data} />}
-                
+                {/* {hide && data && !error && <ListingsTable nonExisting={data} />} */}
+
             </div>
 
         </div>

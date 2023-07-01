@@ -49,14 +49,22 @@ const business = new Schema({
         type: String,
         required: false,
     },
+
     phone: {
         type: String,
         required: false,
     },
+    
     advertising: {
         type: String,
         required: false,
     },
+
+    chat: {
+        type: String,
+        required: false,
+    },
+
     rating: {
         type: String,
         required: false,

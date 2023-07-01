@@ -18,14 +18,14 @@ function BootstrapModal(props) {
 
     const data = [];
 
-    if (tempData) {
-        if (tempData.length) {
-            for (let i = 0; i < tempData.length; i++) {
-                data.push({ id: tempData[i].id, name: tempData[i].name, url: tempData[i].url, search: tempData[i].search })
-            }
-        }
+    // if (tempData) {
+    //     if (tempData.length) {
+    //         for (let i = 0; i < tempData.length; i++) {
+    //             data.push({ id: tempData[i].id, name: tempData[i].name, url: tempData[i].url, search: tempData[i].search })
+    //         }
+    //     }
 
-    }
+    // }
 
     console.log('data is: ', data);
 
@@ -51,8 +51,11 @@ function BootstrapModal(props) {
                 </Modal.Header>
                 <Modal.Body>
 
-                    {data.map((ele) => (
-                        <div key={ele.id}>{ele.url}</div>
+                    {/* {data.map((ele) => ( */}
+                    {tempData.map((ele) => (
+                        
+                        // <div key={ele.id}>{ele.url}</div>
+                        <div key={ele.id}>{ele.page}</div>
                     ))}
                     
                 </Modal.Body>
@@ -64,8 +67,8 @@ function BootstrapModal(props) {
                         </Button>
                     </a>
 
-                    <a href='http://localhost:3000/processEmails' target='_blank'>
-                    {/* <a href='http://localhost:3000/processEmails2' target='_blank'> */}
+                    {/* <a href='http://localhost:3000/processEmails' target='_blank'> */}
+                    <a href='http://localhost:3000/processEmails2' target='_blank'>
                         <Button variant="secondary">
                             Extract Emails
                         </Button>

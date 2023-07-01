@@ -12,26 +12,44 @@ const thePage = () => {
     let index = 0;
     // let mainData = { name: '', url: '', email: '', phone: '', advertising: '', rating: '', reviews: '', industry: '', city: '', state: '', search: '' };
 
+    // // search query
+    // if (searchStr.length >= 1) {
+    //     if (searchStr[0].getAttribute('href')) {
+    //         // let page = searchStr[0].getAttribute('aria-label');
+    //         // console.log('page is: ', page);
+    //         search = searchStr[0].getAttribute('href');
+    //         console.log('searh href is:', search);
+    //         if (search.includes('&')) {
+    //             search = search.split('&')[0];
+    //             if (search.includes('search?q=')) {
+    //                 if (search.split('search?q=')[1]) {
+    //                     search = search.split('search?q=')[1];
+    //                     search = decodeURIComponent(search);
+    //                     search = search.replaceAll('+', ' ');
+    //                     console.log('search is: ', search);
+    //                 }
+    //             }
+    //         }
+    //     }
+    // }
+
     // search query
-    if (searchStr.length >= 1) {
-        if (searchStr[0].getAttribute('href')) {
-            // let page = searchStr[0].getAttribute('aria-label');
-            // console.log('page is: ', page);
-            search = searchStr[0].getAttribute('href');
-            console.log('searh href is:', search);
-            if (search.includes('&')) {
-                search = search.split('&')[0];
-                if (search.includes('search?q=')) {
-                    if (search.split('search?q=')[1]) {
-                        search = search.split('search?q=')[1];
-                        search = decodeURIComponent(search);
-                        search = search.replaceAll('+', ' ');
-                        console.log('search is: ', search);
-                    }
-                }
-            }
-        }
+    // Get the <title> element
+    const titleElement = document.head.querySelector('title');
+
+    // Extract the innerHTML of the <title> element
+    let titleInnerHTML = '';
+    if(titleElement) {
+            titleInnerHTML = titleElement.innerHTML;
+
     }
+
+    // Print the innerHTML of the <title> element
+    console.log('titleInnerHTML: ', titleInnerHTML);
+
+    const search = titleInnerHTML.split('-')[0].trim();
+    console.log('search: ', search);
+
 
     // get componay results block    
 
@@ -79,7 +97,16 @@ const thePage = () => {
                             console.log('anchors.getAttribute ran again');
                             const url = anchors[i].getAttribute('href'); // company site url
                             if (!url.includes('adurl')) {  // leave out the ads
-                                mainData['url'] = url;
+                                // strip domain and update url field
+                                const urlRegex = /^(ftp|http|https):\/\/[^ "]+$/; // url regex
+                                if (urlRegex.test(url)) {
+                                    let temp = new URL(url);
+                                    temp = temp.hostname;
+                                    temp = temp.replace('www.', '');
+                                    mainData['url'] = temp;
+                                }
+
+                                mainData['page'] = url;
                             }
                             else {
                                 mainData['advertising'] = 'Yes';

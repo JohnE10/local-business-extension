@@ -1,6 +1,7 @@
 import styles from '../styles/SeachDatabase.module.css';
 import { useEffect, useState } from 'react'
 import { capFirst } from '../utils/helpers';
+import SearchResultsTable from '../components/searchResultsTable';
 
 
 
@@ -56,7 +57,7 @@ const searchDataBase = () => {
             setError(data.error);
             setLoading(false);
         }
-        
+
     }
 
 
@@ -82,7 +83,7 @@ const searchDataBase = () => {
 
     if (results) {
         if (results.length > 0) {
-            console.log('results: ', results);
+            // console.log('results: ', results);
         }
     }
 
@@ -100,9 +101,9 @@ const searchDataBase = () => {
             {loading && <div>... Loading</div>}
             {results && !loading && <div className='mb-4'>Query Name: {showName} - Query Term: {queryValue}</div>}
             {error && !loading && <div className='text-danger'>{error}</div>}
-            {results && <div>Count: {results.length}</div>}
+            {/* {results && <div>Count: {results.length}</div>} */}
 
-            {results && !loading &&
+            {/* {results && !loading &&
                 results.map((ele, i) => (
                     <div key={i} className='d-flex flex-column justify-content-start align-items-start m-3 '>
                         {Object.keys(ele).map((key, index) => (
@@ -110,6 +111,10 @@ const searchDataBase = () => {
                         ))}
                     </div>
                 ))
+            } */}
+            
+            {results &&
+                <SearchResultsTable listings={results} />
             }
 
         </div>
