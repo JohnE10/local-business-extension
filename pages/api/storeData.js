@@ -9,7 +9,7 @@ export default async function handler(req, res) {
 
   let nonExisting = [];
 
-  const excludeUrls = ['example.com'];
+  const excludeUrls = ['example.com, facebook.com, m.facebook.com'];
 
   // connect to db and insert business - leave out any duplicates
   try {
@@ -41,8 +41,11 @@ export default async function handler(req, res) {
 
           }
           else {
-            const businessEntry = await Business.updateOne({ url: objArr[i]['url'] }, { $set: objArr[i] });
-            // console.log(`${objArr[i]['url']} has been updated`);
+            if (await Business.findOne({ email: 'no email'})) {
+              const businessEntry = await Business.updateOne({ url: objArr[i]['url'] }, { $set: objArr[i] });
+              // console.log(`${objArr[i]['url']} has been updated`);
+            }
+
           }
         }
       }

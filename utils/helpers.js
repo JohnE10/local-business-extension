@@ -186,38 +186,8 @@ export const checkUrlSecure = (url) => {
   });
 };
 
-// export const fetchApiData = (endPoint) => {
+export const stringContains = (str, query) => {
+  const match = query.every(element => str.toLowerCase().includes(element.toLowerCase()));
+  return match;
 
-//   const [data, setData] = useState(null);
-//   const [error, setError] = useState(null);
-//   const [loading, setLoading] = useState(false);
-
-//   const runFetch = async () => {
-//     try {
-//       setData(null);
-//       console.log('useFetch ran');
-//       setLoading(true);
-//       const response = await fetch(endPoint);
-//       const responseData = await response.json();
-
-//       if (responseData.success) {
-//         setData(responseData.success);
-//         setLoading(false);
-//       }
-//       else if (responseData.error) {
-//         setError(responseData.error);
-//         setLoading(false);
-//       }
-//     } catch (error) {
-//       console.log('fetchApiData error: ', error.message);
-//     }
-//   };
-
-//   useEffect(() => {
-//     runFetch();
-//   }, [endPoint]);
-
-//   // return { useFetchData, useFetchError, loading };
-//   return { data, error, loading };
-
-// };
+};

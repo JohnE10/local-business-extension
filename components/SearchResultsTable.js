@@ -48,7 +48,7 @@ const SearchResultsTable = (props) => {
 
     // set width for certain cells
     const modifyCellWidth1 = ['id'];
-    const modifyCellWidth2 = ['rating', 'reviews'];
+    const modifyCellWidth2 = ['rating', 'reviews', 'chat', 'advertising'];
     columns.map((ele, i) => {
         if (modifyCellWidth1.includes(ele.field)) {
             ele['flex'] = 0.1;

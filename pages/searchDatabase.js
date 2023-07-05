@@ -15,7 +15,7 @@ const searchDataBase = () => {
     const [showName, setShowName] = useState('');
     const [active, setActive] = useState(false);
 
-    const [queries, setQueries] = useState({ search: '', name: '', url: '', advertising: '' });
+    const [queries, setQueries] = useState({ search: '', name: '', url: '', email: '', advertising: '' });
 
     const handleQueryChange = (e) => {
 

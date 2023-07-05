@@ -50,6 +50,8 @@ const thePage = () => {
     const search = titleInnerHTML.split('-')[0].trim();
     console.log('search: ', search);
 
+    // check if document includes chat
+    const documentText = document.documentElement.innerHTML;
 
     // get componay results block    
 
@@ -59,7 +61,11 @@ const thePage = () => {
     // loop through block
     if (entities.length >= 1) {
         Array.from(entities).forEach((entity) => {
-            let mainData = { id: '', name: 'no name', url: 'no url', page: 'no page', email: 'no email', phone: 'no phone', advertising: 'no advertising', rating: 'no rating', reviews: 'no reviews', industry: 'no industry', city: 'no city', state: 'no state', search: 'no search' };
+            let mainData = { id: '', name: 'no name', url: 'no url', page: 'no page', email: 'no email', phone: 'no phone', advertising: 'no advertising', chat: 'no chat', rating: 'no rating', reviews: 'no reviews', industry: 'no industry', city: 'no city', state: 'no state', search: 'no search' };
+
+            if (documentText.includes('chat') || documentText.includes('livechat') || documentText.includes('chatbot')) {
+                mainData['chat'] = 'Yes';
+            }
 
             mainData['search'] = search;
             const name = entity.querySelector('.rllt__details .dbg0pd .OSrXXb'); // company name

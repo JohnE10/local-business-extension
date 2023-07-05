@@ -25,8 +25,12 @@ const ProcessEmails2 = () => {
     let counter1 = 0;
     let counter2 = 0;
 
+    let comboArr = []
+
     const handleClick = (e) => {
         if (textArea != '') {
+            setEmailList([]);
+            setContactEmailList([]);
             setIsWorking(true);
             setUrls(textArea.split('\n'));
         }
@@ -84,9 +88,9 @@ const ProcessEmails2 = () => {
                                     if (!contactUrls.map(a => a.contactUrl).includes(aTag.getAttribute('href'))) { // check for dupes
                                         contactUrls.push({ url: ele.url, contactUrl: aTag.getAttribute('href') })
 
-                                        if (isValidUrl(aTag.getAttribute('href') )) {
+                                        if (isValidUrl(aTag.getAttribute('href'))) {
 
-                                            const endPoint = `/api/lib/helpers/fetchUrlData?url=${aTag.getAttribute('href') }`;
+                                            const endPoint = `/api/lib/helpers/fetchUrlData?url=${aTag.getAttribute('href')}`;
                                             const results = await getFetchData(endPoint);
                                             console.log('results: ', results);
 
@@ -108,11 +112,11 @@ const ProcessEmails2 = () => {
                     if (!emailList.map(a => a.email).includes(tempArr[i][0]) && !tempArr[i][0].includes('/') && !tempArr[i][0].includes("'")) { // no dupes and no junk 
 
                         const fileExtension = tempArr[i][0].split('.').pop(); // 
-                        const emailTLD  = tempArr[i][0].split('@').pop();
+                        const emailTLD = tempArr[i][0].split('@').pop();
 
 
                         // check for unwanted file extensions and email TLDs
-                        if(!unwantedExtensionsdArr.includes(fileExtension) && !leaveOut.includes(emailTLD)) {
+                        if (!unwantedExtensionsdArr.includes(fileExtension) && !leaveOut.includes(emailTLD)) {
                             emailList.push({ url: strippedUrl, email: tempArr[i][0] }); // add to list
                         }
                     }
@@ -134,10 +138,10 @@ const ProcessEmails2 = () => {
                     if (!contactEmailList.map(a => a.email).includes(tempArr[i][0]) && !tempArr[i][0].includes('/') && !tempArr[i][0].includes("'")) { // no dupes and no junk 
 
                         const fileExtension = tempArr[i][0].split('.').pop(); // 
-                        const emailTLD  = tempArr[i][0].split('@').pop();
+                        const emailTLD = tempArr[i][0].split('@').pop();
 
                         // check for unwanted file extensions and email TLDs
-                        if(!unwantedExtensionsdArr.includes(fileExtension) && !leaveOut.includes(emailTLD)) {
+                        if (!unwantedExtensionsdArr.includes(fileExtension) && !leaveOut.includes(emailTLD)) {
                             contactEmailList.push({ url: strippedUrl, email: tempArr[i][0] }); // add to list // add to list
                         }
 
@@ -155,7 +159,7 @@ const ProcessEmails2 = () => {
 
     }
 
-    let comboArr = [...emailList, ...contactEmailList];
+    comboArr = [...emailList, ...contactEmailList];
 
     // send email data to be stored in database
     const sendData = async (dataObj) => {
@@ -181,10 +185,9 @@ const ProcessEmails2 = () => {
     return (
 
         <div>
-            {emailList.length < 1 && contactEmailList < 1 && noEmailList.length < 1 &&
+            {/* {emailList.length < 1 && contactEmailList < 1 && noEmailList.length < 1 &&
                 <div className='text-center'>
                     <label className='w-100 fw-bold mb-1'>Paste URLs:</label>
-                    {/* <textarea className='w-50' rows={6} */}
                     <textarea
                         value={textArea}
                         placeholder='Paste your urls here...'
@@ -195,7 +198,21 @@ const ProcessEmails2 = () => {
                     </div>
 
                 </div>
-            }
+            } */}
+
+            <div className='text-center'>
+                <label className='w-100 fw-bold mb-1'>Paste URLs:</label>
+                {/* <textarea className='w-50' rows={6} */}
+                <textarea
+                    value={textArea}
+                    placeholder='Paste your urls here...'
+                    onChange={(e) => setTextArea(e.target.value)}
+                />
+                <div className='w100 m-3'>
+                    <button onClick={handleClick}>Submit</button>
+                </div>
+
+            </div>
 
             {comboArr.length > 0 && <h4 className='text-center m-3'>Email List</h4>}
 
@@ -226,7 +243,7 @@ export const getFetchData = async (endPoint) => {
     else {
         return '';
     }
-    
+
 };
 
 // strip url to just domain

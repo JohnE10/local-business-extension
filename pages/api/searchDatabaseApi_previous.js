@@ -8,11 +8,17 @@ export default async function handler(req, res) {
 
     const temp = { queryName: queryName };
 
+
     console.log('queryName: ', queryName);
     console.log('queryValue: ', queryValue);
 
-    // regex search
+
+
+    // const searchRegEx = /^.*albany.*$/;
+    // const searchRegEx = new RegExp(`^.*${queryValue}.*$`);
     const searchRegEx = new RegExp(`^.*${queryValue}.*$`, 'i');
+
+
 
     console.log('rsearchRegEx: ', searchRegEx);
 
