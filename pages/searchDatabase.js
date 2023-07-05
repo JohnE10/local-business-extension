@@ -46,6 +46,7 @@ const searchDataBase = () => {
         setResults(null);
 
         const response = await fetch(`/api/searchDatabaseApi?queryValue=${queryValue}&queryName=${queryName}`);
+
         const data = await response.json();
 
         if (data.success) {
@@ -60,8 +61,6 @@ const searchDataBase = () => {
 
     }
 
-
-
     const queryJsx = Object.entries(queries).map(([key, value]) => (
         <div key={key} className={styles.search}>
             <div><label>Search by {key}:</label></div>
@@ -74,23 +73,19 @@ const searchDataBase = () => {
                 />
             </div>
             <div>
-                {/* <button id={`${key}Button`} className={active ? '' : 'disabled'} onClick={handleSearch} disabled={!active}>Submit</button> */}
+
                 <button id={`${key}Button`} onClick={handleSearch} disabled={!active}>Submit</button>
 
             </div>
         </div>
     ));
 
-    if (results) {
-        if (results.length > 0) {
-            // console.log('results: ', results);
-        }
-    }
 
 
 
     return (
         <div className='main'>
+
             <div className='pageTitle'>
                 <h4>Search Database</h4>
             </div>
@@ -101,17 +96,6 @@ const searchDataBase = () => {
             {loading && <div>... Loading</div>}
             {results && !loading && <div className='mb-4'>Query Name: {showName} - Query Term: {queryValue}</div>}
             {error && !loading && <div className='text-danger'>{error}</div>}
-            {/* {results && <div>Count: {results.length}</div>} */}
-
-            {/* {results && !loading &&
-                results.map((ele, i) => (
-                    <div key={i} className='d-flex flex-column justify-content-start align-items-start m-3 '>
-                        {Object.keys(ele).map((key, index) => (
-                            <div style={{ width: '700px' }}>{capFirst(key)}: {ele[key]}</div>
-                        ))}
-                    </div>
-                ))
-            } */}
             
             {results &&
                 <SearchResultsTable listings={results} />
