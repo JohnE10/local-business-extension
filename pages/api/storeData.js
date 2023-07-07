@@ -9,7 +9,8 @@ export default async function handler(req, res) {
 
   let nonExisting = [];
 
-  const excludeUrls = ['example.com, facebook.com, m.facebook.com'];
+  const excludeUrls = ['example.com', 'walmart.com'];
+  const socialPages = ['facebook.com', 'm.facebook.com', 'fb.me', 'poplme.co'];
 
   // connect to db and insert business - leave out any duplicates
   try {
@@ -41,7 +42,12 @@ export default async function handler(req, res) {
 
           }
           else {
-            if (await Business.findOne({ email: 'no email'})) {
+            if(socialPages.includes(objArr[i]['url'])) {
+              if (!await Business.findOne({ page: objArr[i]['page'] })) {
+                const businessEntry = await Business.create(objArr[i]);
+              }
+            }
+            else if (await Business.findOne({ email: 'no email'})) {
               const businessEntry = await Business.updateOne({ url: objArr[i]['url'] }, { $set: objArr[i] });
               // console.log(`${objArr[i]['url']} has been updated`);
             }
