@@ -37,12 +37,14 @@ const handler = async (req, res) => {
 
         const listings = await page.$$eval('div[jscontroller="xkZ6Lb"]', (blocks) => {
 
-            return blocks.map((ele) => {
+            return blocks.map((ele, index) => {
                 let mainData = { id: '', name: 'no name', url: 'no url', page: 'no page', email: 'no email', phone: 'no phone', advertising: 'no advertising', chat: 'no chat', rating: 'no rating', reviews: 'no reviews', industry: 'no industry', city: 'no city', state: 'no state', search: 'no search' };
 
+                // set element id
+                mainData['id'] = index;
                 // get name
                 if (ele.querySelector('.deyx8d .rgnuSb.xYjf2e') && ele.querySelector('.deyx8d .rgnuSb.xYjf2e').textContent) {
-                    
+
                     mainData['name'] = ele.querySelector('.rgnuSb.xYjf2e').textContent;
 
                     // get page, url and advertising
@@ -67,12 +69,21 @@ const handler = async (req, res) => {
                         }
                     }
 
-                    
+                    // get ratings and reviews
+                    if (ele.querySelector('.deyx8d .rGaJuf') && ele.querySelector('.deyx8d .rGaJuf').textContent) {
+                        mainData['rating'] = ele.querySelector('.deyx8d .rGaJuf').textContent;
+
+                    }
+
+                    // get reviews
+                    if (ele.querySelector('.deyx8d .leIgTe') && ele.querySelector('.deyx8d .leIgTe').textContent) {
+                        mainData['reviews'] = ele.querySelector('.deyx8d .leIgTe').textContent.replace('(', '').replace(')', '');
+                    }
+
+                    console.log(mainData);
+                    return (mainData);
+
                 }
-
-                console.log(mainData);
-                return (mainData);
-
             })
         });
 
@@ -195,7 +206,7 @@ const handler = async (req, res) => {
             console.log({ nextPageBoolean });
 
             await goToNextpage(page);
-            // await browser.close();
+
 
         } while (await hasNextpage(page))
 
@@ -204,6 +215,8 @@ const handler = async (req, res) => {
         await getListingDetails(page, searchQuery);
 
         console.log('Done');
+
+        await browser.close();
 
         return res.status(200).json({ success: listingArr });
 
