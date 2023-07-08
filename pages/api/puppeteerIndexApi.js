@@ -1,25 +1,36 @@
 
-
-
-
 const handler = async (req, res) => {
 
     const puppeteer = require('puppeteer');
 
+    // listing array
+    let listingArr = [];
+
+    // wait function
+    const wait = (milliseconds) => {
+        return new Promise((resolve) => setTimeout(resolve, milliseconds));
+    };
+
     // go to google places
     const goToGooglePlaces = async (page) => {
+        await wait(2000);
         // click the "More Businesses" button
-        await page.waitForSelector('.oYWfcb.OSrXXb.RB2q5e');
-        await page.click('.oYWfcb.OSrXXb.RB2q5e');
+        const element = await page.$('.oYWfcb.OSrXXb.RB2q5e');
+
+        if (element) {
+            await page.click('.oYWfcb.OSrXXb.RB2q5e');
+        }
+        else {
+            throw Error('Page does not have a link to Google Places');
+        }
+
+        // await page.waitForSelector('.oYWfcb.OSrXXb.RB2q5e');
+        // await page.click('.oYWfcb.OSrXXb.RB2q5e');
     };
 
     // get listing details
-    const getListingDetails = async (page) => {
-
-        // // click the "More Businesses" button
-        // await page.waitForSelector('.oYWfcb.OSrXXb.RB2q5e');
-        // await page.click('.oYWfcb.OSrXXb.RB2q5e');
-
+    const getListingDetails = async (page, search) => {
+        await wait(2000);
         await page.waitForSelector('div[jscontroller="xkZ6Lb"]');
 
         // console.log('waited for selector div[jscontroller="xkZ6Lb"]');
@@ -27,20 +38,45 @@ const handler = async (req, res) => {
         const listings = await page.$$eval('div[jscontroller="xkZ6Lb"]', (blocks) => {
 
             return blocks.map((ele) => {
-                let name = '';
-                let url = '';
+                let mainData = { id: '', name: 'no name', url: 'no url', page: 'no page', email: 'no email', phone: 'no phone', advertising: 'no advertising', chat: 'no chat', rating: 'no rating', reviews: 'no reviews', industry: 'no industry', city: 'no city', state: 'no state', search: 'no search' };
 
+                // get name
                 if (ele.querySelector('.rgnuSb.xYjf2e') && ele.querySelector('.rgnuSb.xYjf2e').textContent) {
-                    name = ele.querySelector('.rgnuSb.xYjf2e').textContent;
+                    mainData['name'] = ele.querySelector('.rgnuSb.xYjf2e').textContent;
+
+                    // get page, url and advertising
                     if (ele.querySelector('a div[jscontroller="CCRWHf"]') && ele.querySelector('a div[jscontroller="CCRWHf"]').getAttribute('data-website-url')) {
-                        url = ele.querySelector('a div[jscontroller="CCRWHf"]').getAttribute('data-website-url');
+
+                        const tempUrl = ele.querySelector('a div[jscontroller="CCRWHf"]').getAttribute('data-website-url');
+
+                        if (!tempUrl.includes('adurl')) {  // leave out the ads
+                            // strip domain and update url field
+                            const urlRegex = /^(ftp|http|https):\/\/[^ "]+$/; // url regex
+                            if (urlRegex.test(tempUrl)) {
+                                let tempUrl2 = new URL(tempUrl);
+                                tempUrl2 = tempUrl2.hostname;
+                                tempUrl2 = tempUrl2.replace('www.', '');
+                                mainData['url'] = tempUrl2;
+                            }
+
+                            mainData['page'] = tempUrl;
+                        }
+                        else {
+                            mainData['advertising'] = 'Yes';
+                        }
                     }
                 }
 
-                console.log({ name, url });
-                return ({ name, url });
+                console.log(mainData);
+                return (mainData);
 
             })
+        });
+
+        // set the value for search and push listings to listingArr
+        listings.map((ele) => {
+            ele['search'] = search.replaceAll('+', ' ');
+            listingArr.push(ele)
         });
 
         console.log({ listings });
@@ -49,13 +85,9 @@ const handler = async (req, res) => {
 
     };
 
-    // wait function
-    const wait = (milliseconds) => {
-        return new Promise((resolve) => setTimeout(resolve, milliseconds));
-    };
-
     // auto scroll function
     const autoScroll = async (page) => {
+        await wait(2000);
         await page.waitForSelector('.YhtaGd.aQOEkf');
         await page.evaluate(async () => {
             await new Promise((resolve) => {
@@ -75,16 +107,24 @@ const handler = async (req, res) => {
         });
     };
 
-    // go to next page
-    const goToNextpage = async (page) => {
-        // click next button if it exists
+    const hasNextpage = async (page) => {
+        // check for Next button
         const element = await page.$('button[aria-label="Suivant"]');
-        if(element) {
-            await page.click('button[aria-label="Suivant"]');
-            await page.waitForNetworkIdle();
+        if (element) {
             return true;
         }
         return false;
+    };
+
+    // go to next page
+    const goToNextpage = async (page) => {
+        await wait(2000);
+        // click next button if it exists
+        // const element = await page.$('button[aria-label="Suivant"]');
+        if (await hasNextpage(page)) {
+            await page.click('button[aria-label="Suivant"]');
+            await page.waitForNetworkIdle();
+        }
 
         // await page.waitForSelector('button[aria-label="Suivant"]');
         // await page.click('button[aria-label="Suivant"]');
@@ -101,6 +141,8 @@ const handler = async (req, res) => {
         if (punctuationRegEx.test(searchQuery)) {
             searchQuery = searchQuery.replace(punctuationRegEx, "");
         }
+
+
 
         // get the search query from url parameter
         searchQuery = searchQuery.trim();
@@ -123,46 +165,38 @@ const handler = async (req, res) => {
             // args: ['--lang=bn-BD,bn']
         });
         const page = await browser.newPage();
-        await page.setExtraHTTPHeaders({
-            'Accept-Language': 'en'
-        });
+
+        // await page.setExtraHTTPHeaders({
+        //     'Accept-Language': 'en'
+        // });
+
         await page.setViewport({
             width: 1300,
             height: 600
         })
-        await page.goto(endPoint);
+        // await page.goto(endPoint);
+        await page.goto(endPoint, {
+            waitUntil: "domcontentloaded"
+        });
 
-        // wait before moving on with code
-        await wait(2000);
-
-        // go to google places
         await goToGooglePlaces(page);
 
-        
+        do {
+            // run the app
+            await autoScroll(page);
+            // let listings = [];
+            // listings = await getListingDetails(page, searchQuery);
+            await getListingDetails(page, searchQuery);
+            const nextPageBoolean = await hasNextpage(page);
+            console.log({ nextPageBoolean });
+            await goToNextpage(page);
 
-        // wait before moving on with code
-        await wait(2000);
+            // await browser.close();
+        } while (await hasNextpage(page))
 
-        // scroll to bottom of page
-        await autoScroll(page);
+        console.log('Done');
 
-        // wait before moving on with code
-        await wait(2000);
-
-        // parse listings
-        let listings = [];
-        listings = await getListingDetails(page);
-
-        // wait before moving on with code
-        await wait(2000);
-
-        const nextPageBoolean = await goToNextpage(page);
-
-        console.log({nextPageBoolean});
-
-        // await browser.close();
-
-        return res.status(200).json({ success: listings });
+        return res.status(200).json({ success: listingArr });
 
     } catch (error) {
         console.log('puppeteerIndexApi error:', error.message);

@@ -30,7 +30,6 @@ const puppeteerIndex = () => {
         }
     }
 
-
     return (
         <div className='main'>
             <div className='pageTitle'>
