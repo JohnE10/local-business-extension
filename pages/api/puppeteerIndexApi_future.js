@@ -1,3 +1,4 @@
+import { queryLocations } from '../../utils/helpers';
 
 const handler = async (req, res) => {
 
@@ -32,6 +33,8 @@ const handler = async (req, res) => {
     const getListingDetails = async (page, search) => {
         await wait(2000);
         await page.waitForSelector('div[jscontroller="xkZ6Lb"]');
+
+        const {runAppSearchQuery, city, state} = search;
 
         // console.log('waited for selector div[jscontroller="xkZ6Lb"]');
 
@@ -87,13 +90,18 @@ const handler = async (req, res) => {
             })
         });
 
-        // set the value for search and push listings to listingArr
+        // set the value for search, city and state, and push listings to listingArr
         listings.map((ele) => {
-            ele['search'] = search.replaceAll('+', ' ');
+            // ele['search'] = search.replaceAll('+', ' ');
+
+            ele['search'] = `${runAppSearchQuery} ${city} ${state}`
+            ele['city'] = city;
+            ele['state'] = state;
             listingArr.push(ele)
         });
 
         console.log({ listings });
+        console.log()
 
         return listings;
 
@@ -144,33 +152,61 @@ const handler = async (req, res) => {
         // await page.click('button[aria-label="Suivant"]');
     };
 
+    // // start the puppeteer scraping process
+    // const runApp = async (runAppSearchQuery, runAppUrl) => {
+
+    //     let runAppEndPoint = runAppUrl;
+
+    //     if (runAppSearchQuery) {
+    //         runAppEndPoint = `${runAppEndPoint}/search?q=${runAppSearchQuery}`;
+    //     }
+    //     await page.goto(runAppEndPoint, {
+    //         waitUntil: "domcontentloaded"
+    //     });
+
+    //     await goToGooglePlaces(page);
+
+    //     do {
+    //         let i = 0
+    //         // run the app
+    //         await autoScroll(page);
+    //         // let listings = [];
+    //         // listings = await getListingDetails(page, searchQuery);
+    //         await getListingDetails(page, searchQuery);
+    //         const nextPageBoolean = await hasNextpage(page);
+    //         console.log({ nextPageBoolean });
+
+    //         await goToNextpage(page);
+
+    //     } while (await hasNextpage(page))
+
+    //     // get listing from the last page
+    //     await autoScroll(page);
+    //     await getListingDetails(page, searchQuery);
+
+    //     console.log('Done');
+    // }
+
 
     try {
+
+        let url = 'https://google.com';
 
         // punctuation regex
         const punctuationRegEx = /[^\w\s]/g;
         let searchQuery = req.query.searchQuery;
+        let queryLocation = req.query.queryLocation;
+
+        // console.log({queryLocation});
 
         // remove punctuation, if there is any
         if (punctuationRegEx.test(searchQuery)) {
             searchQuery = searchQuery.replace(punctuationRegEx, "");
         }
 
-
-
         // get the search query from url parameter
         searchQuery = searchQuery.trim();
         searchQuery = searchQuery.replaceAll(' ', '+');
-
-        let url = 'https://google.com';
-
-        let endPoint = url;
-
-        if (searchQuery) {
-            endPoint = `${endPoint}/search?q=${searchQuery}`;
-        }
-
-        console.log({ endPoint });
 
         // launch Puppeteer browser and go to the specified url
         const browser = await puppeteer.launch({
@@ -180,48 +216,80 @@ const handler = async (req, res) => {
         });
         const page = await browser.newPage();
 
-        // await page.setExtraHTTPHeaders({
-        //     'Accept-Language': 'en'
-        // });
-
         await page.setViewport({
             width: 1300,
             height: 600
         })
-        // await page.goto(endPoint);
-        await page.goto(endPoint, {
-            waitUntil: "domcontentloaded"
-        });
-
-        await goToGooglePlaces(page);
-
-        do {
-            // run the app
-            await autoScroll(page);
-            // let listings = [];
-            // listings = await getListingDetails(page, searchQuery);
-            await getListingDetails(page, searchQuery);
-            const nextPageBoolean = await hasNextpage(page);
-            console.log({ nextPageBoolean });
-
-            await goToNextpage(page);
 
 
-        } while (await hasNextpage(page))
 
-        // get listing from the last page
-        await autoScroll(page);
-        await getListingDetails(page, searchQuery);
+        // start the puppeteer scraping process
+        const runApp = async (runAppUrl, runAppSearchQuery, runAppQueryLocation) => {
 
-        console.log('Done');
+            // get state
+            const state = runAppQueryLocation.replace('Cities', '');
 
-        await browser.close();
+            // get cities
+            let cities = queryLocations[runAppQueryLocation];
+            cities = cities.map((city) => {
+                return city.trim().replaceAll(' ', '+');
+            })
 
-        return res.status(200).json({ success: listingArr });
+        
+            const listings = cities.map(async (city) => {
+
+                let runAppEndPoint = runAppUrl;
+
+                if (runAppSearchQuery) {
+                    runAppEndPoint = `${runAppEndPoint}/search?q=${runAppSearchQuery}+${city}+${state}`;
+                }
+
+                // full search
+                const fullSearchQuery = {runAppSearchQuery, city, state}
+
+                console.log('runAppEndPoint:', runAppEndPoint)
+
+                await page.goto(runAppEndPoint, {
+                    waitUntil: "domcontentloaded"
+                });
+
+                await goToGooglePlaces(page);
+
+                do {
+                    let i = 0;
+                    // put the pieces together
+                    await autoScroll(page);
+                    await getListingDetails(page, fullSearchQuery);
+                    const nextPageBoolean = await hasNextpage(page);
+                    console.log({ nextPageBoolean });
+
+                    await goToNextpage(page);
+
+                } while (await hasNextpage(page))
+
+                // get listing from the last page
+                await autoScroll(page);
+                const listings = await getListingDetails(page, fullSearchQuery);
+
+                return listings;
+
+            })
+
+            return {listings, runAppSearchQuery, runAppQueryLocation}
+
+        }
+
+        const finalResults = await runApp(url, searchQuery, queryLocation);
+
+        console.log(`${searchQuery} ${queryLocation.replace('Cities', '')} done`);
+
+        // await browser.close();
+
+        return res.status(200).json({ success: finalResults });
 
     } catch (error) {
         console.log('puppeteerIndexApi error:', error.message);
-        return res.status(200).json({ 'puppeteerIndexApi error': error.message });
+        // return res.status(200).json({ 'puppeteerIndexApi error': error.message });
     }
 
 }
