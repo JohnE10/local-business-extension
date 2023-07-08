@@ -41,7 +41,8 @@ const handler = async (req, res) => {
                 let mainData = { id: '', name: 'no name', url: 'no url', page: 'no page', email: 'no email', phone: 'no phone', advertising: 'no advertising', chat: 'no chat', rating: 'no rating', reviews: 'no reviews', industry: 'no industry', city: 'no city', state: 'no state', search: 'no search' };
 
                 // get name
-                if (ele.querySelector('.rgnuSb.xYjf2e') && ele.querySelector('.rgnuSb.xYjf2e').textContent) {
+                if (ele.querySelector('.deyx8d .rgnuSb.xYjf2e') && ele.querySelector('.deyx8d .rgnuSb.xYjf2e').textContent) {
+                    
                     mainData['name'] = ele.querySelector('.rgnuSb.xYjf2e').textContent;
 
                     // get page, url and advertising
@@ -65,6 +66,8 @@ const handler = async (req, res) => {
                             mainData['advertising'] = 'Yes';
                         }
                     }
+
+                    
                 }
 
                 console.log(mainData);
@@ -182,6 +185,7 @@ const handler = async (req, res) => {
         await goToGooglePlaces(page);
 
         do {
+            let i = 0
             // run the app
             await autoScroll(page);
             // let listings = [];
@@ -189,10 +193,15 @@ const handler = async (req, res) => {
             await getListingDetails(page, searchQuery);
             const nextPageBoolean = await hasNextpage(page);
             console.log({ nextPageBoolean });
-            await goToNextpage(page);
 
+            await goToNextpage(page);
             // await browser.close();
+
         } while (await hasNextpage(page))
+
+        // get listing from the last page
+        await autoScroll(page);
+        await getListingDetails(page, searchQuery);
 
         console.log('Done');
 
