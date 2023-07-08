@@ -1,4 +1,3 @@
-import { queryLocations } from '../../utils/helpers';
 
 const handler = async (req, res) => {
 
@@ -151,21 +150,20 @@ const handler = async (req, res) => {
         // punctuation regex
         const punctuationRegEx = /[^\w\s]/g;
         let searchQuery = req.query.searchQuery;
-        let queryLocation = req.query.queryLocation;
 
         // remove punctuation, if there is any
         if (punctuationRegEx.test(searchQuery)) {
             searchQuery = searchQuery.replace(punctuationRegEx, "");
         }
 
+
+
         // get the search query from url parameter
         searchQuery = searchQuery.trim();
         searchQuery = searchQuery.replaceAll(' ', '+');
 
-        // get cities
-        const cities = queryLocations.queryLocation;
-
         let url = 'https://google.com';
+
         let endPoint = url;
 
         if (searchQuery) {
@@ -190,12 +188,7 @@ const handler = async (req, res) => {
             width: 1300,
             height: 600
         })
-
-        // start the puppeteer scraping process
-
-        if (searchQuery) {
-            endPoint = `${endPoint}/search?q=${searchQuery}`;
-        }
+        // await page.goto(endPoint);
         await page.goto(endPoint, {
             waitUntil: "domcontentloaded"
         });
@@ -213,6 +206,7 @@ const handler = async (req, res) => {
             console.log({ nextPageBoolean });
 
             await goToNextpage(page);
+
 
         } while (await hasNextpage(page))
 
