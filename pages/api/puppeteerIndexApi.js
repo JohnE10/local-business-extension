@@ -41,7 +41,7 @@ const handler = async (req, res) => {
                 let mainData = { id: '', name: 'no name', url: 'no url', page: 'no page', email: 'no email', phone: 'no phone', advertising: 'no advertising', chat: 'no chat', rating: 'no rating', reviews: 'no reviews', industry: 'no industry', city: 'no city', state: 'no state', search: 'no search' };
 
                 // set element id
-                mainData['id'] = index;
+                mainData['id'] = index + 1;
                 // get name
                 if (ele.querySelector('.deyx8d .rgnuSb.xYjf2e') && ele.querySelector('.deyx8d .rgnuSb.xYjf2e').textContent) {
 
