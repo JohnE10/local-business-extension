@@ -191,3 +191,7 @@ export const stringContains = (str, query) => {
   return match;
 
 };
+
+export const queryLocations = {
+  laCities: ['New Orleans', 'Baton Rouge', 'Shreveport', 'Metairie', 'Lafayette', 'Lake Charles', 'Kenner', 'Bossier City', 'Monroe', 'Alexandria', 'Prairieville', 'Marrero', 'Houma', 'Central', 'Laplace', 'Slidell', 'New Iberia', 'Terrytown', 'Ruston', 'Chalmette', 'Bayou Cane', 'Hammond', 'Harvey', 'Sulphur', 'Shenandoah', 'Zachary', 'Estelle', 'Natchitoches', 'Youngsville', 'Gretna', 'Thibodaux', 'Opelousas', 'Broussard', 'Luling', 'Pineville', 'River Ridge', 'Mandeville', 'Claiborne', 'Gonzales', 'West Monroe', 'Carencro', 'Baker', 'Destrehan', 'Covington', 'Moss Bluff', 'Minden', 'Crowley', 'Woodmere', 'Bayou Blue', 'Waggaman', 'Morgan City', 'Raceland', 'Gardere', 'Abbeville', 'Timberlane', 'Jefferson', 'Bogalusa', 'Belle Chasse', 'DeRidder', 'Jennings', 'Denham Springs', 'Fort Polk South', 'Eunice', 'Oak Hills Place', 'Bastrop', 'Merrydale', 'Old Jefferson', 'Harahan', 'Village St. George', 'Reserve', 'Scott', 'Eden Isle', 'Westwego', 'Prien', 'Ponchatoula', 'Lacombe', 'St. Rose', 'Bridge City', 'Red Chute', 'Breaux Bridge', 'Galliano', 'Addis', 'Meraux', 'Rayne', 'Donaldsonville', 'Inniswold', 'Elmwood', 'Larose', 'St. Gabriel', 'Oakdale', 'Franklin', 'Walker', 'Ville Platte', 'Gray', 'Plaquemine', 'Tallulah', 'Brownfields', 'Patterson', 'Schriever', 'Leesville'],
+}
