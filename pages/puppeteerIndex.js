@@ -16,6 +16,7 @@ const puppeteerIndex = () => {
     const [cities, setCities] = useState(null);
     const [cityCount, setCityCount] = useState(0);
     const [runUseEffect, setRunUseEffect] = useState(false);
+    const [counter, setCounter] = useState(0);
 
     // start the process
     const run = async (searchQuery, city, state) => {
@@ -51,14 +52,14 @@ const puppeteerIndex = () => {
 
     useEffect(() => {
         if (runUseEffect) {
-            run(searchQuery, cities, state);
+            run(searchQuery, cities[0], state);
         }
     }, [runUseEffect]);
 
     const runPuppeteerIndex = async () => {
 
         setRunUseEffect(true);
-        
+
         // queryLocations keys array
         const queryLocationKeys = Object.keys(queryLocations);
 
