@@ -18,6 +18,9 @@ const puppeteerIndex = () => {
     const [runUseEffect, setRunUseEffect] = useState(false);
     const [counter, setCounter] = useState(0);
 
+// try {
+    
+
     // start the process
     const run = async (searchQuery, city, state) => {
         setLoading(true);
@@ -50,9 +53,35 @@ const puppeteerIndex = () => {
         }
     });
 
+    let i = 0;
     useEffect(() => {
         if (runUseEffect) {
-            run(searchQuery, cities[0], state);
+            const fetchData = async (counter) => {
+                // await run(searchQuery, cities[counter], state);
+                console.log({ i });
+                await run(searchQuery, cities[counter], state);
+                console.log('api ran');
+                i++;
+                if (i < cityCount) {
+                    fetchData(i)
+                }
+                else {
+                    setRunUseEffect(false);
+                    console.log('Ran all cities');
+                }
+
+                // if (counter < cityCount) {
+                //     // await run(searchQuery, cities[counter], state);
+                //     setCounter(counter + 1)
+                // }
+                // else {
+                //     setRunUseEffect(false);
+                //     console.log('Ran all cities');
+                // }
+            }
+            fetchData(i);
+
+
         }
     }, [runUseEffect]);
 
@@ -106,6 +135,11 @@ const puppeteerIndex = () => {
 
 
     }
+
+// } catch (error) {
+//     console.log('puppeteerIndex error:', error.message);
+//     setError('puppeteerIndex error: ' + error.message);
+// }
 
     return (
         <div className='main'>
