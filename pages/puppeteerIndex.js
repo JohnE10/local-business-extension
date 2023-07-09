@@ -12,12 +12,25 @@ const puppeteerIndex = () => {
     const [searchQueryError, setSearchQueryError] = useState(null);
     const [queryLocationError, setQueryLocationError] = useState(null);
     const [loading, setLoading] = useState(false);
+    const [state, setState] = useState(null);
+    const [cities, setCities] = useState(null);
+    const [cityCount, setCityCount] = useState(0);
 
-    // queryLocations keys array
-    const queryLocationKeys = Object.keys(queryLocations);
+
+
+    useEffect(() => {
+        setState(queryLocation.replace('Cities', ''));
+        setCities(queryLocations[queryLocation]);
+        if (queryLocation) {
+            setCityCount(queryLocations[queryLocation].length);
+        }
+    });
 
 
     const runPuppeteerIndex = async () => {
+
+        // queryLocations keys array
+        const queryLocationKeys = Object.keys(queryLocations);
 
         // check that queryLocation is on the list
         if (queryLocationKeys.includes(queryLocation)) {
@@ -28,25 +41,13 @@ const puppeteerIndex = () => {
             return;
         }
 
-        const state = queryLocation.replace('Cities', '');
-
-        let cities = queryLocations[queryLocation];
-
-        // city count
-        const cityCount = cities.length;
-
-        console.log({ state, cities });
-
         // check search term not empty
-
-        if (searchQuery == '') {
+        if (searchQuery.trim() == '') {
             setSearchQueryError('Cannot be empty');
         }
 
-        // tbd
-       
-        const city = 'elmwood';
-        
+        console.log({ searchQuery, state, cities, cityCount });
+
         const run = async (searchQuery, city, state) => {
             setLoading(true);
             setError(null);
@@ -56,8 +57,6 @@ const puppeteerIndex = () => {
 
             const response = await fetch(`/api/puppeteerIndexApi?searchQuery=${searchQuery.trim()}&city=${city}&state=${state}`);
 
-
-            // const response = await fetch(`/api/puppeteerIndexApi?searchQuery=${searchQuery.trim()}&city=${city}&state=${state}&cityCount=${cityCount}`);
             const data = await response.json();
 
             if (data.success) {
@@ -71,7 +70,8 @@ const puppeteerIndex = () => {
                 setLoading(false);
             }
         }
-        run(searchQuery, city, state);
+
+        await run(searchQuery, cities, state);
 
 
     }
