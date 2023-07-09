@@ -29,7 +29,7 @@ const handler = async (req, res) => {
     };
 
     // get listing details
-    const getListingDetails = async (page, search) => {
+    const getListingDetails = async (page, search, city, state) => {
         await wait(2000);
         await page.waitForSelector('div[jscontroller="xkZ6Lb"]');
 
@@ -89,8 +89,10 @@ const handler = async (req, res) => {
 
         // set the value for search and push listings to listingArr
         listings.map((ele) => {
-            ele['search'] = search.replaceAll('+', ' ');
-            listingArr.push(ele)
+            ele['search'] = search.replaceAll('+', ' ') + ' ' + city.replaceAll('+', ' ') + ' ' + state.replaceAll('+', ' ');
+            ele['city'] = city.replaceAll('+', ' ');
+            ele['state'] = state.replaceAll('+', ' ');
+            listingArr.push(ele);
         });
 
         console.log({ listings });
@@ -156,8 +158,6 @@ const handler = async (req, res) => {
             searchQuery = searchQuery.replace(punctuationRegEx, "");
         }
 
-
-
         // get the search query from url parameter
         searchQuery = searchQuery.trim();
         searchQuery = searchQuery.replaceAll(' ', '+');
@@ -188,10 +188,6 @@ const handler = async (req, res) => {
         });
         const page = await browser.newPage();
 
-        // await page.setExtraHTTPHeaders({
-        //     'Accept-Language': 'en'
-        // });
-
         await page.setViewport({
             width: 1300,
             height: 600
@@ -206,9 +202,7 @@ const handler = async (req, res) => {
         do {
             // run the app
             await autoScroll(page);
-            // let listings = [];
-            // listings = await getListingDetails(page, searchQuery);
-            await getListingDetails(page, searchQuery);
+            await getListingDetails(page, searchQuery, city, state);
             const nextPageBoolean = await hasNextpage(page);
             console.log({ nextPageBoolean });
 
@@ -219,7 +213,7 @@ const handler = async (req, res) => {
 
         // get listing from the last page
         await autoScroll(page);
-        await getListingDetails(page, searchQuery);
+        await getListingDetails(page, searchQuery, city, state);
 
         console.log('Done');
 
