@@ -7,21 +7,11 @@ import { checkLink, chooseDirectory, copyFile, createDirectory, createDirectoryA
 
 const ApiTemp2 = async (req, res) => {
 
-	const fs = require('fs');
-	const path = require('path');
+	const temp = req.body;
+	console.log({temp});
 
-	const directory = 'C:/Users/jetto/OneDrive/Desktop/Files/Coding-ASUS/WP Migration Campaign/smilingfacesnola/public/';
+	return res.json({success: 'temp'})
 
-	const filename = 'Defaults21ea.eot';
-
-	const foundFilePath = searchForFile(directory, filename);
-	if (foundFilePath) {
-		console.log(`File found at: ${foundFilePath}`);
-	} else {
-		console.log(`File not found.`);
-	}
-	
-	return res.json({success: 'Done'})
 };
 
 export default ApiTemp2;

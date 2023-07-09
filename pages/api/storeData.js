@@ -9,7 +9,7 @@ export default async function handler(req, res) {
 
   let nonExisting = [];
 
-  const excludeUrls = ['example.com', 'walmart.com'];
+  const excludeUrls = ['example.com', 'walmart.com', 'google.com'];
   const socialPages = ['facebook.com', 'm.facebook.com', 'fb.me', 'poplme.co'];
 
   // connect to db and insert business - leave out any duplicates
@@ -58,8 +58,9 @@ export default async function handler(req, res) {
 
     }
 
-    console.log('Done')
-    return res.status(200).send(JSON.stringify(nonExisting));
+    console.log('Listings added to database')
+    return res.status(200).json({success: 'Listings added to database'});
+    // return res.status(200).send(JSON.stringify(nonExisting));
 
   } catch (err) {
     return res.status(200).send({ error: err.message })

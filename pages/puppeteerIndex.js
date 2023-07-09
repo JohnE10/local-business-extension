@@ -16,7 +16,7 @@ const puppeteerIndex = () => {
     const [cities, setCities] = useState(null);
     const [cityCount, setCityCount] = useState(0);
     const [runUseEffect, setRunUseEffect] = useState(false);
-    const [counter, setCounter] = useState(0);
+
 
 // try {
     
@@ -57,7 +57,6 @@ const puppeteerIndex = () => {
     useEffect(() => {
         if (runUseEffect) {
             const fetchData = async (counter) => {
-                // await run(searchQuery, cities[counter], state);
                 console.log({ i });
                 await run(searchQuery, cities[counter], state);
                 console.log('api ran');
@@ -69,15 +68,6 @@ const puppeteerIndex = () => {
                     setRunUseEffect(false);
                     console.log('Ran all cities');
                 }
-
-                // if (counter < cityCount) {
-                //     // await run(searchQuery, cities[counter], state);
-                //     setCounter(counter + 1)
-                // }
-                // else {
-                //     setRunUseEffect(false);
-                //     console.log('Ran all cities');
-                // }
             }
             fetchData(i);
 

@@ -136,14 +136,23 @@ const handler = async (req, res) => {
     const goToNextpage = async (page) => {
         await wait(2000);
         // click next button if it exists
-        // const element = await page.$('button[aria-label="Suivant"]');
         if (await hasNextpage(page)) {
             await page.click('button[aria-label="Suivant"]');
             await page.waitForNetworkIdle();
         }
+    };
 
-        // await page.waitForSelector('button[aria-label="Suivant"]');
-        // await page.click('button[aria-label="Suivant"]');
+    const sendDataToDB = async (objArr) => {
+        const url = 'http://localhost:3000/api/storeData';
+        const response = await fetch(url, {
+            method: 'POST',
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify(objArr)
+        });
+        // setData(await response.json());
+        // console.log('response is: ', response);
     };
 
 
@@ -219,11 +228,13 @@ const handler = async (req, res) => {
 
         await browser.close();
 
+        await sendDataToDB(listingArr);
+
         return res.status(200).json({ success: listingArr });
 
     } catch (error) {
         console.log('puppeteerIndexApi error:', error.message);
-        return res.status(200).json({ 'puppeteerIndexApi error': error.message });
+        // return res.status(200).json({ 'puppeteerIndexApi error': error.message });
     }
 
 }
