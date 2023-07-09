@@ -52,7 +52,7 @@ const puppeteerIndex = () => {
             setError(null);
             setResults(null);
 
-            console.log({ searchQuery, cities, state })
+            console.log({ searchQuery, city, state })
 
             const response = await fetch(`/api/puppeteerIndexApi?searchQuery=${searchQuery.trim()}&city=${city}&state=${state}`);
 
@@ -71,7 +71,7 @@ const puppeteerIndex = () => {
                 setLoading(false);
             }
         }
-        run(searchQuery, cities, state);
+        run(searchQuery, city, state);
 
 
     }

@@ -162,12 +162,20 @@ const handler = async (req, res) => {
         searchQuery = searchQuery.trim();
         searchQuery = searchQuery.replaceAll(' ', '+');
 
+        // get city
+        let city = req.query.city;
+        city = city.trim().replaceAll(' ', '+');
+
+        // get state
+        let state = req.query.state;
+        state = state.trim().replaceAll(' ', '+');
+
         let url = 'https://google.com';
 
         let endPoint = url;
 
         if (searchQuery) {
-            endPoint = `${endPoint}/search?q=${searchQuery}`;
+            endPoint = `${endPoint}/search?q=${searchQuery}+${city}+${state}`;
         }
 
         console.log({ endPoint });
