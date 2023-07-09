@@ -15,8 +15,31 @@ const puppeteerIndex = () => {
     const [state, setState] = useState(null);
     const [cities, setCities] = useState(null);
     const [cityCount, setCityCount] = useState(0);
+    const [runUseEffect, setRunUseEffect] = useState(false);
 
+    // start the process
+    const run = async (searchQuery, city, state) => {
+        setLoading(true);
+        setError(null);
+        setResults(null);
 
+        console.log({ searchQuery, city, state })
+
+        const response = await fetch(`/api/puppeteerIndexApi?searchQuery=${searchQuery.trim()}&city=${city}&state=${state}`);
+
+        const data = await response.json();
+
+        if (data.success) {
+            setResults(data.success);
+            setLoading(false);
+            console.log('data:', data.success);
+        }
+        else if (data.error) {
+            console.log('data.error: ', data.error);
+            setError(data.error);
+            setLoading(false);
+        }
+    }
 
     useEffect(() => {
         setState(queryLocation.replace('Cities', ''));
@@ -26,9 +49,16 @@ const puppeteerIndex = () => {
         }
     });
 
+    useEffect(() => {
+        if (runUseEffect) {
+            run(searchQuery, cities, state);
+        }
+    }, [runUseEffect]);
 
     const runPuppeteerIndex = async () => {
 
+        setRunUseEffect(true);
+        
         // queryLocations keys array
         const queryLocationKeys = Object.keys(queryLocations);
 
@@ -48,30 +78,30 @@ const puppeteerIndex = () => {
 
         console.log({ searchQuery, state, cities, cityCount });
 
-        const run = async (searchQuery, city, state) => {
-            setLoading(true);
-            setError(null);
-            setResults(null);
+        // const run = async (searchQuery, city, state) => {
+        //     setLoading(true);
+        //     setError(null);
+        //     setResults(null);
 
-            console.log({ searchQuery, city, state })
+        //     console.log({ searchQuery, city, state })
 
-            const response = await fetch(`/api/puppeteerIndexApi?searchQuery=${searchQuery.trim()}&city=${city}&state=${state}`);
+        //     const response = await fetch(`/api/puppeteerIndexApi?searchQuery=${searchQuery.trim()}&city=${city}&state=${state}`);
 
-            const data = await response.json();
+        //     const data = await response.json();
 
-            if (data.success) {
-                setResults(data.success);
-                setLoading(false);
-                console.log('data:', data.success);
-            }
-            else if (data.error) {
-                console.log('data.error: ', data.error);
-                setError(data.error);
-                setLoading(false);
-            }
-        }
+        //     if (data.success) {
+        //         setResults(data.success);
+        //         setLoading(false);
+        //         console.log('data:', data.success);
+        //     }
+        //     else if (data.error) {
+        //         console.log('data.error: ', data.error);
+        //         setError(data.error);
+        //         setLoading(false);
+        //     }
+        // }
 
-        await run(searchQuery, cities, state);
+        // await run(searchQuery, cities, state);
 
 
     }
