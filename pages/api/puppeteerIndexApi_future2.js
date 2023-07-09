@@ -3,6 +3,8 @@ const handler = async (req, res) => {
 
     const puppeteer = require('puppeteer');
 
+    let i = 0;
+
     // listing array
     let listingArr = [];
 
@@ -29,7 +31,7 @@ const handler = async (req, res) => {
     };
 
     // get listing details
-    const getListingDetails = async (page, search) => {
+    const getListingDetails = async (page, search, city, state) => {
         await wait(2000);
         await page.waitForSelector('div[jscontroller="xkZ6Lb"]');
 
@@ -80,20 +82,22 @@ const handler = async (req, res) => {
                         mainData['reviews'] = ele.querySelector('.deyx8d .leIgTe').textContent.replace('(', '').replace(')', '');
                     }
 
-                    console.log(mainData);
+                    // console.log(mainData);
                     return (mainData);
 
                 }
             })
         });
 
-        // set the value for search and push listings to listingArr
+        // set the value for search, city and state, and push listings to listingArr
         listings.map((ele) => {
             ele['search'] = search.replaceAll('+', ' ');
+            ele['city'] = city;
+            ele['state'] = state;
             listingArr.push(ele)
         });
 
-        console.log({ listings });
+        // console.log({ listings });
 
         return listings;
 
@@ -137,7 +141,7 @@ const handler = async (req, res) => {
         // const element = await page.$('button[aria-label="Suivant"]');
         if (await hasNextpage(page)) {
             await page.click('button[aria-label="Suivant"]');
-            await page.waitForNetworkIdle();
+            // await page.waitForNetworkIdle();
         }
 
         // await page.waitForSelector('button[aria-label="Suivant"]');
@@ -150,13 +154,22 @@ const handler = async (req, res) => {
         // punctuation regex
         const punctuationRegEx = /[^\w\s]/g;
         let searchQuery = req.query.searchQuery;
+        // const city = req.query.city;
+        let cities = req.query.cities;
+        cities = JSON.parse(cities);
+        const state = req.query.state;
+
+        const cityCount = cities.length;
+        // const cityCount = req.query.cityCount;
+
+        console.log({cities, cityCount});
+
+
 
         // remove punctuation, if there is any
         if (punctuationRegEx.test(searchQuery)) {
             searchQuery = searchQuery.replace(punctuationRegEx, "");
         }
-
-
 
         // get the search query from url parameter
         searchQuery = searchQuery.trim();
@@ -166,28 +179,42 @@ const handler = async (req, res) => {
 
         let endPoint = url;
 
-        if (searchQuery) {
-            endPoint = `${endPoint}/search?q=${searchQuery}`;
+        const fullSearchQuery = `${searchQuery}+${cities[i]}+${state}`;
+
+        if (fullSearchQuery) {
+            endPoint = `${endPoint}/search?q=${fullSearchQuery}`;
         }
 
         console.log({ endPoint });
 
-        // launch Puppeteer browser and go to the specified url
-        const browser = await puppeteer.launch({
-            headless: false,
-            executablePath: 'C:/Program Files/Google/Chrome/Application/chrome.exe',
-            // args: ['--lang=bn-BD,bn']
-        });
-        const page = await browser.newPage();
+        let browser;
 
-        // await page.setExtraHTTPHeaders({
-        //     'Accept-Language': 'en'
-        // });
+        try {
+            browser = await puppeteer.connect({ browserURL: 'http://localhost:9222' });
+            // If the connection is successful, it means a browser is already open
+            console.log('Browser is already open.');
+
+            // Perform any actions you need with the existing browser instance
+
+        } catch (error) {
+            // If the connection fails, it means no browser instance is open
+            console.log('No browser open. Launching a new one...');
+            browser = await puppeteer.launch({
+                headless: false,
+                executablePath: 'C:/Program Files/Google/Chrome/Application/chrome.exe',
+                // args: ['--lang=bn-BD,bn']
+            });
+
+            // Perform any actions you need with the newly launched browser instance
+        }
+
+        const page = await browser.newPage();
 
         await page.setViewport({
             width: 1300,
             height: 600
         })
+
         // await page.goto(endPoint);
         await page.goto(endPoint, {
             waitUntil: "domcontentloaded"
@@ -196,24 +223,31 @@ const handler = async (req, res) => {
         await goToGooglePlaces(page);
 
         do {
+
             // run the app
             await autoScroll(page);
             // let listings = [];
             // listings = await getListingDetails(page, searchQuery);
-            await getListingDetails(page, searchQuery);
+            await getListingDetails(page, searchQuery, cities[i], state);
             const nextPageBoolean = await hasNextpage(page);
             console.log({ nextPageBoolean });
 
             await goToNextpage(page);
 
-
         } while (await hasNextpage(page))
 
         // get listing from the last page
         await autoScroll(page);
-        await getListingDetails(page, searchQuery);
+        await getListingDetails(page, searchQuery, cities[i], state);
 
-        console.log('Done');
+        console.log(`${searchQuery} ${cities[i]} ${state} done`);
+
+        i++;
+        console.log({ i });
+
+        if (i >= 1) {
+            console.log('more to go');
+        }
 
         await browser.close();
 

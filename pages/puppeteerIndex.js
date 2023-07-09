@@ -35,7 +35,7 @@ const puppeteerIndex = () => {
         // city count
         const cityCount = cities.length;
 
-        console.log({state, cities});
+        console.log({ state, cities });
 
         // check search term not empty
 
@@ -43,14 +43,20 @@ const puppeteerIndex = () => {
             setSearchQueryError('Cannot be empty');
         }
 
-        const run = async (searchQuery, cities, state ) => {
+        // tbd
+       
+        const city = 'elmwood';
+        
+        const run = async (searchQuery, city, state) => {
             setLoading(true);
             setError(null);
             setResults(null);
 
             console.log({ searchQuery, cities, state })
 
-            const response = await fetch(`/api/puppeteerIndexApi?searchQuery=${searchQuery.trim()}&cities=${JSON.stringify(cities)}&state=${state}`);
+            const response = await fetch(`/api/puppeteerIndexApi?searchQuery=${searchQuery.trim()}&city=${city}&state=${state}`);
+
+
             // const response = await fetch(`/api/puppeteerIndexApi?searchQuery=${searchQuery.trim()}&city=${city}&state=${state}&cityCount=${cityCount}`);
             const data = await response.json();
 
