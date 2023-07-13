@@ -1,33 +1,29 @@
 import React from 'react'
+import Business from '../../models/business';
 
 const apiTemp3 = async (req, res) => {
 
-  const tempBody = 'test body'
-  // const response = await fetch('http://localhost:3000/api/apiTemp2', {
-    const response = await fetch('http://localhost:3000/api/apiTemp2', {
-    method: 'POST',
-    headers: {
-      'content-type': 'application/json'
-    },
-    body: JSON.stringify(tempBody)
-  });
-  const data = await response.json();
-  console.log({ data });
+  let headers = Object.keys(Business.schema.obj);
+  // headers = headers.filter((element) => element != 'numberOfEmails' && element != 'dateEmailedLast');
 
-  return res.send(data);
+  // console.log({headers});
 
-  //   const sendDataToDB = async (objArr) => {
-  //     const url = '/api/storeData';
-  //     response = await fetch(url, {
-  //         method: 'POST',
-  //         headers: {
-  //             'content-type': 'application/json'
-  //         },
-  //         body: JSON.stringify(objArr)
-  //     });
-  //     // setData(await response.json());
-  //     // console.log('response is: ', response);
-  // };
+const tempObj = await Business.findOne({url: 'galcanelectric.com'});
+
+const objId = tempObj._id;
+console.log(objId);
+
+const tempObj2 = await Business.findOne(objId);
+console.log({tempObj2});
+
+// console.log(typeof objId);
+
+
+
+
+
+
+  return res.send('temp');
 
   return (
     <div>apiTemp3</div>

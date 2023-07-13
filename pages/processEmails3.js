@@ -19,6 +19,7 @@ const ProcessEmails2 = () => {
     const [textArea, setTextArea] = useState('');
     const [urls, setUrls] = useState(null);
     const [isWorking, setIsWorking] = useState(false);
+    const [sendTrigger, setSendTrigger] = useState(false);
 
     const cheerio = require('cheerio');
 
@@ -28,7 +29,9 @@ const ProcessEmails2 = () => {
     let comboArr = []
 
     const handleClick = (e) => {
+
         if (textArea != '') {
+            // setSendTrigger(false);
             setEmailList([]);
             setContactEmailList([]);
             setIsWorking(true);
@@ -39,23 +42,62 @@ const ProcessEmails2 = () => {
     const emailRegEx = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/g;
 
     // fetch page content
+    // useEffect(() => {
+    //     console.log('use effect ran');
+    //     if (urls) {
+    //         urls.forEach(async (url) => {
+    //             console.log('url: ', url);
+    //             if (isValidUrl(url)) {
+
+    //                 const endPoint = `/api/lib/helpers/fetchUrlData?url=${url}`;
+    //                 const results = await getFetchData(endPoint);
+    //                 // console.log('results1: ', results);
+
+    //                 if (results) {
+    //                     setPageContent((pageContent) => [...pageContent, { url: url, data: results }]);
+    //                 }
+    //             }
+    //         });
+    //     }
+    // }, [urls]);
+
     useEffect(() => {
-        console.log('use effect ran');
         if (urls) {
-            urls.forEach(async (url) => {
-                console.log('url: ', url);
-                if (isValidUrl(url)) {
+            console.log('use effect ran');
+            let i = 0;
+            const getEmails = async (urls, i) => {
+                try {
 
-                    const endPoint = `/api/lib/helpers/fetchUrlData?url=${url}`;
-                    const results = await getFetchData(endPoint);
-                    console.log('results1: ', results);
+                    console.log({ i })
+                    console.log('url: ', urls[i]);
+                    if (isValidUrl(urls[i])) {
 
-                    if (results) {
-                        setPageContent((pageContent) => [...pageContent, { url: url, data: results }]);
+                        const endPoint = `/api/lib/helpers/fetchUrlData?url=${urls[i]}`;
+                        const results = await getFetchData(endPoint);
+                        // console.log('results1: ', results);
+
+                        if (results) {
+                            setPageContent((pageContent) => [...pageContent, { url: urls[i], data: results }]);
+                        }
+                        i++;
+                        if (i < urls.length) {
+                            getEmails(urls, i);
+                        }
+                        else {
+                            console.log('getEmails() done');
+                            // setSendTrigger(true);
+                        }
                     }
+
+                } catch (error) {
+                    console.log('getEmails() error:', urls[i] + ' - ' + error.message);
                 }
-            });
+
+            }
+            getEmails(urls, i);
+
         }
+
     }, [urls]);
 
     // get a list of emails and a list of urls where no email was found
@@ -64,10 +106,9 @@ const ProcessEmails2 = () => {
     const leaveOut = ['email.com', 'mail.com']; // unwanted email TLDs
 
     if (pageContent.length > 0) {
-        // console.log({pageContent});
+
         pageContent.map((ele) => {
             let strippedUrl = stripDomain(ele.url); // strip url to host name
-            console.log({strippedUrl});
             const tempArr = [...ele.data.matchAll(emailRegEx)]; // get all email addresses in page
             // if url has no email, then stick it in the checkContact array to see if there's an email in the contact page
             if (tempArr.length == 0) {
@@ -162,6 +203,9 @@ const ProcessEmails2 = () => {
 
     comboArr = [...emailList, ...contactEmailList];
 
+
+
+
     // send email data to be stored in database
     const sendData = async (dataObj) => {
         const fetchUrl = `http://localhost:3000/api/storeData2`;
@@ -174,13 +218,15 @@ const ProcessEmails2 = () => {
         });
         // setData(await response.json());
         // console.log('response is: ', response);
-    }
+    };
 
     useEffect(() => {
         if (urls) {
             sendData(comboArr);
+            console.log({ comboArr });
             setIsWorking(false);
         }
+
     }, [comboArr]);
 
     return (

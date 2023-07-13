@@ -1,4 +1,4 @@
-import Business from '../../models/business';
+import Sandbox from '../../models/sandbox';
 import { dbConnect } from '../../middleware/dbConnect';
 import { stringContains } from '../../utils/helpers';
 
@@ -9,17 +9,8 @@ export default async function handler(req, res) {
     let queryName = req.query.queryName;
     let queryValue = req.query.queryValue;
 
-    let results = [];
 
-    if(queryValue == 'findAll') {
-        results = await Business.find();
-        console.log({results});
-        return res.status(200).json({ success: results });
-    }
-
-
-
-    const temp = { queryName: queryName };
+    // const temp = { queryName, queryValue };
 
     console.log('queryName: ', queryName);
     console.log('queryValue: ', queryValue);
@@ -39,6 +30,7 @@ export default async function handler(req, res) {
     // let search = 'glass repair san antonio, tx';
 
     let deletedArr = [];
+    let results = [];
     let tempResults = null;
 
     let obj = {};
@@ -47,7 +39,7 @@ export default async function handler(req, res) {
 
     try {
         if (queryName == 'search') {
-            results = await Business.find();
+            results = await Sandbox.find();
             // console.log('results:', results);
             if (results) {
                 if (results.length > 0) {
@@ -110,7 +102,7 @@ export default async function handler(req, res) {
 
         }
         else {
-            results = await Business.find(obj, { _id: 0 });
+            results = await Sandbox.find(obj, { _id: 0 });
         }
 
         // if (results) {

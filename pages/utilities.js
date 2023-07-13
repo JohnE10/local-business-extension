@@ -21,6 +21,7 @@ const utilities = () => {
 
         <div className='pageTitle'><h4>Functionality List</h4></div>
         <div><Link href='/puppeteerIndex'><p>Puppeteer</p></Link></div>
+        <div><Link href='/processEmails5'><p>Process emails</p></Link></div>
         <div><Link href='/searchDatabase'><p>Search database</p></Link></div>
         <div><Link href='/manualDeletePage'><p>Delete from database</p></Link></div>
         <div><Link href='/wordPressChecker'><p>Check if website is wordpress</p></Link></div>
@@ -34,6 +35,9 @@ const utilities = () => {
         <div><Link href='/googlePageSpeedInsights'><p>Google PageSpeed Insights</p></Link></div>
         <div><Link href='/downloadAllImages'><p>Download All Images</p></Link></div>
         <div><Link href='/getFilesDirectoriesInUrl'><p>Get files and directories from URL</p></Link></div>
+        <div><Link href='/puppeteerIndex_Sandbox'><p>Puppeteer Sandbox</p></Link></div>
+        <div><Link href='/searchDatabase_Sandbox'><p>Search database sandbox</p></Link></div>
+
         
       </div>
     </>

@@ -334,7 +334,7 @@ const handler = async (req, res) => {
     // };
 
     const sendDataToDB = async (objArr) => {
-        const url = 'http://localhost:3000/api/storeData';
+        const url = 'http://localhost:3000/api/storeInSandbox';
         const response = await fetch(url, {
             method: 'POST',
             headers: {

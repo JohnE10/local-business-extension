@@ -186,15 +186,73 @@ export const checkUrlSecure = (url) => {
   });
 };
 
-export const stringContains = (str, query) => {
-  const match = query.every(element => str.toLowerCase().includes(element.toLowerCase()));
+// find if string contains every substring given in queryArr in an
+export const stringContains = (str, queryArr) => {
+  const match = queryArr.every(element => str.toLowerCase().includes(element.toLowerCase()));
   return match;
+
+};
+
+// delete key/value pair from object
+export const deleteKeyValue = (obj, deleteArr) => {
+
+  const objKeys = Object.keys(obj);
+
+  objKeys.map((ele) => {
+    // console.log({ele});
+    if (deleteArr.includes(ele.trim())) {
+      delete obj[ele];
+    }
+  })
+
+  return obj;
 
 };
 
 export const queryLocations = {
   // louisianaCities: ['New Orleans', 'Baton Rouge', 'Shreveport', 'Metairie', 'Lafayette', 'Lake Charles', 'Kenner', 'Bossier City', 'Monroe', 'Alexandria', 'Prairieville', 'Marrero', 'Houma', 'Central', 'Laplace', 'Slidell', 'New Iberia', 'Terrytown', 'Ruston', 'Chalmette', 'Bayou Cane', 'Hammond', 'Harvey', 'Sulphur', 'Shenandoah', 'Zachary', 'Estelle', 'Natchitoches', 'Youngsville', 'Gretna', 'Thibodaux', 'Opelousas', 'Broussard', 'Luling', 'Pineville', 'River Ridge', 'Mandeville', 'Claiborne', 'Gonzales', 'West Monroe', 'Carencro', 'Baker', 'Destrehan', 'Covington', 'Moss Bluff', 'Minden', 'Crowley', 'Woodmere', 'Bayou Blue', 'Waggaman', 'Morgan City', 'Raceland', 'Gardere', 'Abbeville', 'Timberlane', 'Jefferson', 'Bogalusa', 'Belle Chasse', 'DeRidder', 'Jennings', 'Denham Springs', 'Fort Polk South', 'Eunice', 'Oak Hills Place', 'Bastrop', 'Merrydale', 'Old Jefferson', 'Harahan', 'Village St. George', 'Reserve', 'Scott', 'Eden Isle', 'Westwego', 'Prien', 'Ponchatoula', 'Lacombe', 'St. Rose', 'Bridge City', 'Red Chute', 'Breaux Bridge', 'Galliano', 'Addis', 'Meraux', 'Rayne', 'Donaldsonville', 'Inniswold', 'Elmwood', 'Larose', 'St. Gabriel', 'Oakdale', 'Franklin', 'Walker', 'Ville Platte', 'Gray', 'Plaquemine', 'Tallulah', 'Brownfields', 'Patterson', 'Schriever', 'Leesville'],
-  // louisianaCities: 'elmwood',
-  louisianaCities: ['Elmwood', 'Mandeville'],
-  // louisianaCities: ['Mandeville', 'Elmwood'],
+
+  // louisianaCities: ['Elmwood', 'Mandeville'],
+  louisianaCities: ['Baton Rouge'],
+
+
+}
+
+// if value in object arr, return true
+export const findValueInObjArr = (objArr, key, value) => {
+  // export const findValueInObjArr = (obj, value) => {
+
+
+  const values = objArr.map((obj) => {
+    if (obj[key]) {
+      return obj[key];
+    }
+  });
+
+  // if(values) {
+  //   console.log('helpers values:', values);
+  // }
+
+
+  if (values.includes(value)) {
+    return true;
+  }
+  else {
+    return false;
+  }
+
+
+
+
+
+
+
+
+  // const objValues = Object.values(obj);
+  // if (objValues.includes(value)) {
+  //   return true;
+  // }
+  // else {
+  //   return false;
+  // }
 }

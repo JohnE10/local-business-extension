@@ -19,6 +19,8 @@ const ProcessEmails2 = () => {
     const [textArea, setTextArea] = useState('');
     const [urls, setUrls] = useState(null);
     const [isWorking, setIsWorking] = useState(false);
+    const [sendTrigger, setSendTrigger] = useState(false);
+    const [triggerWarmUp, setTriggerWarmUp] = useState(false);
 
     const cheerio = require('cheerio');
 
@@ -28,7 +30,10 @@ const ProcessEmails2 = () => {
     let comboArr = []
 
     const handleClick = (e) => {
+
         if (textArea != '') {
+            setSendTrigger(false);
+            setTriggerWarmUp(false);
             setEmailList([]);
             setContactEmailList([]);
             setIsWorking(true);
@@ -38,24 +43,47 @@ const ProcessEmails2 = () => {
 
     const emailRegEx = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/g;
 
-    // fetch page content
+
+
     useEffect(() => {
-        console.log('use effect ran');
         if (urls) {
-            urls.forEach(async (url) => {
-                console.log('url: ', url);
-                if (isValidUrl(url)) {
+            console.log('use effect ran');
+            let i = 0;
+            const getEmails = async (urls, i) => {
+                try {
 
-                    const endPoint = `/api/lib/helpers/fetchUrlData?url=${url}`;
-                    const results = await getFetchData(endPoint);
-                    console.log('results1: ', results);
+                    console.log({ i })
+                    console.log('url: ', urls[i]);
+                    if (isValidUrl(urls[i])) {
 
-                    if (results) {
-                        setPageContent((pageContent) => [...pageContent, { url: url, data: results }]);
+                        const endPoint = `/api/lib/helpers/fetchUrlData?url=${urls[i]}`;
+                        const results = await getFetchData(endPoint);
+                        // console.log('results1: ', results);
+
+                        if (results) {
+                            setPageContent((old) => [...old, { url: urls[i], data: results }]);
+                        }
+                        i++;
+                        if (i < urls.length) {
+                            getEmails(urls, i);
+                        }
+                        else {
+                            console.log('getEmails() done');
+                            setSendTrigger(true);
+                            // sendData(comboArr);
+                            // console.log({ comboArr });
+                        }
                     }
+
+                } catch (error) {
+                    console.log('getEmails() error:', urls[i] + ' - ' + error.message);
                 }
-            });
+
+            }
+            getEmails(urls, i);
+
         }
+
     }, [urls]);
 
     // get a list of emails and a list of urls where no email was found
@@ -64,10 +92,10 @@ const ProcessEmails2 = () => {
     const leaveOut = ['email.com', 'mail.com']; // unwanted email TLDs
 
     if (pageContent.length > 0) {
-        // console.log({pageContent});
+
         pageContent.map((ele) => {
+            console.log('ele.url:', ele.url);
             let strippedUrl = stripDomain(ele.url); // strip url to host name
-            console.log({strippedUrl});
             const tempArr = [...ele.data.matchAll(emailRegEx)]; // get all email addresses in page
             // if url has no email, then stick it in the checkContact array to see if there's an email in the contact page
             if (tempArr.length == 0) {
@@ -143,7 +171,9 @@ const ProcessEmails2 = () => {
 
                         // check for unwanted file extensions and email TLDs
                         if (!unwantedExtensionsdArr.includes(fileExtension) && !leaveOut.includes(emailTLD)) {
-                            contactEmailList.push({ url: strippedUrl, email: tempArr[i][0] }); // add to list // add to list
+                            emailList.push({ url: strippedUrl, email: tempArr[i][0] }); // add to list // add to list
+                            // contactEmailList.push({ url: strippedUrl, email: tempArr[i][0] }); // add to list // add to list
+
                         }
 
                     }
@@ -162,6 +192,9 @@ const ProcessEmails2 = () => {
 
     comboArr = [...emailList, ...contactEmailList];
 
+
+
+
     // send email data to be stored in database
     const sendData = async (dataObj) => {
         const fetchUrl = `http://localhost:3000/api/storeData2`;
@@ -174,14 +207,30 @@ const ProcessEmails2 = () => {
         });
         // setData(await response.json());
         // console.log('response is: ', response);
-    }
+    };
 
     useEffect(() => {
         if (urls) {
+
             sendData(comboArr);
+            console.log({ comboArr });
             setIsWorking(false);
         }
+
     }, [comboArr]);
+
+    // useEffect(() => {
+    //     if (urls) {
+    //         if (urls.length > 0) {
+    //             if (sendTrigger) {
+    //                 // sendData(comboArr);
+    //                 // console.log({ comboArr });
+    //                 setIsWorking(false);
+    //             }
+    //         }
+    //     }
+
+    // }, [sendTrigger]);
 
     return (
 
@@ -203,10 +252,20 @@ const ProcessEmails2 = () => {
 
             {comboArr.length > 0 && <h4 className='text-center m-3'>Email List</h4>}
 
-            {comboArr.length > 0 &&
+            {/* {comboArr.length > 0 &&
                 <div className='text-center'>
                     <h5 className='text-center mb-3'>Count: {comboArr.length}</h5>
                     {comboArr.map((email, i) => (
+                        <div key={i}>{email.url} - {email.email}</div>
+                        // <div key={i}>{email.email}</div>
+                    ))}
+                </div>
+            } */}
+
+            {emailList.length > 0 &&
+                <div className='text-center'>
+                    <h5 className='text-center mb-3'>Count: {emailList.length}</h5>
+                    {emailList.map((email, i) => (
                         <div key={i}>{email.url} - {email.email}</div>
                         // <div key={i}>{email.email}</div>
                     ))}

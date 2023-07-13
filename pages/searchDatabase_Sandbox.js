@@ -45,32 +45,7 @@ const searchDataBase = () => {
         setError(null);
         setResults(null);
 
-        const response = await fetch(`/api/searchDatabaseApi?queryValue=${queryValue}&queryName=${queryName}`);
-
-        const data = await response.json();
-
-        if (data.success) {
-            setResults(data.success);
-            setLoading(false);
-        }
-        else if (data.error) {
-            console.log('data.error: ', data.error);
-            setError(data.error);
-            setLoading(false);
-        }
-
-    }
-
-    const handleFindAll = async (e) => {
-
-        const queryName = e.target.id.replace('Button', '');
-        // setShowName(queryName);
-
-        setLoading(true);
-        setError(null);
-        setResults(null);
-
-        const response = await fetch('/api/searchDatabaseApi?queryValue=findAll');
+        const response = await fetch(`/api/searchDatabaseApi_Sandbox?queryValue=${queryValue}&queryName=${queryName}`);
 
         const data = await response.json();
 
@@ -112,18 +87,7 @@ const searchDataBase = () => {
         <div className='main'>
 
             <div className='pageTitle'>
-                <h4>Search Database</h4>
-            </div>
-            <div className={styles.search}>
-                <div>
-                    <label className='px-3'>Find all</label>
-                </div>
-
-                <div>
-
-                    <button id={'findAllButton'} onClick={handleFindAll}>Submit</button>
-
-                </div>
+                <h4>Search Database Sandbox</h4>
             </div>
             <div className={styles.searschBlock}>
                 {queryJsx}
@@ -132,7 +96,7 @@ const searchDataBase = () => {
             {loading && <div>... Loading</div>}
             {results && !loading && <div className='mb-4'>Query Name: {showName} - Query Term: {queryValue}</div>}
             {error && !loading && <div className='text-danger'>{error}</div>}
-
+            
             {results &&
                 <SearchResultsTable listings={results} />
             }

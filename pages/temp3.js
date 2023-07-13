@@ -1,28 +1,21 @@
 import React, { useEffect, useState } from 'react'
-import { locations, stringContains } from '../utils/helpers';
+import { deleteKeyValue, findValueInObjArr, locations, stringContains } from '../utils/helpers';
 
 const temp3 = () => {
 
-  async function fetchData() {
-    // Simulating an asynchronous operation with a setTimeout
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        resolve('Data fetched!');
-      }, 5000); // Simulating a 2-second delay
-    });
-  }
+  const obj = [{ a: 1, b: 2}, {a: 3, b: 'x' }];
 
+  const m = 1;
 
-  async function myFunction() {
-    // Wait for the fetchData function to complete before moving on
-    const result = await fetchData();
+  // const valueArr = Object.values(obj);
+  // if(valueArr.includes(obj['d'])) {
+  //   console.log('true');
+  // }
+  // else {
+  //   console.log('false');
+  // }
 
-    // Once the fetchData function is finished, this line will execute
-    console.log(result);
-    console.log('done');
-  }
-
-  myFunction();
+  console.log(findValueInObjArr(obj, 'a', m));
 
 
 
@@ -31,7 +24,8 @@ const temp3 = () => {
 
 
   return (
-    <div>temp</div>
+    <div>results</div>
+    // <div>{tempObj[0]['url']}</div>
   )
 
 }
@@ -40,3 +34,20 @@ const temp3 = () => {
 
 
 export default temp3;
+
+export const getFetchData = async (endPoint) => {
+
+  const response = await fetch(endPoint);
+  const results = await response.json();
+
+  // console.log('getFetchData() results:', results);
+
+  if (results.success) {
+    const data = results.success;
+    return data;
+  }
+  else if (results.error) {
+    return results.error;
+  }
+
+};

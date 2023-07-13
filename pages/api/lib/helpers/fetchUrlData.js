@@ -18,7 +18,7 @@ const handler = async (req, res) => {
         return res.status(200).json({ success: data });
 
     } catch (err) {
-        console.log('fetchUrlData error: ', err.message);
+        console.log('fetchUrlData error: ', url + ' - ' + err.message);
         return res.status(200).json({ error: err.message });
     }
 
