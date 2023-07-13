@@ -3,21 +3,12 @@ import { deleteKeyValue, findValueInObjArr, locations, stringContains } from '..
 
 const temp3 = () => {
 
-  const obj = [{ a: 1, b: 2}, {a: 3, b: 'x' }];
+  const arr = ['a', 'b', 'c']
 
-  const m = 1;
+  // const str = arr.join(' ');
+  console.log(str);
 
-  // const valueArr = Object.values(obj);
-  // if(valueArr.includes(obj['d'])) {
-  //   console.log('true');
-  // }
-  // else {
-  //   console.log('false');
-  // }
-
-  console.log(findValueInObjArr(obj, 'a', m));
-
-
+stringContains(str, arr);
 
 
 

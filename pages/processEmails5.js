@@ -211,10 +211,7 @@ const ProcessEmails4 = () => {
     // send email data to be stored in database
     const sendData = async (dataObj) => {
         console.log('sendData() ran');
-        const fetchUrl = 'http://localhost:3000/api/storeData5';
-        // const fetchUrl = 'http://localhost:3000/api/storeData4';
-        // const fetchUrl = `http://localhost:3000/api/storeData3`;
-        // const fetchUrl = `http://localhost:3000/api/storeData2`;
+        const fetchUrl = 'http://localhost:3000/api/storeData6';
         const response = await fetch(fetchUrl, {
             method: 'POST',
             headers: {
